@@ -30,6 +30,7 @@ function ajaxSuccess(data) //called when ajax data is successfully retrieved
     $("#map1Button").prop('disabled', false);
     $.each(data.features, function (key, val)
     {
+        console.log(data);
         // Get the lat and lng data for use in the markers
         const coords = val.geometry.coordinates;
         const latLng = new google.maps.LatLng(coords[1], coords[0]);
