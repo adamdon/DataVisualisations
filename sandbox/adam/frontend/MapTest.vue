@@ -21,7 +21,28 @@
 
 <script>
 export default {
-    name: "MapTest"
+    name: "MapTest",
+    data() {
+        return {
+        }
+    },
+    mounted()
+    {
+        if (document.getElementById('script2')) return; // was already loaded
+        let scriptTag2 = document.createElement("script");
+        scriptTag2.src = "javascript/map1.js";
+        scriptTag2.defer = true;
+        scriptTag2.id = "script2";
+        document.getElementsByTagName('head')[0].appendChild(scriptTag2);
+
+
+        if (document.getElementById('script1')) return; // was already loaded
+        let scriptTag1 = document.createElement("script");
+        scriptTag1.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAPKZPA5U02v5Ag20p35PUos8uRoN6KvM8&callback=initMap";
+        scriptTag1.defer = true;
+        scriptTag1.id = "script1";
+        document.getElementsByTagName('head')[0].appendChild(scriptTag1);
+    }
 };
 </script>
 
