@@ -5,7 +5,7 @@ $(function ()
 {
     $("#map1Button").click(map1ButtonOnClick); //sets on click listener
     apiURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson"; // url where data will be retrieved
-
+    insertGoogleScriptTag();
 }); //Calls When page loads
 
 
@@ -43,6 +43,16 @@ function ajaxSuccess(data) //called when ajax data is successfully retrieved
         );
 
     }); //for each end
+}
+
+function insertGoogleScriptTag()
+{
+    if (document.getElementById('googlescript')) return; // was already loaded
+    let scriptTag1 = document.createElement("script");
+    scriptTag1.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAPKZPA5U02v5Ag20p35PUos8uRoN6KvM8&callback=initMap";
+    scriptTag1.defer = true;
+    scriptTag1.id = "googlescript";
+    document.getElementsByTagName('head')[0].appendChild(scriptTag1);
 }
 
 
