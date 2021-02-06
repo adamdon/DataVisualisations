@@ -2,7 +2,6 @@ export let googleMap1;
 
 export default function mapTestScript()
 {
-    // initMap();
     insertGoogleScriptTag();
     $("#map1Button").click(map1ButtonOnClick); //sets on click listener
 }

@@ -1,4 +1,4 @@
-import mapTestScript from "./javascript/mapTestScript.js";
+import mapTestScript from "../javascript/mapTestScript.js";
 
 
 export default {

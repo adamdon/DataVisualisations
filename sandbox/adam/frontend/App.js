@@ -1,15 +1,15 @@
-import NavTop from './NavTop.js'
-import LayoutContainer from './LayoutContainer.js'
-import FullContentContainer from './FullContentContainer.js';
-import MapTest from "./MapTest.js";
-import CoinTest from "./CoinTest.js";
+import NavTop from './components/NavTop.js'
+import LayoutContainer from './components/LayoutContainer.js'
+import FullContentContainer from './components/FullContentContainer.js';
+import MapTest from "./components/MapTest.js";
+import CoinTest from "./components/CoinTest.js";
 
 
 
 
 export default {
     name: "App",
-    components: {NavTop, LayoutContainer, FullContentContainer, MapTest, CoinTest}, // MapTest, CoinTest},
+    components: {NavTop, LayoutContainer, FullContentContainer, MapTest, CoinTest},
     data()
     {
         return {

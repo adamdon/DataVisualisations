@@ -1,4 +1,4 @@
-import coinTestScript from "./javascript/coinTestScript.js";
+import coinTestScript from "../javascript/coinTestScript.js";
 
 export default {
     name: "CoinTest",
