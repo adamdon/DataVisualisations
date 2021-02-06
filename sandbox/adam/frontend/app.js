@@ -1,4 +1,8 @@
+// import coinTest from "./javascript/coinTest.js"
+// window.coinTest = coinTest;
+
 const {loadModule} = window["vue3-sfc-loader"];
+
 
 
 
@@ -26,6 +30,7 @@ const sfcLoaderOptions =
             document.head.insertBefore(style, ref);
         },
     };
+
 
 
 

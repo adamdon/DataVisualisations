@@ -1,9 +1,20 @@
-$(function ()
+
+// export default function coinTest()
+// {
+//     console.log("coinTest on ready");
+//     insertChartJsScriptTag();
+//     populateDataset();
+// }
+
+$(() => coinTest()); //Calls when page loads
+
+function coinTest()
 {
+    console.log("coinTest on ready");
     insertChartJsScriptTag();
     populateDataset();
+}
 
-}); //Calls when page loads
 
 
 async function populateDataset()
