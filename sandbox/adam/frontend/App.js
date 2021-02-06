@@ -8,7 +8,7 @@ import CoinTest from "./CoinTest.js";
 
 
 export default {
-    name: "index",
+    name: "App",
     components: {NavTop, LayoutContainer, FullContentContainer, MapTest, CoinTest}, // MapTest, CoinTest},
     data()
     {

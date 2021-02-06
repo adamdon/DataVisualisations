@@ -1,20 +1,12 @@
+import mapTestScript from "./javascript/mapTestScript.js";
+
+
 export default {
     name: "MapTest",
 
     async mounted()
     {
-        // console.log("mounted called");
-        // // window["coinTest"]();
-        // coinTest();
-
-
-
-        if (document.getElementById('script2')) return; // was already loaded
-        let scriptTag2 = document.createElement("script");
-        scriptTag2.src = "javascript/map1.js";
-        scriptTag2.defer = true;
-        scriptTag2.id = "script2";
-        document.getElementsByTagName('head')[0].appendChild(scriptTag2);
+        mapTestScript();
     },
 
     template: `

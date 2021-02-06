@@ -1,18 +1,31 @@
-let googleMap1;
-let apiURL;
+export let googleMap1;
 
-$(function ()
+export default function mapTestScript()
 {
-    $("#map1Button").click(map1ButtonOnClick); //sets on click listener
-    apiURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson"; // url where data will be retrieved
+    // initMap();
     insertGoogleScriptTag();
-}); //Calls When page loads
+    $("#map1Button").click(map1ButtonOnClick); //sets on click listener
+}
+
+
+
+
+// $(() => mapTestScript); //Calls When page loads
+//
+// function mapTestScript()
+// {
+//     insertGoogleScriptTag();
+//     $("#map1Button").click(map1ButtonOnClick); //sets on click listener
+// }
 
 
 
 
 function map1ButtonOnClick() //when get earthquake data button is clicked
 {
+    let apiURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson"; // url where data will be retrieved
+
+
     $("#map1Button").prop('disabled', true); //disables button
     $.ajax({url: apiURL, error: () => ajaxError(), success: data => ajaxSuccess(data),}); //make ajax request
 }
@@ -58,8 +71,8 @@ function insertGoogleScriptTag()
 
 
 
-//initMap() called when Google Maps API code is loaded - when web page is opened/refreshed
-function initMap()
+//initMap() made global as maps api will use this as a call back
+window.initMap= function ()
 {
     googleMap1 = new google.maps.Map(document.getElementById("map1"),
         {
