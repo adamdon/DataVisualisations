@@ -16,10 +16,10 @@ export default {
         <div class="card-body">
 
             <div class="currencySelectContainer">
-
+            <p> Base Currency </p>
             <select name="currency1" id="currency1">
             </select>
-
+            <p> Secondary Currency </p>
             <select name="currency2" id="currency2">
             
             </select>

@@ -2,7 +2,6 @@
 export default function exchangeTestScript()
 {
     console.log("Exchange Currency on script started");
-
     getCurrencyList();
     let currency1 = document.getElementById('currency1');
     let currency2 = document.getElementById('currency2');
@@ -39,7 +38,8 @@ async function getCurrencyList()
             currency2.innerHTML = currency2.innerHTML + opt;
         });
         
-        
+        currency1.value = "USD";
+        currency2.value = "GBP";
 
     }
     catch (error)
@@ -57,7 +57,8 @@ async function OnCurrencyChange()
 
     console.log(currency1.value);
     console.log(currency2.value);
-
+    populateDataset();
+    
 }
 
 
@@ -66,8 +67,11 @@ async function populateDataset()
 
     try
     {
-        let url = "https://api.exchangeratesapi.io/latest?base=USD";
-
+        let BaseCurrency = document.getElementById('currency1');
+        let CompCurrency = document.getElementById('currency2');
+        
+        let url = `https://api.exchangeratesapi.io/history?start_at=2021-01-01&end_at=2021-02-20&base=${BaseCurrency.value}&symbols=${CompCurrency.value}`;
+console.log(url);
         let chartElement = document.getElementById('exchangeChart').getContext('2d');
         chartElement.font = "30px Roboto";
         chartElement.fillStyle = "white";
@@ -75,42 +79,44 @@ async function populateDataset()
 
 
         let response = await axios.get(url);
-        console.log(response);
+
+
+        let rates = response.data.rates;
+
+        const sortedRates =[];
+  
+        for (const [key, value] of Object.entries(rates)) {
+
+            let newobj = { [key] :`${Object.values(value)}` };
+
+            sortedRates.push(newobj);
+            
+        }
+  
+        console.log(sortedRates);
+
+
+        let Dates =  Object.keys(response.data.rates)
+
+        let DateValues = Object.values(response.data.rates);
 
 
 
-        let lineChart = new Chart(chartElement,
-            {
-                type:'line',
-                data:
-                    {
-                        labels: keys,
-                        datasets:
-                            [
-                                {
-                                    label:'Percentage',
-                                    data:values,
-                                    borderWidth:1,
-                                    borderColor:'#4e5d6c',
-                                    hoverBorderWidth:4,
-                                    hoverBorderColor:'#2b3e50',
-                                    backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
-                                }
-                            ]
-                    },
-                options:
-                    {
-                        legend:
-                            {
-                                labels:
-                                    {
-                                        fontColor: "white",
-                                        fontSize: 24
-                                    }
-                            },
-                    }
-            });
+        let data = {
 
+            data: [20, 10],
+            labels: ['a', 'b']
+        } 
+
+        let options = {
+
+        } 
+        
+        var LineChart = new Chart(chartElement, {
+            type: 'line',
+            data: data,
+            options: options
+        });
 
     }
     catch (error)
@@ -124,12 +130,12 @@ async function populateDataset()
 function insertChartJsScriptTag()
 {
 
-    if (document.getElementById('exchangeChart')) return; // was already loaded
+    if (document.getElementById('chartjsscript')) return; // was already loaded
     let chartjsscript = document.createElement("script");
     chartjsscript.src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js";
     chartjsscript.defer = false;
     chartjsscript.async = false;
-    chartjsscript.id = "exchangeChart";
+    chartjsscript.id = "chartjsscript";
     document.getElementsByTagName('head')[0].appendChild(chartjsscript);
 
 }
