@@ -30,13 +30,11 @@
 
 
         <script type="module">
-
-            import define from "./observable_runtime.js";
             import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-
-            const runtime = new Runtime();
-            const main = runtime.module(define, Inspector.into(document.getElementById("barTest")));
-
+            import define from "./observable_script.js";
+            new Runtime().module(define, name => {
+                if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-62b97b00"));
+            });
         </script>
 
 
@@ -63,7 +61,7 @@
                             <div class="card-header"><i class="fas fa-th"></i> Top Coin Market History</div>
                             <div class="card-body">
 
-                                <div id="barTest"></div>
+                                <div id="observablehq-chart-62b97b00"></div>
 
                             </div>
                         </div>

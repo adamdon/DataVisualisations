@@ -4,6 +4,8 @@ export default function define(runtime, observer)
 
 
 
+
+
     let dataObjectArray =
         [
             {
@@ -55,54 +57,101 @@ export default function define(runtime, observer)
             ],
             ...dataObjectArray.map(item =>
                 [
-                item.date,
-                item.name,
-                item.category,
-                item.value
+                    item.date,
+                    item.name,
+                    item.category,
+                    item.value
                 ])
-    ].map(e => e.join(",")).join("\n");
+        ].map(e => e.join(",")).join("\n");
 
-    console.log(dataObjectArrayCsvString);
-
-
+    // console.log(dataObjectArrayCsvString);
 
 
+    const arrayToObject = (array, keyField) =>
+        array.reduce((obj, item) =>
+        {
+            obj[item[keyField]] = item;
+            return obj;
+        }, {});
+
+    const dataObjectOfObjects = arrayToObject(dataObjectArray, "name");
+
+    console.log(dataObjectOfObjects);
+
+    // var mapped = dataObjectArray .map(item => ({ [item.key]: item.value }) );
+    // var newObj = Object.assign({}, ...mapped );
+    // console.log(newObj );
 
 
-    const fileAttachments = new Map([["category-brands.csv", new URL("./category-brands.csv", import.meta.url)]]);
-    // const fileAttachments = new Map([["category-brands.csv", dataObjectArrayCsvString]]);
-
-
-    // const fileAttachments = dataObjectArray;
-    // const fileAttachments = new Map(dataObjectArrayCsvString.map(obj => [obj.key, obj.val]));
-    // const fileAttachments = new Map("category-brands.csv", dataObjectArray.map(obj => [obj.key, obj.val]));
 
 
 
 
 
-    main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
+    const fileAttachments = new Map([["category-brands.csv", "https://static.observableusercontent.com/files/aec3792837253d4c6168f9bbecdf495140a5f9bb1cdb12c7c8113cec26332634a71ad29b446a1e8236e0a45732ea5d0b4e86d9d1568ff5791412f093ec06f4f1"]]);
 
-    //
-    // main.variable(observer()).define(["md"], function (md)
-    // {
-    //     return (
-    //         md`# Bar Chart Race
-    //
-    //         This chart animates the value (in $M) of the top global brands from 2000 to 2019. Color indicates sector.`
-    //     );
-    // });
-    //
+
+
+    main.builtin("FileAttachment", runtime.fileAttachments(    function (name)
+        {
+            return fileAttachments.get(name);
+        }
+    ));
+
+
+
+
+
 
     main.variable(observer("data")).define("data", ["FileAttachment"], function (FileAttachment)
     {
-        return (
-            FileAttachment("category-brands.csv").csv({typed: true})
-        );
+        // return dataObjectArray;
 
-        // return (
-        //     dataObjectArrayCsvString
-        // );
+        let returnObject = FileAttachment("category-brands.csv").csv({typed: true});
+        // console.log("returnObject: " + typeof returnObject);
+        // console.log("returnObject: " + returnObject);
+
+        // returnObject.then(result =>
+        // {
+        //     console.log("result:" + typeof result)
+        //     console.log(result)
+        //     result = dataObjectArray;
+        // });
+
+        // console.log("dataObjectArray: " + typeof dataObjectArray);
+        console.log("dataObjectArray: " + typeof dataObjectArray);
+        console.log(dataObjectArray);
+
+        // console.log("dataObjectOfObjects: " + typeof dataObjectOfObjects);
+        // console.log(dataObjectOfObjects);
+        //returnObject = dataObjectArray;
+
+
+
+        // return dataObjectArray;
+        return returnObject;
+    });
+
+
+    main.variable(observer("testvar")).define("testvar", function ()
+    {
+        let test = 250;
+        console.log("IN THE MD");
+
+
+        return (
+            250
+        );
+    });
+
+
+    main.variable(observer()).define(["md"], function (md)
+    {
+        return (
+            md`# Bar Chart Race
+
+                This chart animates the value (in $M) of the top global brands from 2000 to 2019. Color indicates sector. See [the explainer](/d/e9e3929cf7c50b45) for more. Data: [Interbrand](https://www.interbrand.com/best-brands/)`
+        );
     });
 
 
@@ -114,13 +163,16 @@ export default function define(runtime, observer)
         );
     });
 
+
     main.variable(observer("replay")).define("replay", ["Generators", "viewof replay"], (G, _) => G.input(_));
+
 
     main.variable(observer("chart")).define("chart", ["replay", "d3", "width", "height", "bars", "axis", "labels", "ticker", "keyframes", "duration", "x", "invalidation"], async function* (replay, d3, width, height, bars, axis, labels, ticker, keyframes, duration, x, invalidation)
         {
             replay;
 
-            const svg = d3.create("svg").attr("viewBox", [0, 0, width, height]);
+            const svg = d3.create("svg")
+                .attr("viewBox", [0, 0, width, height]);
 
             const updateBars = bars(svg);
             const updateAxis = axis(svg);
@@ -149,12 +201,17 @@ export default function define(runtime, observer)
         }
     );
 
+
+
+
+
     main.variable(observer("duration")).define("duration", function ()
     {
         return (
             250
         );
     });
+
 
     main.variable(observer("n")).define("n", function ()
     {
@@ -163,12 +220,14 @@ export default function define(runtime, observer)
         );
     });
 
+
     main.variable(observer("names")).define("names", ["data"], function (data)
     {
         return (
             new Set(data.map(d => d.name))
         );
     });
+
 
     main.variable(observer("datevalues")).define("datevalues", ["d3", "data"], function (d3, data)
     {
@@ -178,6 +237,7 @@ export default function define(runtime, observer)
                 .sort(([a], [b]) => d3.ascending(a, b))
         );
     });
+
 
     main.variable(observer("rank")).define("rank", ["names", "d3", "n"], function (names, d3, n)
     {
@@ -195,12 +255,14 @@ export default function define(runtime, observer)
         );
     });
 
+
     main.variable(observer("k")).define("k", function ()
     {
         return (
             10
         );
     });
+
 
     main.variable(observer("keyframes")).define("keyframes", ["d3", "datevalues", "k", "rank"], function (d3, datevalues, k, rank)
         {
@@ -218,9 +280,10 @@ export default function define(runtime, observer)
                 }
             }
             keyframes.push([new Date(kb), rank(name => b.get(name) || 0)]);
-            return keyframes;
+            return keyframes;``
         }
     );
+
 
     main.variable(observer("nameframes")).define("nameframes", ["d3", "keyframes"], function (d3, keyframes)
     {
@@ -229,6 +292,7 @@ export default function define(runtime, observer)
         );
     });
 
+
     main.variable(observer("prev")).define("prev", ["nameframes", "d3"], function (nameframes, d3)
     {
         return (
@@ -236,12 +300,14 @@ export default function define(runtime, observer)
         );
     });
 
+
     main.variable(observer("next")).define("next", ["nameframes", "d3"], function (nameframes, d3)
     {
         return (
             new Map(nameframes.flatMap(([, data]) => d3.pairs(data)))
         );
     });
+
 
     main.variable(observer("bars")).define("bars", ["n", "color", "y", "x", "prev", "next"], function (n, color, y, x, prev, next)
     {
@@ -272,6 +338,7 @@ export default function define(runtime, observer)
             }
         );
     });
+
 
     main.variable(observer("labels")).define("labels", ["n", "x", "prev", "y", "next", "textTween"], function (n, x, prev, y, next, textTween)
     {
@@ -310,6 +377,7 @@ export default function define(runtime, observer)
         );
     });
 
+
     main.variable(observer("textTween")).define("textTween", ["d3", "formatNumber"], function (d3, formatNumber)
     {
         return (
@@ -324,12 +392,14 @@ export default function define(runtime, observer)
         );
     });
 
+
     main.variable(observer("formatNumber")).define("formatNumber", ["d3"], function (d3)
     {
         return (
             d3.format(",d")
         );
     });
+
 
     main.variable(observer("axis")).define("axis", ["margin", "d3", "x", "width", "barSize", "n", "y"], function (margin, d3, x, width, barSize, n, y)
     {
@@ -355,6 +425,7 @@ export default function define(runtime, observer)
         );
     });
 
+
     main.variable(observer("ticker")).define("ticker", ["barSize", "width", "margin", "n", "formatDate", "keyframes"], function (barSize, width, margin, n, formatDate, keyframes)
     {
         return (
@@ -377,12 +448,14 @@ export default function define(runtime, observer)
         );
     });
 
+
     main.variable(observer("formatDate")).define("formatDate", ["d3"], function (d3)
     {
         return (
             d3.utcFormat("%Y")
         );
     });
+
 
     main.variable(observer("color")).define("color", ["d3", "data"], function (d3, data)
         {
@@ -397,12 +470,14 @@ export default function define(runtime, observer)
         }
     );
 
+
     main.variable(observer("x")).define("x", ["d3", "margin", "width"], function (d3, margin, width)
     {
         return (
             d3.scaleLinear([0, 1], [margin.left, width - margin.right])
         );
     });
+
 
     main.variable(observer("y")).define("y", ["d3", "n", "margin", "barSize"], function (d3, n, margin, barSize)
     {
@@ -414,12 +489,14 @@ export default function define(runtime, observer)
         );
     });
 
+
     main.variable(observer("height")).define("height", ["margin", "barSize", "n"], function (margin, barSize, n)
     {
         return (
             margin.top + barSize * n + margin.bottom
         );
     });
+
 
     main.variable(observer("barSize")).define("barSize", function ()
     {
@@ -428,12 +505,14 @@ export default function define(runtime, observer)
         );
     });
 
+
     main.variable(observer("margin")).define("margin", function ()
     {
         return (
             {top: 16, right: 6, bottom: 6, left: 0}
         );
     });
+
 
     main.variable(observer("d3")).define("d3", ["require"], function (require)
     {
@@ -442,5 +521,9 @@ export default function define(runtime, observer)
         )
     });
 
+
+
     return main;
+
+
 }
