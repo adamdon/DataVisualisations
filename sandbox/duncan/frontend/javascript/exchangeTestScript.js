@@ -70,8 +70,8 @@ async function populateDataset()
         let BaseCurrency = document.getElementById('currency1');
         let CompCurrency = document.getElementById('currency2');
         
-        let url = `https://api.exchangeratesapi.io/history?start_at=2021-01-01&end_at=2021-02-20&base=${BaseCurrency.value}&symbols=${CompCurrency.value}`;
-console.log(url);
+        let url = `https://api.exchangeratesapi.io/history?start_at=2021-01-01&end_at=2021-02-20&base=${BaseCurrency.value || 'USD'}&symbols=${CompCurrency.value|| 'GBP'}`;
+        console.log(url);
         let chartElement = document.getElementById('exchangeChart').getContext('2d');
         chartElement.font = "30px Roboto";
         chartElement.fillStyle = "white";
@@ -98,14 +98,24 @@ console.log(url);
 
         let Dates =  Object.keys(response.data.rates)
 
-        let DateValues = Object.values(response.data.rates);
+        let DateValuesObj = Object.values(response.data.rates);
 
+        let DateValuesArr= [];
 
+        DateValuesObj.forEach(element => {
+            DateValuesArr.push(Object.values(element)[0])
+        });
+
+        console.log(DateValuesArr);
 
         let data = {
-
-            data: [20, 10],
-            labels: ['a', 'b']
+                labels: Dates,
+                datasets: [{
+                    data: DateValuesArr,
+                    backgroundColor: ['rgba(10, 194, 235, 0.35)']
+                }]
+            
+       
         } 
 
         let options = {
