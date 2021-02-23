@@ -9,43 +9,45 @@ export default function define(runtime, observer)
     let dataObjectArray =
         [
             {
-                date: "2000-01-01",
-                name: "Coca-Cola",
+                date: new Date("2000-01-01"),
+                name: "Coca-ColaX",
                 category: "Beverages",
-                value: "72537"
+                value: 72537
             },
             {
-                date: "2000-01-01",
-                name: "Microsoft",
+                date: new Date("2000-01-01"),
+                name: "MicrosoftY",
                 category: "Technology",
-                value: "70196"
+                value: 70196
             },
             {
-                date: "2001-01-01",
-                name: "Coca-Cola",
+                date: new Date("2001-01-01"),
+                name: "Coca-ColaX",
                 category: "Beverages",
-                value: "68945"
+                value: 68945
             },
             {
-                date: "2001-01-01",
-                name: "Microsoft",
+                date: new Date("2001-01-01"),
+                name: "MicrosoftY",
                 category: "Technology",
-                value: "65068"
+                value: 65068
             },
             {
-                date: "2002-01-01",
-                name: "Coca-Cola",
+                date: new Date("2002-01-01"),
+                name: "Coca-ColaX",
                 category: "Beverages",
-                value: "69637"
+                value: 69637
             },
             {
-                date: "2002-01-01",
-                name: "Microsoft",
+                date: new Date("2002-01-01"),
+                name: "MicrosoftY",
                 category: "Technology",
-                value: "64091"
+                value: 64091
             },
 
         ];
+
+    dataObjectArray.columns = ["date", "name", "category", "value"];
 
     const dataObjectArrayCsvString =
         [
@@ -76,7 +78,7 @@ export default function define(runtime, observer)
 
     const dataObjectOfObjects = arrayToObject(dataObjectArray, "name");
 
-    console.log(dataObjectOfObjects);
+    // console.log(dataObjectOfObjects);
 
     // var mapped = dataObjectArray .map(item => ({ [item.key]: item.value }) );
     // var newObj = Object.assign({}, ...mapped );
@@ -88,7 +90,8 @@ export default function define(runtime, observer)
 
 
 
-    const fileAttachments = new Map([["category-brands.csv", "https://static.observableusercontent.com/files/aec3792837253d4c6168f9bbecdf495140a5f9bb1cdb12c7c8113cec26332634a71ad29b446a1e8236e0a45732ea5d0b4e86d9d1568ff5791412f093ec06f4f1"]]);
+    // const fileAttachments = new Map([["category-brands.csv", "https://static.observableusercontent.com/files/aec3792837253d4c6168f9bbecdf495140a5f9bb1cdb12c7c8113cec26332634a71ad29b446a1e8236e0a45732ea5d0b4e86d9d1568ff5791412f093ec06f4f1"]]);
+    const fileAttachments = new Map([["category-brands.csv", "./test.csv"]]);
 
 
 
@@ -111,12 +114,13 @@ export default function define(runtime, observer)
         // console.log("returnObject: " + typeof returnObject);
         // console.log("returnObject: " + returnObject);
 
-        // returnObject.then(result =>
-        // {
-        //     console.log("result:" + typeof result)
-        //     console.log(result)
-        //     result = dataObjectArray;
-        // });
+        returnObject.then(result =>
+        {
+            console.log("result:" + typeof result);
+            console.log(result);
+            result = dataObjectArray;
+            // result = dataObjectArray;
+        });
 
         // console.log("dataObjectArray: " + typeof dataObjectArray);
         console.log("dataObjectArray: " + typeof dataObjectArray);
@@ -128,8 +132,8 @@ export default function define(runtime, observer)
 
 
 
-        // return dataObjectArray;
-        return returnObject;
+        return dataObjectArray;
+        // return returnObject;
     });
 
 
