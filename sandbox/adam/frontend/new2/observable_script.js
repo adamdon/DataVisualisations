@@ -1,4 +1,4 @@
-export default function define(runtime, observer)
+export default async function define(runtime, observer)
 {
     const main = runtime.module();
 
@@ -8,155 +8,87 @@ export default function define(runtime, observer)
 
     let dataObjectArray =
         [
-            {
-                date: new Date("2000-01-01"),
-                name: "Coca-ColaX",
-                category: "Beverages",
-                value: 72537
-            },
-            {
-                date: new Date("2000-01-01"),
-                name: "MicrosoftY",
-                category: "Technology",
-                value: 70196
-            },
-            {
-                date: new Date("2001-01-01"),
-                name: "Coca-ColaX",
-                category: "Beverages",
-                value: 68945
-            },
-            {
-                date: new Date("2001-01-01"),
-                name: "MicrosoftY",
-                category: "Technology",
-                value: 65068
-            },
-            {
-                date: new Date("2002-01-01"),
-                name: "Coca-ColaX",
-                category: "Beverages",
-                value: 69637
-            },
-            {
-                date: new Date("2002-01-01"),
-                name: "MicrosoftY",
-                category: "Technology",
-                value: 64091
-            },
+            // {
+            //     date: new Date("2000-01-01"),
+            //     name: "Coca-ColaX",
+            //     category: "Beverages",
+            //     value: 72537
+            // },
+            // {
+            //     date: new Date("2000-01-01"),
+            //     name: "MicrosoftY",
+            //     category: "Technology",
+            //     value: 70196
+            // },
+            // {
+            //     date: new Date("2001-01-01"),
+            //     name: "Coca-ColaX",
+            //     category: "Beverages",
+            //     value: 68945
+            // },
+            // {
+            //     date: new Date("2001-01-01"),
+            //     name: "MicrosoftY",
+            //     category: "Technology",
+            //     value: 65068
+            // },
+            // {
+            //     date: new Date("2002-01-01"),
+            //     name: "Coca-ColaX",
+            //     category: "Beverages",
+            //     value: 69637
+            // },
+            // {
+            //     date: new Date("2002-01-01"),
+            //     name: "MicrosoftY",
+            //     category: "Technology",
+            //     value: 64091
+            // },
 
         ];
-
     dataObjectArray.columns = ["date", "name", "category", "value"];
 
-    const dataObjectArrayCsvString =
-        [
-            [
-                "date",
-                "name",
-                "category",
-                "value"
-            ],
-            ...dataObjectArray.map(item =>
-                [
-                    item.date,
-                    item.name,
-                    item.category,
-                    item.value
-                ])
-        ].map(e => e.join(",")).join("\n");
-
-    // console.log(dataObjectArrayCsvString);
+    async function getDataFunction()
+    {
+        const response = await fetch("https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=90&interval=daily")
+        const data = await response.json();
+        const allBitcoinMarketCaps = data.market_caps;
 
 
-    const arrayToObject = (array, keyField) =>
-        array.reduce((obj, item) =>
+        for (const [key, value] of Object.entries(allBitcoinMarketCaps))
         {
-            obj[item[keyField]] = item;
-            return obj;
-        }, {});
+            console.log(new Date(value[0]));
+            console.log(value[1].toFixed(2))
 
-    const dataObjectOfObjects = arrayToObject(dataObjectArray, "name");
+            dataObjectArray.push(
+                {
+                    date: new Date(value[0]),
+                    name: "bitcoin",
+                    category: "bitcoin",
+                    value: value[1].toFixed(2)
+                }
+            );
 
-    // console.log(dataObjectOfObjects);
-
-    // var mapped = dataObjectArray .map(item => ({ [item.key]: item.value }) );
-    // var newObj = Object.assign({}, ...mapped );
-    // console.log(newObj );
-
-
-
-
-
-
-
-    // const fileAttachments = new Map([["category-brands.csv", "https://static.observableusercontent.com/files/aec3792837253d4c6168f9bbecdf495140a5f9bb1cdb12c7c8113cec26332634a71ad29b446a1e8236e0a45732ea5d0b4e86d9d1568ff5791412f093ec06f4f1"]]);
-    const fileAttachments = new Map([["category-brands.csv", "./test.csv"]]);
-
-
-
-    main.builtin("FileAttachment", runtime.fileAttachments(    function (name)
-        {
-            return fileAttachments.get(name);
+            // console.log(`${key}: ${value}`);
         }
-    ));
 
+        console.log(dataObjectArray);
+        return data;
+    }
 
+    const fulldata = await getDataFunction()
 
 
 
 
     main.variable(observer("data")).define("data", ["FileAttachment"], function (FileAttachment)
     {
-        // return dataObjectArray;
-
-        let returnObject = FileAttachment("category-brands.csv").csv({typed: true});
-        // console.log("returnObject: " + typeof returnObject);
-        // console.log("returnObject: " + returnObject);
-
-        returnObject.then(result =>
-        {
-            console.log("result:" + typeof result);
-            console.log(result);
-            result = dataObjectArray;
-            // result = dataObjectArray;
-        });
-
-        // console.log("dataObjectArray: " + typeof dataObjectArray);
-        console.log("dataObjectArray: " + typeof dataObjectArray);
-        console.log(dataObjectArray);
-
-        // console.log("dataObjectOfObjects: " + typeof dataObjectOfObjects);
-        // console.log(dataObjectOfObjects);
-        //returnObject = dataObjectArray;
-
-
-
         return dataObjectArray;
-        // return returnObject;
     });
 
 
-    main.variable(observer("testvar")).define("testvar", function ()
-    {
-        let test = 250;
-        console.log("IN THE MD");
 
 
-        return (
-            250
-        );
-    });
-
-
-    main.variable(observer()).define(["md"], function (md)
-    {
-        return (
-            md`# Bar Chart Race
-
-                This chart animates the value (in $M) of the top global brands from 2000 to 2019. Color indicates sector. See [the explainer](/d/e9e3929cf7c50b45) for more. Data: [Interbrand](https://www.interbrand.com/best-brands/)`
-        );
-    });
 
 
     main.variable(observer("viewof replay")).define("viewof replay", ["html"], function (html)
@@ -284,7 +216,7 @@ export default function define(runtime, observer)
                 }
             }
             keyframes.push([new Date(kb), rank(name => b.get(name) || 0)]);
-            return keyframes;``
+            return keyframes;
         }
     );
 
