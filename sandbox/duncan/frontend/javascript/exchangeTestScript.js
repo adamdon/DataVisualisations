@@ -23,7 +23,6 @@ async function getCurrencyList()
         chartElement.fillText("Loading data...", 10, 50);
 
         let res = await axios.get(url);
-        console.log(Object.keys(res.data.rates));
 
         let currencies = Object.keys(res.data.rates);
 
@@ -92,20 +91,27 @@ async function populateDataset()
             sortedRates.push(newobj);
             
         }
-  
-        console.log(sortedRates);
 
+        const newSortedRates = sortedRates.sort(function(a,b){
+            let date1 = new Date(Object.keys(a)[0]);
+            let date2 = new Date(Object.keys(b)[0]);
+            return date1.getDate() - date2.getDate()
+            });
 
-        let Dates =  Object.keys(response.data.rates)
+        console.log(newSortedRates);
+        const Dates =  []
 
-        let DateValuesObj = Object.values(response.data.rates);
+        const DateValuesArr = [];
 
-        let DateValuesArr= [];
-
-        DateValuesObj.forEach(element => {
-            DateValuesArr.push(Object.values(element)[0])
+        newSortedRates.forEach(element => {
+            DateValuesArr.push((Object.values(element)[0]));
         });
 
+        newSortedRates.forEach(element => {
+            Dates.push((Object.keys(element)[0].toString()));
+        });
+
+        console.log(Dates);
         console.log(DateValuesArr);
 
         let data = {
