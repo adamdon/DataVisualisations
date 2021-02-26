@@ -1,4 +1,7 @@
 
+let startdate
+
+let enddate
 export default function exchangeTestScript()
 {
     console.log("Exchange Currency on script started");
@@ -8,11 +11,20 @@ export default function exchangeTestScript()
     currency1.onchange = OnCurrencyChange;
     currency2.onchange = OnCurrencyChange;
     $('#el').daterangepicker({
+
         change: function(event, data) { 
+
+            let datesChanged = Object.values(JSON.parse($('#el').val()));
+
+            startdate = datesChanged[0];
+            enddate = datesChanged[1];
+            $('#el').val(`${startdate} - ${enddate}`)
             populateDataset()
-        },
-        initialText:"Please select a date range"
+        }
+        
     });
+    $('#el').removeAttr('style');
+    $('#drp_autogen0').text("Select a Date")
     insertChartJsScriptTag();
     populateDataset();
 }
@@ -89,13 +101,9 @@ async function populateDataset()
 
         let BaseCurrency = document.getElementById('currency1');
         let CompCurrency = document.getElementById('currency2');
-        
-        let datesSelected = Object.values(JSON.parse($('#el').val()));
+    
 
-        let startdate = datesSelected[0]
-        let enddate = datesSelected[1]
-
-        let url = `https://api.exchangeratesapi.io/history?start_at=${startdate || "2020-01-01"}&end_at=${enddate || "2021-02-20"}&base=${BaseCurrency.value || 'USD'}&symbols=${CompCurrency.value|| 'GBP'}`;
+        let url = `https://api.exchangeratesapi.io/history?start_at=${startdate || "2021-01-01"}&end_at=${enddate || "2021-02-20"}&base=${BaseCurrency.value || 'USD'}&symbols=${CompCurrency.value|| 'GBP'}`;
         console.log(url);
         let chartElement = document.getElementById('exchangeChart').getContext('2d');
         chartElement.font = "30px Roboto";
