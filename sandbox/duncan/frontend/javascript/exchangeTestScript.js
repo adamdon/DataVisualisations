@@ -7,8 +7,27 @@ export default function exchangeTestScript()
     let currency2 = document.getElementById('currency2');
     currency1.onchange = OnCurrencyChange;
     currency2.onchange = OnCurrencyChange;
+    $('#el').daterangepicker({
+        change: function(event, data) { 
+            populateDataset()
+        },
+        initialText:"Please select a date range"
+    });
     insertChartJsScriptTag();
     populateDataset();
+}
+
+function createCanvas() {
+    
+    let currencySelectContainer = document.getElementsByClassName('currencySelectContainer')[0];
+
+    let canvas = document.createElement('canvas');
+    canvas.id = 'exchangeChart'
+
+    $(canvas).insertAfter(currencySelectContainer);
+
+
+
 }
 
 
@@ -58,6 +77,7 @@ async function OnCurrencyChange()
     console.log(currency2.value);
     populateDataset();
     
+    
 }
 
 
@@ -66,10 +86,16 @@ async function populateDataset()
 
     try
     {
+
         let BaseCurrency = document.getElementById('currency1');
         let CompCurrency = document.getElementById('currency2');
         
-        let url = `https://api.exchangeratesapi.io/history?start_at=2021-01-01&end_at=2021-02-20&base=${BaseCurrency.value || 'USD'}&symbols=${CompCurrency.value|| 'GBP'}`;
+        let datesSelected = Object.values(JSON.parse($('#el').val()));
+
+        let startdate = datesSelected[0]
+        let enddate = datesSelected[1]
+
+        let url = `https://api.exchangeratesapi.io/history?start_at=${startdate || "2020-01-01"}&end_at=${enddate || "2021-02-20"}&base=${BaseCurrency.value || 'USD'}&symbols=${CompCurrency.value|| 'GBP'}`;
         console.log(url);
         let chartElement = document.getElementById('exchangeChart').getContext('2d');
         chartElement.font = "30px Roboto";
@@ -111,14 +137,12 @@ async function populateDataset()
             Dates.push((Object.keys(element)[0].toString()));
         });
 
-        console.log(Dates);
-        console.log(DateValuesArr);
-
         let data = {
                 labels: Dates,
                 datasets: [{
                     data: DateValuesArr,
-                    backgroundColor: ['rgba(10, 194, 235, 0.35)']
+                    backgroundColor: ['rgba(10, 194, 235, 0.05)'],
+                    pointBackgroundColor:['rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)']
                 }]
             
        

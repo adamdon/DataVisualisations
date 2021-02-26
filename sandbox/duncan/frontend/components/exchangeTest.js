@@ -23,6 +23,10 @@ export default {
             <select name="currency2" id="currency2">
             
             </select>
+            <p> Select a date: </p>
+            <input id="el">
+        
+
 
             </div> 
             <canvas id="exchangeChart"></canvas>
