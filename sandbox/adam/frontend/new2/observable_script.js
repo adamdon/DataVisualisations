@@ -34,6 +34,9 @@ export default async function define(runtime, observer)
 
 
 
+
+
+
     async function getTokenNamesFromSymbols(tokenSymbols)
     {
         let tokenNames = [];
@@ -70,7 +73,7 @@ export default async function define(runtime, observer)
 
     async function getArrayOfCoins()
     {
-        let arrayOfCoins = ["ethereum", "litecoin", "bitcoin-cash", "ripple"];
+        // let arrayOfCoins = ["ethereum", "litecoin", "bitcoin-cash", "ripple"];
 
         const urlText = `https://api.coingecko.com/api/v3/global`;
         const response = await fetch(urlText);
@@ -83,10 +86,15 @@ export default async function define(runtime, observer)
 
 
         let noBitCoinTokenNames = tokenNames.filter((name) => name !== "bitcoin")
+        let noEthTokenNames = noBitCoinTokenNames.filter((name) => name !== "ethereum")
+        let noRippleTokenNames = noEthTokenNames.filter((name) => name !== "ripple")
 
-        console.log(noBitCoinTokenNames)
-        // return noBitCoinTokenNames;
-        return arrayOfCoins;
+
+        let shortListTokenNames = noRippleTokenNames.slice(0, 10);
+
+        console.log(shortListTokenNames)
+        return shortListTokenNames;
+        // return arrayOfCoins;
     }
 
 
