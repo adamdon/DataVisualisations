@@ -4,89 +4,60 @@ export default async function define(runtime, observer)
 
 
 
-
-
-    let dataObjectArray =
-        [
-            // {
-            //     date: new Date("2000-01-01"),
-            //     name: "Coca-ColaX",
-            //     category: "Beverages",
-            //     value: 72537
-            // },
-            // {
-            //     date: new Date("2000-01-01"),
-            //     name: "MicrosoftY",
-            //     category: "Technology",
-            //     value: 70196
-            // },
-            // {
-            //     date: new Date("2001-01-01"),
-            //     name: "Coca-ColaX",
-            //     category: "Beverages",
-            //     value: 68945
-            // },
-            // {
-            //     date: new Date("2001-01-01"),
-            //     name: "MicrosoftY",
-            //     category: "Technology",
-            //     value: 65068
-            // },
-            // {
-            //     date: new Date("2002-01-01"),
-            //     name: "Coca-ColaX",
-            //     category: "Beverages",
-            //     value: 69637
-            // },
-            // {
-            //     date: new Date("2002-01-01"),
-            //     name: "MicrosoftY",
-            //     category: "Technology",
-            //     value: 64091
-            // },
-
-        ];
-    dataObjectArray.columns = ["date", "name", "category", "value"];
-
-    async function getDataFunction()
+    async function getMarketCaps(coinText)
     {
-        const response = await fetch("https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=90&interval=daily")
+        const urlText = `https://api.coingecko.com/api/v3/coins/${coinText}/market_chart?vs_currency=usd&days=90&interval=daily`;
+        const response = await fetch(urlText);
         const data = await response.json();
-        const allBitcoinMarketCaps = data.market_caps;
+        const allMarketCaps = data.market_caps;
+        let fullDataObjectArray = [];
 
 
-        for (const [key, value] of Object.entries(allBitcoinMarketCaps))
+        for (const [key, value] of Object.entries(allMarketCaps))
         {
-            console.log(new Date(value[0]));
-            console.log(value[1].toFixed(2))
+            // console.log(new Date(value[0]));
+            // console.log(value[1].toFixed(2))
 
-            dataObjectArray.push(
+            fullDataObjectArray.push(
                 {
                     date: new Date(value[0]),
-                    name: "bitcoin",
-                    category: "bitcoin",
+                    name: coinText,
+                    category: coinText,
                     value: value[1].toFixed(2)
                 }
             );
 
-            // console.log(`${key}: ${value}`);
         }
 
-        console.log(dataObjectArray);
-        return data;
+        return fullDataObjectArray;
     }
 
-    const fulldata = await getDataFunction()
+
+
+
+
+
+    let arrayOfCoins = ["bitcoin", "ethereum", "litecoin"];
+    let finalDataObjectArray = [];
+
+
+    for(let index in arrayOfCoins)
+    {
+        let currentCoin = arrayOfCoins[index];
+        let returnedDataObjectArray = await getMarketCaps(currentCoin);
+        finalDataObjectArray.push( ...returnedDataObjectArray);
+    }
+
+
+    finalDataObjectArray.columns = ["date", "name", "category", "value"];
 
 
 
 
     main.variable(observer("data")).define("data", ["FileAttachment"], function (FileAttachment)
     {
-        return dataObjectArray;
+        return finalDataObjectArray;
     });
-
-
 
 
 
@@ -136,7 +107,6 @@ export default async function define(runtime, observer)
             }
         }
     );
-
 
 
 
