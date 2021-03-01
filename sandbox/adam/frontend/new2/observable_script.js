@@ -34,23 +34,91 @@ export default async function define(runtime, observer)
 
 
 
-
-
-
-    let arrayOfCoins = ["bitcoin", "ethereum", "litecoin"];
-    let finalDataObjectArray = [];
-
-
-    for(let index in arrayOfCoins)
+    async function getTokenNamesFromSymbols(tokenSymbols)
     {
-        let currentCoin = arrayOfCoins[index];
-        let returnedDataObjectArray = await getMarketCaps(currentCoin);
-        finalDataObjectArray.push( ...returnedDataObjectArray);
+        let tokenNames = [];
+        // console.log(tokenSymbols);
+
+        const urlText = `https://api.coingecko.com/api/v3/coins/list`;
+        const response = await fetch(urlText);
+        const data = await response.json();
+
+
+
+        for(let index in tokenSymbols)
+        {
+            let currentSymbol = tokenSymbols[index];
+
+
+            for(let index in data)
+            {
+                let currentToken = data[index];
+
+
+                if(currentToken.symbol === currentSymbol)
+                {
+                    tokenNames.push(currentToken.id);
+                }
+
+            } //end of loop of all token objects to get name
+
+        }//end loop of top cap symbols
+
+        return tokenNames;
     }
 
 
-    finalDataObjectArray.columns = ["date", "name", "category", "value"];
+    async function getArrayOfCoins()
+    {
+        let arrayOfCoins = ["ethereum", "litecoin", "bitcoin-cash", "ripple"];
 
+        const urlText = `https://api.coingecko.com/api/v3/global`;
+        const response = await fetch(urlText);
+        const data = await response.json();
+
+        const tokenSymbols = Object.keys(data.data.total_market_cap);
+        let tokenNames = await getTokenNamesFromSymbols(tokenSymbols);
+
+        console.log(tokenNames);
+
+
+        let noBitCoinTokenNames = tokenNames.filter((name) => name !== "bitcoin")
+
+        console.log(noBitCoinTokenNames)
+        // return noBitCoinTokenNames;
+        return arrayOfCoins;
+    }
+
+
+
+
+    async function getFinalDataObjectArray()
+    {
+        let arrayOfCoins = await getArrayOfCoins();
+        let finalDataObjectArray = [];
+
+
+        for(let index in arrayOfCoins)
+        {
+            let currentCoin = arrayOfCoins[index];
+            let returnedDataObjectArray = await getMarketCaps(currentCoin);
+            finalDataObjectArray.push( ...returnedDataObjectArray);
+        }
+
+
+        finalDataObjectArray.columns = ["date", "name", "category", "value"];
+        return finalDataObjectArray;
+    }
+
+
+
+
+    //
+    // Line one here
+    //
+    console.log("getFinalDataObjectArray starting")
+    const finalDataObjectArray = getFinalDataObjectArray();
+    console.log("getFinalDataObjectArray ended")
 
 
 
