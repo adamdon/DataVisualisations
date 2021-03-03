@@ -168,3 +168,6 @@ a.text-primary:hover, a.text-primary:focus
 {
     color: #2f2f5e !important;
 }
+#weather_data{
+    font-family: 'Times New Roman', Times, serif;
+}
