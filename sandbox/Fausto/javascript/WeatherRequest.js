@@ -36,7 +36,7 @@ class Fetch{
               <div class="card-body justify-content-center" style="background: #414180;">
                   <h5 class="card-title" style="text-align: center;"><strong>${data.name}, ${data.sys.country}</strong></h5>
                   <br>
-                  <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${data.main.temp_max}.</strong> Lows of <strong style="color: #3284D2;">${data.main.temp_min}</strong></h6>
+                  <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${data.main.temp_max} K.</strong><br> Lows of <strong style="color: #3284D2;">${data.main.temp_min} K.</strong></h6>
                   <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${data.weather[0].description}</strong></p>
                   
               </div>
