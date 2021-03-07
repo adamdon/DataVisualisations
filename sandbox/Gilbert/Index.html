@@ -4,6 +4,7 @@
 <script>
 window.onload = function () {
 
+    async function TestFunction(){
     //example pull from teleport api for san fransisco (not currently working)
     const url = `https://api.teleport.org/api/urban_areas/slug:san-francisco-bay-area/scores/`
     const response = await fetch(url)
@@ -37,6 +38,9 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	}]
 });
 chart.render();
+    }
+
+    TestFunction();
 
 }
 </script>
