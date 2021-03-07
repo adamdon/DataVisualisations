@@ -13,7 +13,7 @@ async function populateDataset()
     {
         let url = "https://api.teleport.org/api/urban_areas/slug:san-francisco-bay-area/scores/";
 
-        let chartElement = document.getElementById('chart').getContext('2d');
+        let chartElement = document.getElementById('qualityOfLifeChart').getContext('2d');
         chartElement.font = "30px Roboto";
         chartElement.fillStyle = "white";
         chartElement.fillText("Loading data...", 10, 50);
@@ -21,43 +21,35 @@ async function populateDataset()
 
         let response = await axios.get(url);
         console.log(response);
-        let data = response.data.data;
-        let marketCapPercentage = data.market_cap_percentage;
-        let keys = Object.keys(marketCapPercentage);
-        let values  = Object.values(marketCapPercentage);
+        let data = response.data
 
 
-        let barChart = new Chart(chartElement,
-            {
-                type:'pie',
-                data:
-                    {
-                        labels: keys,
-                        datasets:
-                            [
-                                {
-                                    label:'Percentage',
-                                    data:values,
-                                    borderWidth:1,
-                                    borderColor:'#4e5d6c',
-                                    hoverBorderWidth:4,
-                                    hoverBorderColor:'#2b3e50',
-                                    backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
-                                }
-                            ]
-                    },
-                options:
-                    {
-                        legend:
-                            {
-                                labels:
-                                    {
-                                        fontColor: "white",
-                                        fontSize: 24
-                                    }
-                            },
-                    }
-            });
+        let barChart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            title:{
+                text: "Top Oil Reserves"
+            },
+            axisY: {
+                title: "Reserves(MMbbl)"
+            },
+            data: [{        
+                type: "column",  
+                showInLegend: true, 
+                legendMarkerColor: "grey",
+                legendText: "MMbbl = one million barrels",
+                dataPoints: [      
+                    { y: 300878, label: "Venezuela" },
+                    { y: 266455,  label: "Saudi" },
+                    { y: 169009,  label: "Canada" },
+                    { y: 158400,  label: "Iran" },
+                    { y: 142503,  label: "Iraq" },
+                    { y: 101500, label: "Kuwait" },
+                    { y: 97800,  label: "UAE" },
+                    { y: 80000,  label: "Russia" }
+                ]
+            }]
+        });
 
 
     }
@@ -74,7 +66,7 @@ function insertqualityOfLifeChartTag()
 
     if (document.getElementById('qualityOfLifeChart')) return; // was already loaded
     let qualityOfLifeChart = document.createElement("script");
-    qualityOfLifeChart.src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js";
+    qualityOfLifeChart.src = "https://canvasjs.com/assets/script/canvasjs.min.js";
     qualityOfLifeChart.defer = false;
     qualityOfLifeChart.async = false;
     qualityOfLifeChart.id = "qualityOfLifeChart";
