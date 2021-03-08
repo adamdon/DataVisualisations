@@ -91,8 +91,34 @@ export default async function define(runtime, observer)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     let duration = 250;
     let n = 12;
+    let k = 10;
+
+    let data = finalDataObjectArray;
+
+    let names = new Set(data.map(d => d.name));
+
+
+    let margin = {top: 16, right: 6, bottom: 6, left: 0};
+    let barSize = 48;
+    let height = (margin.top + barSize * n + margin.bottom);
 
 
 
@@ -117,10 +143,7 @@ export default async function define(runtime, observer)
 
 
 
-    main.variable(observer("data")).define("data", ["FileAttachment"], function (FileAttachment)
-    {
-        return finalDataObjectArray;
-    });
+
 
 
 
@@ -137,7 +160,7 @@ export default async function define(runtime, observer)
     main.variable(observer("replay")).define("replay", ["Generators", "viewof replay"], (G, _) => G.input(_));
 
 
-    main.variable(observer("chart")).define("chart", ["replay", "d3", "width", "height", "bars", "axis", "labels", "ticker", "keyframes", "x", "invalidation"], async function* (replay, d3, width, height, bars, axis, labels, ticker, keyframes, x, invalidation)
+    main.variable(observer("chart")).define("chart", ["replay", "d3", "width", "bars", "axis", "labels", "ticker", "keyframes", "x", "invalidation"], async function* (replay, d3, width, bars, axis, labels, ticker, keyframes, x, invalidation)
         {
             replay;
 
@@ -176,15 +199,10 @@ export default async function define(runtime, observer)
 
 
 
-    main.variable(observer("names")).define("names", ["data"], function (data)
-    {
-        return (
-            new Set(data.map(d => d.name))
-        );
-    });
 
 
-    main.variable(observer("datevalues")).define("datevalues", ["d3", "data"], function (d3, data)
+
+    main.variable(observer("datevalues")).define("datevalues", ["d3"], function (d3)
     {
         return (
             Array.from(d3.rollup(data, ([d]) => d.value, d => +d.date, d => d.name))
@@ -194,7 +212,7 @@ export default async function define(runtime, observer)
     });
 
 
-    main.variable(observer("rank")).define("rank", ["names", "d3"], function (names, d3)
+    main.variable(observer("rank")).define("rank", ["d3"], function (d3)
     {
         return (
             function rank(value)
@@ -211,15 +229,10 @@ export default async function define(runtime, observer)
     });
 
 
-    main.variable(observer("k")).define("k", function ()
-    {
-        return (
-            10
-        );
-    });
 
 
-    main.variable(observer("keyframes")).define("keyframes", ["d3", "datevalues", "k", "rank"], function (d3, datevalues, k, rank)
+
+    main.variable(observer("keyframes")).define("keyframes", ["d3", "datevalues", "rank"], function (d3, datevalues, rank)
         {
             const keyframes = [];
             let ka, a, kb, b;
@@ -356,7 +369,7 @@ export default async function define(runtime, observer)
     });
 
 
-    main.variable(observer("axis")).define("axis", ["margin", "d3", "x", "width", "barSize", "y"], function (margin, d3, x, width, barSize, y)
+    main.variable(observer("axis")).define("axis", ["d3", "x", "width", "y"], function (d3, x, width, y)
     {
         return (
             function axis(svg)
@@ -381,7 +394,7 @@ export default async function define(runtime, observer)
     });
 
 
-    main.variable(observer("ticker")).define("ticker", ["barSize", "width", "margin", "formatDate", "keyframes"], function (barSize, width, margin, formatDate, keyframes)
+    main.variable(observer("ticker")).define("ticker", ["width", "formatDate", "keyframes"], function (width, formatDate, keyframes)
     {
         return (
             function ticker(svg)
@@ -412,7 +425,7 @@ export default async function define(runtime, observer)
     });
 
 
-    main.variable(observer("color")).define("color", ["d3", "data"], function (d3, data)
+    main.variable(observer("color")).define("color", ["d3"], function (d3)
         {
             const scale = d3.scaleOrdinal(d3.schemeTableau10);
             if (data.some(d => d.category !== undefined))
@@ -426,7 +439,7 @@ export default async function define(runtime, observer)
     );
 
 
-    main.variable(observer("x")).define("x", ["d3", "margin", "width"], function (d3, margin, width)
+    main.variable(observer("x")).define("x", ["d3", "width"], function (d3, width)
     {
         return (
             d3.scaleLinear([0, 1], [margin.left, width - margin.right])
@@ -434,7 +447,7 @@ export default async function define(runtime, observer)
     });
 
 
-    main.variable(observer("y")).define("y", ["d3", "margin", "barSize"], function (d3, margin, barSize)
+    main.variable(observer("y")).define("y", ["d3"], function (d3)
     {
         return (
             d3.scaleBand()
@@ -445,28 +458,7 @@ export default async function define(runtime, observer)
     });
 
 
-    main.variable(observer("height")).define("height", ["margin", "barSize", ], function (margin, barSize)
-    {
-        return (
-            margin.top + barSize * n + margin.bottom
-        );
-    });
 
-
-    main.variable(observer("barSize")).define("barSize", function ()
-    {
-        return (
-            48
-        );
-    });
-
-
-    main.variable(observer("margin")).define("margin", function ()
-    {
-        return (
-            {top: 16, right: 6, bottom: 6, left: 0}
-        );
-    });
 
 
     main.variable(observer("d3")).define("d3", ["require"], function (require)
