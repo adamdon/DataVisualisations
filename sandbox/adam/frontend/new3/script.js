@@ -102,8 +102,8 @@ console.log("getFinalDataObjectArray ended")
 let d3 = window.d3;
 
 
-let duration = 250;
-let n = 12;
+let duration = 120;
+let n = 15;
 let k = 10;
 
 
@@ -163,7 +163,7 @@ let nameframes = d3.groups(keyframes.flatMap(([, data]) => data), d => d.name);
 let prev = new Map(nameframes.flatMap(([, data]) => d3.pairs(data, (a, b) => [b, a])));
 let next = new Map(nameframes.flatMap(([, data]) => d3.pairs(data)));
 
-let formatDate = d3.utcFormat("%Y");
+let formatDate = d3.utcFormat("%-d/%-m/%-y");
 
 
 let color = getColor();
