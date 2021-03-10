@@ -4,6 +4,49 @@ export default async function define(runtime, observer)
 
 
 
+    async function getCoinNames()
+    {
+        const urlText = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false`;
+        const response = await fetch(urlText);
+        const data = await response.json();
+
+        const coinNames = data.map(coin => coin.id);
+
+        let coinsNamesToFilter = ["bitcoin", "ethereum", "ripple", "tether"];
+        let filteredCoinNames = coinNames.filter(name => !(coinsNamesToFilter.includes(name)));
+        let shortListTokenNames = filteredCoinNames.slice(0, 15);
+
+
+        console.log(coinNames);
+        console.log(filteredCoinNames);
+        console.log(shortListTokenNames);
+
+
+        return shortListTokenNames
+    }
+
+
+
+    async function getFinalDataObjectArray(arrayOfCoins)
+    {
+        let finalDataObjectArray = [];
+
+        for(let index in arrayOfCoins)
+        {
+            let currentCoin = arrayOfCoins[index];
+            let returnedDataObjectArray = await getMarketCaps(currentCoin);
+            finalDataObjectArray.push( ...returnedDataObjectArray);
+        }
+
+
+        finalDataObjectArray.columns = ["date", "name", "category", "value"];
+        return finalDataObjectArray;
+    }
+
+
+
+
+    //Gets the market cap history of a single coin by name
     async function getMarketCaps(coinText)
     {
         const urlText = `https://api.coingecko.com/api/v3/coins/${coinText}/market_chart?vs_currency=usd&days=90&interval=daily`;
@@ -15,8 +58,6 @@ export default async function define(runtime, observer)
 
         for (const [key, value] of Object.entries(allMarketCaps))
         {
-            // console.log(new Date(value[0]));
-            // console.log(value[1].toFixed(2))
 
             fullDataObjectArray.push(
                 {
@@ -36,97 +77,33 @@ export default async function define(runtime, observer)
 
 
 
-
-    async function getTokenNamesFromSymbols(tokenSymbols)
-    {
-        let tokenNames = [];
-        // console.log(tokenSymbols);
-
-        const urlText = `https://api.coingecko.com/api/v3/coins/list`;
-        const response = await fetch(urlText);
-        const data = await response.json();
-
-
-
-        for(let index in tokenSymbols)
-        {
-            let currentSymbol = tokenSymbols[index];
-
-
-            for(let index in data)
-            {
-                let currentToken = data[index];
-
-
-                if(currentToken.symbol === currentSymbol)
-                {
-                    tokenNames.push(currentToken.id);
-                }
-
-            } //end of loop of all token objects to get name
-
-        }//end loop of top cap symbols
-
-        return tokenNames;
-    }
-
-
-    async function getArrayOfCoins()
-    {
-        // let arrayOfCoins = ["ethereum", "litecoin", "bitcoin-cash", "ripple"];
-
-        const urlText = `https://api.coingecko.com/api/v3/global`;
-        const response = await fetch(urlText);
-        const data = await response.json();
-
-        const tokenSymbols = Object.keys(data.data.total_market_cap);
-        let tokenNames = await getTokenNamesFromSymbols(tokenSymbols);
-
-        console.log(tokenNames);
-
-
-        let noBitCoinTokenNames = tokenNames.filter((name) => name !== "bitcoin")
-        let noEthTokenNames = noBitCoinTokenNames.filter((name) => name !== "ethereum")
-        let noRippleTokenNames = noEthTokenNames.filter((name) => name !== "ripple")
-
-
-        let shortListTokenNames = noRippleTokenNames.slice(0, 10);
-
-        console.log(shortListTokenNames)
-        return shortListTokenNames;
-        // return arrayOfCoins;
-    }
-
-
-
-
-    async function getFinalDataObjectArray()
-    {
-        let arrayOfCoins = await getArrayOfCoins();
-        let finalDataObjectArray = [];
-
-
-        for(let index in arrayOfCoins)
-        {
-            let currentCoin = arrayOfCoins[index];
-            let returnedDataObjectArray = await getMarketCaps(currentCoin);
-            finalDataObjectArray.push( ...returnedDataObjectArray);
-        }
-
-
-        finalDataObjectArray.columns = ["date", "name", "category", "value"];
-        return finalDataObjectArray;
-    }
-
-
-
-
-    //
-    // Line one here
-    //
+    // Line one start here
     console.log("getFinalDataObjectArray starting")
-    const finalDataObjectArray = getFinalDataObjectArray();
+    const coinNames = await getCoinNames();
+
+    const finalDataObjectArray = await getFinalDataObjectArray(coinNames);
     console.log("getFinalDataObjectArray ended")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
