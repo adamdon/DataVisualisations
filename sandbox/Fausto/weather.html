@@ -64,9 +64,17 @@
                         <div class="card-header"><i class="fas fa-th"></i> Google map example</div>
                         <div class="card-body">
                             <p class="card-text">Below there's an example of google map</p>
+                            <table>
+                                <tr>
+                                    <th><input type="text" id="searchUser" class="form-control" placeholder="Work In Progress"></th>
+                                    <th><button type="submit" id="submit" class="btn btn-success" style="text-align: right;">Obtain weather data</button></th>
+                                </tr>
+                            </table>
+
+                            <br>
                             <div id="map"></div>
                             <div id="label">Drag the marker somewhere</div>
-                            <div id="label2">The name of the city will appear here</div>
+                            <div id="Info">Details of the selected city will appear here</div>
                         </div>
                     </div>
                 </div>
@@ -76,8 +84,8 @@
 
         </div> <!-- Row 1  -->
 
-        <script src="./javascript/test.js"></script>
-        <script src="./javascript/WeatherRequest.js"></script>
+        <script src="./javascript/weatherdata.js"></script>
+        <!--<script src="./javascript/WeatherRequest.js"></script>-->
 </body>
 
 
