@@ -43,8 +43,8 @@
 
             <div class="collapse navbar-collapse " id="navbarNavDropdown">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="./">Home <span class="sr-only">(current)</span></a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./">Home </a>
                     </li>
 
                     <li class="nav-item">
@@ -59,8 +59,8 @@
                         <a class="nav-link" href="../../../pages/visualizations/iss/">iss</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../../pages/visualizations/marketcap/">marketcap</a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="../../../pages/visualizations/marketcap/">marketcap <span class="sr-only">(current)</span></a>
                     </li>
 
                     <li class="nav-item">
@@ -112,7 +112,8 @@
                             <div class="card-header"><i class="fas fa-th"></i> Top Coin Market History</div>
                             <div class="card-body">
 
-                                <svg id="barChart">Loading data...</svg>
+                                <p class="card-text" id="loadingP">...Loading external data</p>
+                                <svg id="barChart"></svg>
 
 
                             </div>

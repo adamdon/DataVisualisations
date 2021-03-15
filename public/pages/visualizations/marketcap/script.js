@@ -74,6 +74,8 @@ async function getMarketCaps(coinText)
 
 // Line one start here
 console.log("getFinalDataObjectArray starting")
+
+
 const coinNames = await getCoinNames();
 
 const finalDataObjectArray = await getFinalDataObjectArray(coinNames);
@@ -296,7 +298,9 @@ function labels(svg)
 }
 
 
-
+//Turn off loading text
+const loadingPElement = document.getElementById("loadingP");
+loadingPElement.remove();
 
 const svg = d3.select("#barChart").attr("viewBox", [0, 0, width, height]);
 
