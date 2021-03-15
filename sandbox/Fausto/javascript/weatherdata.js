@@ -141,7 +141,7 @@ function initMap() {
     const longitude = evt.latLng.lng();
 
     coord.getCurrent(latitude, longitude).then((data) => {
-      document.getElementById('searchUser').value = `${data.name}`; // adds City name into text box
+      document.getElementById('searchUser').value = ""; // resets placeholder in text box
 
       var max = Math.round(`${data.main.temp_max}` - 273.15); // converts max temperature value from kelvin to Celsius
       var min = Math.round(`${data.main.temp_min}` - 273.15); // converts min temperature value from kelvin to Celsius
