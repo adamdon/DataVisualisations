@@ -1,8 +1,6 @@
-// Initialize and add the map
-const Glasgow = { lat: 55.860916, lng: -4.251433 };
 //const Selection = {lat: `${data.coord.lat}`, lng: `${data.coord.lon}`};
 
-class GetCoordinates { // working on latitude & longitude search
+class GetCoordinates { // gets data based on coordinates
   async getCurrent(lat, lng) {
 
     const myKey = "6032bc89af3a113b007863b41d2362ad";
@@ -20,7 +18,7 @@ class GetCoordinates { // working on latitude & longitude search
 }
 
 class GetCity{
-  async getCurrent(city){
+  async getCurrent(city){ // gets data based on city name
     const myKey = "6032bc89af3a113b007863b41d2362ad";
 
     const response = await fetch(
@@ -56,6 +54,7 @@ class UI {
         <div class="card mx-auto mt-5" style="width: 18rem; margin-bottom: 10px;">
             <div class="card-body justify-content-center" style="background: #414180;">
                 <h5 class="card-title" style="text-align: center;"><strong>${data.name}, ${data.sys.country}</strong></h5>
+                <br>
                 <h6 class="card-subtitle mb-2">Latitude: <strong>${data.coord.lat}</strong></h6>
                 <h6 class="card-subtitle mb-2">Longitude: <strong>${data.coord.lon}</strong></h6>
                 <br>
@@ -94,6 +93,7 @@ class UI {
 
 //inst classes//
 
+const coord = new GetCoordinates();
 const ft = new GetCity();
 const ui = new UI();
 
@@ -120,18 +120,14 @@ ui.populateUI(dataSaved);
 });
 
 function initMap() {
-  const coord = new GetCoordinates();
-  //const city = new GetCity(); // to be implemented
-
-  // The location of Glasgow
   // The map, centered at Glasgow
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 7,
-    center: Glasgow,
+    center: { lat: 55.860916, lng: -4.251433 },
   });
   // The marker, positioned at Glasgow
   const marker = new google.maps.Marker({
-    position: Glasgow,
+    position: { lat: 55.860916, lng: -4.251433 },
     draggable: true,
     map: map,
   });
@@ -151,6 +147,7 @@ function initMap() {
       <div class="card mx-auto mt-5" style="width: 18rem; margin-bottom: 10px;">
             <div class="card-body justify-content-center" style="background: #414180;">
                 <h5 class="card-title" style="text-align: center;"><strong>${data.name}, ${data.sys.country}</strong></h5>
+                <br>
                 <h6 class="card-subtitle mb-2">Latitude: <strong>${data.coord.lat}</strong></h6>
                 <h6 class="card-subtitle mb-2">Longitude: <strong>${data.coord.lon}</strong></h6>
                 <br>
