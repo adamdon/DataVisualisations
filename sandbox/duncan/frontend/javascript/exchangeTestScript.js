@@ -147,19 +147,41 @@ async function populateDataset()
 
         let data = {
                 labels: Dates,
+
                 datasets: [{
                     label: `${$('#currency2').val()}`,
                     data: DateValuesArr,
-                    backgroundColor: ['rgba(10, 194, 235, 0.05)'],
-                    pointBackgroundColor:['rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)','rgba(10, 194, 235, 1)']
+                    backgroundColor: ['rgba(255, 0, 0, 0.05)'],
+                    pointBackgroundColor: 'white'
                 }]
             
        
         } 
 
-        let options = {
-
-        } 
+        let options = { 
+            legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 18,
+                        stepSize: 1
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 14,
+                        stepSize: 1
+                    }
+                }]
+            }
+        }
         
         var LineChart = new Chart(chartElement, {
             type: 'line',
