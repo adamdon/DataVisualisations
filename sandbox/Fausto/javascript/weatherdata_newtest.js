@@ -17,6 +17,22 @@ class GetCoordinates { // gets data based on coordinates
   }
 }
 
+class GetWeather{
+  async getCurrent(lat, lng){
+    const myKey = "6032bc89af3a113b007863b41d2362ad";
+
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&units=metric&appid=${myKey}`
+    );
+
+    const data = await response.json();
+
+    console.log(data);
+
+    return data;
+  }
+}
+
 class GetCity{
   async getCurrent(city){ // gets data based on city name
     const myKey = "6032bc89af3a113b007863b41d2362ad";
@@ -92,6 +108,7 @@ class UI {
 //inst classes//
 
 const coord = new GetCoordinates();
+const weather = new GetWeather();
 const ft = new GetCity();
 const ui = new UI();
 
@@ -134,8 +151,15 @@ function initMap() {
     const latitude = evt.latLng.lat();
     const longitude = evt.latLng.lng();
 
+    var temps = weather.getCurrent(latitude, longitude);
+
+    var temp_max =temps.daily[0].temp.max;
+
+    var temp_min = temps.daily[0].temp.min;
+    
     coord.getCurrent(latitude, longitude).then((data) => {
       document.getElementById('searchUser').value = ""; // resets placeholder in text box
+      console.log(temp_max);
 
       document.getElementById('Info').innerHTML = `
           
@@ -146,7 +170,7 @@ function initMap() {
                 <h6 class="card-subtitle mb-2">Latitude: <strong>${data.coord.lat}</strong></h6>
                 <h6 class="card-subtitle mb-2">Longitude: <strong>${data.coord.lon}</strong></h6>
                 <br>
-                <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${data.main.temp_max}°C.</strong><br> Lows of <strong style="color: #3284D2;">${data.main.temp_min}°C.</strong></h6>
+                <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${temp_max}°C.</strong><br> Lows of <strong style="color: #3284D2;">${temp_min}°C.</strong></h6>
                 <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${data.weather[0].description}</strong></p>
                 
             </div>
