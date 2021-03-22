@@ -147,19 +147,21 @@ function initMap() {
     map: map,
   });
 
-  google.maps.event.addListener(marker, 'dragend', function (evt) {
+  google.maps.event.addListener(marker, 'dragend', async function (evt) {
     const latitude = evt.latLng.lat();
     const longitude = evt.latLng.lng();
 
-    var temps = weather.getCurrent(latitude, longitude);
+    var temps = await weather.getCurrent(latitude, longitude);
+    console.log(temps);
 
-    var temp_max =temps.daily[0].temp.max;
+    var week_tempmax = [temps.daily[0].temp.max, temps.daily[1].temp.max, temps.daily[2].temp.max, temps.daily[3].temp.max, temps.daily[4].temp.max, temps.daily[5].temp.max, temps.daily[6].temp.max]
 
-    var temp_min = temps.daily[0].temp.min;
+    var week_tempmin = [temps.daily[0].temp.min, temps.daily[1].temp.min, temps.daily[2].temp.min, temps.daily[3].temp.min, temps.daily[4].temp.min, temps.daily[5].temp.min, temps.daily[6].temp.min]
+
+    var week_description = [temps.daily[0].weather[0].description, temps.daily[1].weather[0].description, temps.daily[2].weather[0].description, temps.daily[3].weather[0].description, temps.daily[4].weather[0].description, temps.daily[5].weather[0].description, temps.daily[6].weather[0].description]
     
     coord.getCurrent(latitude, longitude).then((data) => {
       document.getElementById('searchUser').value = ""; // resets placeholder in text box
-      console.log(temp_max);
 
       document.getElementById('Info').innerHTML = `
           
@@ -170,8 +172,8 @@ function initMap() {
                 <h6 class="card-subtitle mb-2">Latitude: <strong>${data.coord.lat}</strong></h6>
                 <h6 class="card-subtitle mb-2">Longitude: <strong>${data.coord.lon}</strong></h6>
                 <br>
-                <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${temp_max}°C.</strong><br> Lows of <strong style="color: #3284D2;">${temp_min}°C.</strong></h6>
-                <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${data.weather[0].description}</strong></p>
+                <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[0]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[0]}°C.</strong></h6>
+                <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${week_description[0]}</strong></p>
                 
             </div>
         </div>
