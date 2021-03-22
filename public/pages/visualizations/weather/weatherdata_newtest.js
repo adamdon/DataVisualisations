@@ -56,30 +56,84 @@ class UI {
     this.defaultCity = "Glasgow";
   }
 
-  populateUI(data) {
+  async populateUI(data) {
     //de-structure vars
 
     //add them to inner HTML
 
     //document.getElementById('label').innerHTML = `<p>The latitude is: ${data.coord.lat} and longitude is: ${data.coord.lon}</p>`;
 
+    const latitude = data.coord.lat;
+    const longitude = data.coord.lon;
+
+    var temps = await weather.getCurrent(latitude, longitude);
+    console.log(temps);
+
+    var week_tempmax = [temps.daily[0].temp.max, temps.daily[1].temp.max, temps.daily[2].temp.max, temps.daily[3].temp.max, temps.daily[4].temp.max, temps.daily[5].temp.max, temps.daily[6].temp.max]
+
+    var week_tempmin = [temps.daily[0].temp.min, temps.daily[1].temp.min, temps.daily[2].temp.min, temps.daily[3].temp.min, temps.daily[4].temp.min, temps.daily[5].temp.min, temps.daily[6].temp.min]
+
+    var week_description = [temps.daily[0].weather[0].description, temps.daily[1].weather[0].description, temps.daily[2].weather[0].description, temps.daily[3].weather[0].description, temps.daily[4].weather[0].description, temps.daily[5].weather[0].description, temps.daily[6].weather[0].description]
+
     this.uiContainer.innerHTML = `
         
-        <div class="card mx-auto mt-5" style="width: 18rem; margin-bottom: 10px;">
-            <div class="card-body justify-content-center" style="background: #414180;">
-                <h5 class="card-title" style="text-align: center;"><strong>${data.name}, ${data.sys.country}</strong></h5>
-                <br>
-                <h6 class="card-subtitle mb-2">Latitude: <strong>${data.coord.lat}</strong></h6>
-                <h6 class="card-subtitle mb-2">Longitude: <strong>${data.coord.lon}</strong></h6>
-                <br>
-                <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${data.main.temp_max}°C.</strong><br> Lows of <strong style="color: #3284D2;">${data.main.temp_min}°C.</strong></h6>
-                <p class="card-text" style="text-align: center;">Current weather conditions are described as: <strong style="color: #54D232;">${data.weather[0].description}</strong></p>
-                
-            </div>
-        </div>
-        
+    <div class="card mx-auto mt-5" style="width: 15rem; margin-bottom: 1px;">
+    <div class="card-body justify-content-center" style="background: #414180;">
+        <h5 class="card-title" style="text-align: center;"><strong>${data.name}, ${data.sys.country}</strong></h5>
+        <h6 class="card-subtitle mb-2">Lat: <strong>${data.coord.lat} </strong>Lon: <strong>${data.coord.lon}</strong></h6>
+        <div>
+        <div>  
         
         `;
+
+        document.getElementById('day1').innerHTML = `
+      <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
+            <div class="card-body justify-content-center" style="background: #414180;">
+            <h5 class="card-title" style="text-align: center;"><strong>Day 1</strong></h5>
+      <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[0]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[0]}°C.</strong></h6>
+      <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${week_description[0]}</strong></p>`;
+
+      document.getElementById('day2').innerHTML = `
+      <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
+            <div class="card-body justify-content-center" style="background: #414180;">
+            <h5 class="card-title" style="text-align: center;"><strong>Day 2</strong></h5>
+      <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[1]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[1]}°C.</strong></h6>
+      <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${week_description[1]}</strong></p>`;
+
+      document.getElementById('day3').innerHTML = `
+      <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
+            <div class="card-body justify-content-center" style="background: #414180;">
+            <h5 class="card-title" style="text-align: center;"><strong>Day 3</strong></h5>
+      <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[2]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[2]}°C.</strong></h6>
+      <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${week_description[2]}</strong></p>`;
+
+      document.getElementById('day4').innerHTML = `
+      <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
+            <div class="card-body justify-content-center" style="background: #414180;">
+            <h5 class="card-title" style="text-align: center;"><strong>Day 4</strong></h5>
+      <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[3]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[3]}°C.</strong></h6>
+      <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${week_description[3]}</strong></p>`;
+
+      document.getElementById('day5').innerHTML = `
+      <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
+            <div class="card-body justify-content-center" style="background: #414180;">
+            <h5 class="card-title" style="text-align: center;"><strong>Day 5</strong></h5>
+      <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[4]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[4]}°C.</strong></h6>
+      <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${week_description[4]}</strong></p>`;
+
+      document.getElementById('day6').innerHTML = `
+      <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
+            <div class="card-body justify-content-center" style="background: #414180;">
+            <h5 class="card-title" style="text-align: center;"><strong>Day 6</strong></h5>
+      <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[5]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[5]}°C.</strong></h6>
+      <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${week_description[5]}</strong></p>`;
+
+      document.getElementById('day7').innerHTML = `
+      <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
+            <div class="card-body justify-content-center" style="background: #414180;">
+            <h5 class="card-title" style="text-align: center;"><strong>Day 7</strong></h5>
+      <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[6]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[6]}°C.</strong></h6>
+      <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${week_description[6]}</strong></p>`;
   }
 
   clearUI() {
