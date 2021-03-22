@@ -6,7 +6,7 @@ import connectLivereload from "connect-livereload";
 
 
 //Sets up livereload so changes to html will auto refresh browser without plugins
-let livereloadServer = livereload.createServer({extraExts : ["vue"]});
+let livereloadServer = livereload.createServer({extraExts : ["js"]});
 
 livereloadServer.watch("views");
 livereloadServer.server.once("connection", () => {setTimeout(() => {livereloadServer.refresh("/");}, 100);});
