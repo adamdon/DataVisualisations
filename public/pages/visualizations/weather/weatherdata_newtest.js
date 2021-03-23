@@ -22,7 +22,7 @@ class GetWeather{
     const myKey = "6032bc89af3a113b007863b41d2362ad";
 
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&units=metric&appid=${myKey}`
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=hourly,minutely&units=metric&appid=${myKey}`
     );
 
     const data = await response.json();
@@ -89,7 +89,7 @@ class UI {
         document.getElementById('day1').innerHTML = `
       <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
             <div class="card-body justify-content-center" style="background: #414180;">
-            <h5 class="card-title" style="text-align: center;"><strong>Day 1</strong></h5>
+            <h5 class="card-title" style="text-align: center;"><strong>Current Day</strong></h5>
       <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[0]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[0]}°C.</strong></h6>
       <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${week_description[0]}</strong></p>`;
 
@@ -229,7 +229,7 @@ function initMap() {
       document.getElementById('day1').innerHTML = `
       <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
             <div class="card-body justify-content-center" style="background: #414180;">
-            <h5 class="card-title" style="text-align: center;"><strong>Day 1</strong></h5>
+            <h5 class="card-title" style="text-align: center;"><strong>Current Day</strong></h5>
       <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[0]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[0]}°C.</strong></h6>
       <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${week_description[0]}</strong></p>`;
 
