@@ -87,6 +87,7 @@ class UI {
     console.log(temps);
 
     marker.setPosition(latlong);
+    map.setCenter(latlong);
 
     var week_tempmax = [temps.daily[0].temp.max, temps.daily[1].temp.max, temps.daily[2].temp.max, temps.daily[3].temp.max, temps.daily[4].temp.max, temps.daily[5].temp.max, temps.daily[6].temp.max]
 
