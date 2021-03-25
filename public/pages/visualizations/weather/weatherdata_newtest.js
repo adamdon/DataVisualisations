@@ -218,15 +218,33 @@ function initMap() {
 
     var week_description = [temps.daily[0].weather[0].description, temps.daily[1].weather[0].description, temps.daily[2].weather[0].description, temps.daily[3].weather[0].description, temps.daily[4].weather[0].description, temps.daily[5].weather[0].description, temps.daily[6].weather[0].description]
 
-    infowindow.setContent('Current Day:'+ '<br />Max Temp: '+week_tempmax[0]+'°C.'+ '<br />Min Temp: '+week_tempmin[0]+'°C.'+'<br />Weather: '+week_description[0]+'<br>'+
-      '<br>'+'Day 2:'+'<br />Max Temp: '+week_tempmax[1]+'°C.'+ '<br />Min Temp: '+week_tempmin[1]+'°C.'+'<br />Weather: '+week_description[1]+'<br>'+
-      '<br>'+'Day 3:'+'<br />Max Temp: '+week_tempmax[2]+'°C.'+ '<br />Min Temp: '+week_tempmin[2]+'°C.'+'<br />Weather: '+week_description[2]+'<br>'+
-      '<br>'+'Day 4:'+'<br />Max Temp: '+week_tempmax[3]+'°C.'+ '<br />Min Temp: '+week_tempmin[3]+'°C.'+'<br />Weather: '+week_description[3]+'<br>'+
-      '<br>'+'Day 5:'+'<br />Max Temp: '+week_tempmax[4]+'°C.'+ '<br />Min Temp: '+week_tempmin[4]+'°C.'+'<br />Weather: '+week_description[4]+'<br>'+
-      '<br>'+'Day 6:'+'<br />Max Temp: '+week_tempmax[5]+'°C.'+ '<br />Min Temp: '+week_tempmin[5]+'°C.'+'<br />Weather: '+week_description[5]+'<br>'+
-      '<br>'+'Day 7:'+'<br />Max Temp: '+week_tempmax[6]+'°C.'+ '<br />Min Temp: '+week_tempmin[6]+'°C.'+'<br />Weather: '+week_description[6]+'<br>');
+    infowindow.setContent(`<p style="text-align: center;"><strong>Current Day:</strong></p>Max Temp: <span style="color: #ff0000">${week_tempmax[0]}°C</span>.<br>Min Temp: <span style="color: #3284D2"><strong>${week_tempmin[0]}°C</strong></span>.<br>Weather: <span style="color: #299828;"><strong>${week_description[0]}</strong></span>.<br>
+    <br><p style="text-align: center;"><strong>Day 2:</strong></p>Max Temp: <span style="color: #ff0000"><strong>${week_tempmax[1]}°C</strong></span>.<br>Min Temp: <span style="color: #3284D2"><strong>${week_tempmin[1]}°C</strong></span>.<br>Weather: <span style="color: #299828;"><strong>${week_description[1]}</strong></span>.<br>
+    <br><p style="text-align: center;"><strong>Day 3:</strong></p>Max Temp: <span style="color: #ff0000"><strong>${week_tempmax[2]}°C</strong></span>.<br>Min Temp: <span style="color: #3284D2"><strong>${week_tempmin[2]}°C</strong></span>.<br>Weather: <span style="color: #299828;"><strong>${week_description[2]}</strong></span>.<br>
+    <br><p style="text-align: center;"><strong>Day 4:</strong></p>Max Temp: <span style="color: #ff0000"><strong>${week_tempmax[3]}°C</strong></span>.<br>Min Temp: <span style="color: #3284D2"><strong>${week_tempmin[3]}°C</strong></span>.<br>Weather: <span style="color: #299828;"><strong>${week_description[3]}</strong></span>.<br>
+    <br><p style="text-align: center;"><strong>Day 5:</strong></p>Max Temp: <span style="color: #ff0000"><strong>${week_tempmax[4]}°C</strong></span>.<br>Min Temp: <span style="color: #3284D2"><strong>${week_tempmin[4]}°C</strong></span>.<br>Weather: <span style="color: #299828;"><strong>${week_description[4]}</strong></span>.<br>
+    <br><p style="text-align: center;"><strong>Day 6:</strong></p>Max Temp: <span style="color: #ff0000"><strong>${week_tempmax[5]}°C</strong></span>.<br>Min Temp: <span style="color: #3284D2"><strong>${week_tempmin[5]}°C</strong></span>.<br>Weather: <span style="color: #299828;"><strong>${week_description[5]}</strong></span>.<br>
+    <br><p style="text-align: center;"><strong>Day 7:</strong></p>Max Temp: <span style="color: #ff0000"><strong>${week_tempmax[6]}°C</strong></span>.<br>Min Temp: <span style="color: #3284D2"><strong>${week_tempmin[6]}°C</strong></span>.<br>Weather: <span style="color: #299828;"><strong>${week_description[6]}</strong></span>.`);
       infowindow.setPosition(evt.latLng);
       infowindow.open(map);
+      coord.getCurrent(latitude, longitude).then((data) => {
+       document.getElementById('Info').innerHTML = `
+          
+      <div class="card mx-auto mt-5" style="width: 15rem; margin-bottom: 1px;">
+            <div class="card-body justify-content-center" style="background: #414180;">
+                <h5 class="card-title" style="text-align: center;"><strong>${data.name}, ${data.sys.country}</strong></h5>
+                <h6 class="card-subtitle mb-2">Lat: <strong>${data.coord.lat} </strong>Lon: <strong>${data.coord.lon}</strong></h6>
+                <div>
+                <div>
+                `;
+      })
+      document.getElementById('day1').innerHTML = "";
+      document.getElementById('day2').innerHTML = "";
+      document.getElementById('day3').innerHTML = "";
+      document.getElementById('day4').innerHTML = "";
+      document.getElementById('day5').innerHTML = "";
+      document.getElementById('day6').innerHTML = "";
+      document.getElementById('day7').innerHTML = "";
   })
 
   google.maps.event.addListener(marker, 'dragend', async function (evt) {
