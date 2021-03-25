@@ -195,15 +195,45 @@ function initMap() {
     center: { lat: 55.860916, lng: -4.251433 },
   });
   // The marker, positioned at Glasgow
-  const marker = new google.maps.Marker({
+  var marker = new google.maps.Marker({
     position: { lat: 55.860916, lng: -4.251433 },
     draggable: true,
     map: map,
   });
 
+  const infowindow = new google.maps.InfoWindow({maxWidth: 500});
+
+  google.maps.event.addListener(map, 'click', async function(evt){
+    const latitude = evt.latLng.lat();
+    const longitude = evt.latLng.lng();
+
+    marker.setPosition(evt.latLng);
+
+    var temps = await weather.getCurrent(latitude, longitude);
+    console.log(temps);
+
+    var week_tempmax = [temps.daily[0].temp.max, temps.daily[1].temp.max, temps.daily[2].temp.max, temps.daily[3].temp.max, temps.daily[4].temp.max, temps.daily[5].temp.max, temps.daily[6].temp.max]
+
+    var week_tempmin = [temps.daily[0].temp.min, temps.daily[1].temp.min, temps.daily[2].temp.min, temps.daily[3].temp.min, temps.daily[4].temp.min, temps.daily[5].temp.min, temps.daily[6].temp.min]
+
+    var week_description = [temps.daily[0].weather[0].description, temps.daily[1].weather[0].description, temps.daily[2].weather[0].description, temps.daily[3].weather[0].description, temps.daily[4].weather[0].description, temps.daily[5].weather[0].description, temps.daily[6].weather[0].description]
+
+    infowindow.setContent('Current Day:'+ '<br />Max Temp: '+week_tempmax[0]+'°C.'+ '<br />Min Temp: '+week_tempmin[0]+'°C.'+'<br />Weather: '+week_description[0]+'<br>'+
+      '<br>'+'Day 2:'+'<br />Max Temp: '+week_tempmax[1]+'°C.'+ '<br />Min Temp: '+week_tempmin[1]+'°C.'+'<br />Weather: '+week_description[1]+'<br>'+
+      '<br>'+'Day 3:'+'<br />Max Temp: '+week_tempmax[2]+'°C.'+ '<br />Min Temp: '+week_tempmin[2]+'°C.'+'<br />Weather: '+week_description[2]+'<br>'+
+      '<br>'+'Day 4:'+'<br />Max Temp: '+week_tempmax[3]+'°C.'+ '<br />Min Temp: '+week_tempmin[3]+'°C.'+'<br />Weather: '+week_description[3]+'<br>'+
+      '<br>'+'Day 5:'+'<br />Max Temp: '+week_tempmax[4]+'°C.'+ '<br />Min Temp: '+week_tempmin[4]+'°C.'+'<br />Weather: '+week_description[4]+'<br>'+
+      '<br>'+'Day 6:'+'<br />Max Temp: '+week_tempmax[5]+'°C.'+ '<br />Min Temp: '+week_tempmin[5]+'°C.'+'<br />Weather: '+week_description[5]+'<br>'+
+      '<br>'+'Day 7:'+'<br />Max Temp: '+week_tempmax[6]+'°C.'+ '<br />Min Temp: '+week_tempmin[6]+'°C.'+'<br />Weather: '+week_description[6]+'<br>');
+      infowindow.setPosition(evt.latLng);
+      infowindow.open(map);
+  })
+
   google.maps.event.addListener(marker, 'dragend', async function (evt) {
     const latitude = evt.latLng.lat();
     const longitude = evt.latLng.lng();
+
+    marker.setPosition(evt.latLng);
 
     var temps = await weather.getCurrent(latitude, longitude);
     console.log(temps);
@@ -276,8 +306,8 @@ function initMap() {
       <p class="card-text">Weather conditions are described as: <strong style="color: #54D232;">${week_description[6]}</strong></p>`;
                 
     });
-    //document.getElementById('label').innerHTML = '<p>The latitude is: ' + evt.latLng.lat().toFixed(3) + ' and longitude is: ' + evt.latLng.lng().toFixed(3) + '</p>';
-    //document.getElementById('label').style.display = "none";
+    document.getElementById('label').innerHTML = '<p>The latitude is: ' + evt.latLng.lat().toFixed(3) + ' and longitude is: ' + evt.latLng.lng().toFixed(3) + '</p>';
+    document.getElementById('label').style.display = "none";
   });
 
   google.maps.event.addListener(marker, 'dragstart', function (evt) {
