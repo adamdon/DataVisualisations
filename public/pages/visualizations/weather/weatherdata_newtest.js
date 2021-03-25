@@ -194,6 +194,16 @@ const ui = new UI();
 
 const search = document.getElementById("searchUser");
 const button = document.getElementById("submit");
+
+search.addEventListener("keyup", function(event){
+  //number 13 is the "Enter" key on the keyboard
+  if(event.keyCode === 13){
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    button.click();
+  }
+})
 button.addEventListener("click", () => {
   const currentVal = search.value;
 
