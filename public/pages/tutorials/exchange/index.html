@@ -110,7 +110,7 @@
 
                     <div class="content-container-fluid">
                         <div class="card text-white bg-primary">
-                            <div class="card-header"><i class="fas fa-graduation-cap"></i> Tutorial for TITLEHERE</div>
+                            <div class="card-header"><i class="fas fa-graduation-cap"></i> Tutorial for Exchange Visualisation</div>
                             <div class="card-body">
 
 
@@ -176,47 +176,156 @@
                                 <h5 class="card-title"><i class="fas fa-cloud-download-alt"></i> Getting the data from the API</h5>
 
                                 <p class="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                    Excepteur sint occaecat cupidatat non proident,
-                                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    The API used for this visualisation is the <a href="https://exchangeratesapi.io/">Exchange Rates Api</a>. This API provides a wide range of historical data on many currencies.
+                                    This tutorial assumes that the user is fluent in HTML, CSS, Javascript and has at least some knowledge of basic DOM manipulation using <a href="https://jquery.com/">JQuery</a>.
+                                    To retrieve the data from the API we will be using a javascript library that simplifies the process called <a href="https://www.npmjs.com/package/axios">AXIOS</a>. 
+                                    We will be using this library to make all of our requests.
+
+
                                 </p>
 
-                                <pre><code class="javascript">
-                                    const t = i / speed;
-                                    keyframes.push([
-                                        new Date(ka * (1 - t) + kb * t),
-                                        rank(name => (a.get(name) || 0) * (1 - t) + (b.get(name) || 0) * t)
-                                    ]);
+                                <p class="card-text">
+                                    Add the following elements to the body of your HTML page
+                                </p>
+
+                                <pre style="color: white; background: #2b2b2b;" > index.html - &lt;body&gt;
+                                     <code class="javascript">
+                                    &lt;div class="currencySelectContainer"&gt;
+                                    &lt;p&gt; Base Currency &lt;/p&gt;
+                                    &lt;select name="currency1" id="currency1"&gt;
+                                    &lt;/select&gt;
+                                    &lt;p&gt; Secondary Currency &lt;/p&gt;
+                                    &lt;select name="currency2" id="currency2"&gt;
+                                    
+                                    &lt;/select&gt;
+                                    &lt;p&gt; Select a date: &lt;/p&gt;
+                                    &lt;input id="el"&gt;
+                                
+                                
+                                
+                                &lt;/div&gt; 
+                                    &lt;canvas id="exchangeChart"&gt;&lt;/canvas&gt; 
+                                </code>
+
+                                </pre>
+
+
+                                <p class="card-text">
+                                    The first function we will create is the GetCurrencyList function, this will be used to get a list of all the valid currencies from the API.
+                                    After the response has been recieved as seen in the code below, we then loop through each currency and add it to the selection boxes called currency 1 & 2.
+
+
+                                </p>
+
+
+                                <pre style="color: white; background: #2b2b2b;" > getCurrencyList()
+                                    <code class="javascript">
+                                        try {
+                                            let url = "https://api.exchangeratesapi.io/latest?base=USD";
+                                            let chartElement = document.getElementById('exchangeChart').getContext('2d');
+                                            chartElement.font = "30px Roboto";
+                                            chartElement.fillStyle = "white";
+                                            chartElement.fillText("Loading data...", 10, 50);
+                                            let res = await axios.get(url);
+                                            let currencies = Object.keys(res.data.rates);            
+                                            let currency1 = document.getElementById('currency1');
+                                            let currency2 = document.getElementById('currency2');
+                                            currencies.forEach(currency => {
+                                                let opt = "&lt;option value="${currency}"&gt;${currency}&lt;/option&gt;";
+                                                    currency1.innerHTML = currency1.innerHTML + opt;
+                                                    currency2.innerHTML = currency2.innerHTML + opt;
+                                            });
+                                            currency1.value = "USD";
+                                            currency2.value = "GBP";
+                                        }
+                                        catch (error){
+                                            console.log(error);
+                                        }
+            
                                 </code></pre>
 
-                                <div class="divider my-4"></div>
+
+                                
+                                <p class="card-text">
+                                    The next function to create is OnCurrencyChange(), 
+                                    this function is responsible for getting the user selected currency when it changes. 
+                                    The final part of the function that calls another another function called 
+                                    populateDataset() will be responsible for getting all of the currency data and displaying it on screen.
+                                </p>
 
 
+                                <pre style="color: white; background: #2b2b2b;"> OnCurrencyChange()
+                                    <code class="javascript">
+                                        let currency1 = document.getElementById('currency1');
+                                        let currency2 = document.getElementById('currency2');
+                                        console.log(currency1.value);
+                                        console.log(currency2.value);
+                                        populateDataset(); 
+                                </code></pre>
 
+                                <p class="card-text">
+                                    After you successfully created the OnCurrencyChange() function, 
+                                    the next function to create is the populateDataset() function. As mentioned previouly, 
+                                    this will be responsible for retrieving the data from the API. As the function is rather large,
+                                    we will break it down into sections so it is easier to understand and explain
+                                </p>
 
+                                <p class="card-text">
+                                    The code below will run in a try catch block as we're retrieving data therefore there maybe complications.
+                                    The first part of this function will get the values from the selection boxes, 
+                                    then uses those values to make a request that will return 
+                                    the historical data of currency 2 using currency 1 as the base currency.
+                                </p>
+                                <pre style="color: white; background: #2b2b2b;"> populateDataset()
+                                    <code class="javascript">
+                                        try
+                                        {
+                                            let BaseCurrency = document.getElementById('currency1');
+                                            let CompCurrency = document.getElementById('currency2');
+                                        
+                                    
+                                            let url = `https://api.exchangeratesapi.io/history?start_at=${startdate || "2021-01-01"}&end_at=${enddate || "2021-02-20"}&base=${BaseCurrency.value || 'USD'}&symbols=${CompCurrency.value|| 'GBP'}`;
+                                            console.log(url);
+                                            let chartElement = document.getElementById('exchangeChart').getContext('2d');
+                                            chartElement.font = "30px Roboto";
+                                            chartElement.fillStyle = "white";
+                                            chartElement.fillText("Loading data...", 10, 50);
+                                    
+                                    
+                                            let response = await axios.get(url);
+                                    
+                                </code></pre>
 
                                 <h5 class="card-title"><i class="fas fa-wrench"></i> Processing the information</h5>
 
                                 <p class="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                    Excepteur sint occaecat cupidatat non proident,
-                                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    After you have recieve the data fron the API, 
+                                    you will notice that the dates aren't in order within in the array.
+                                    To fix this we will implement a piece of code 
+                                    that will sort the sort the array by date in ascending order
                                 </p>
 
-                                <pre><code class="javascript">
-                                    const t = i / speed;
-                                    keyframes.push([
-                                        new Date(ka * (1 - t) + kb * t),
-                                        rank(name => (a.get(name) || 0) * (1 - t) + (b.get(name) || 0) * t)
-                                    ]);
+                                <pre style="color: white; background: #2b2b2b;"> populateDataset()
+                                    <code class="javascript">
+                                    const sortedRates =[];
+                                    for (const [key, value] of Object.entries(rates)) {
+                                        let newobj = { [key] :`${Object.values(value)}`};
+                                        sortedRates.push(newobj);
+                                    }
+                                    const newSortedRates = sortedRates.sort(function(a,b){
+                                        let date1 = new Date(Object.keys(a)[0]);
+                                        let date2 = new Date(Object.keys(b)[0]);
+                                        return date1.getDate() - date2.getDate()
+                                        });
+                                    console.log(newSortedRates);
+                                    const Dates =  []
+                                    const DateValuesArr = [];
+                                    newSortedRates.forEach(element => {
+                                        DateValuesArr.push((Object.values(element)[0]));
+                                    });
+                                    newSortedRates.forEach(element => {
+                                        Dates.push((Object.keys(element)[0].toString()));
+                                    });
                                 </code></pre>
 
                                 <div class="divider my-4"></div>
