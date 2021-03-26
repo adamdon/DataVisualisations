@@ -302,7 +302,7 @@
                                     After you have recieve the data fron the API, 
                                     you will notice that the dates aren't in order within in the array.
                                     To fix this we will implement a piece of code 
-                                    that will sort the sort the array by date in ascending order
+                                    that will sort the array by date in ascending order
                                 </p>
 
                                 <pre style="color: white; background: #2b2b2b;"> populateDataset()
@@ -338,21 +338,64 @@
                                 <h5 class="card-title"><i class="fas fa-desktop"></i> Displaying in the visualisation</h5>
 
                                 <p class="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                    Excepteur sint occaecat cupidatat non proident,
-                                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    After the data has been sorted, the next step is to display the data on screen. 
+                                    For this example we will use <a href="https://www.chartjs.org/">ChartJS</a> as it allows us to create complex charts without much code.
+                                    
+                                    The first thing to do when create a chart is to get the canvas you'd like to use, 
+                                    we selected the chart early in the function and saved it to a variable called chartElement.
                                 </p>
 
-                                <pre><code class="javascript">
-                                    const t = i / speed;
-                                    keyframes.push([
-                                        new Date(ka * (1 - t) + kb * t),
-                                        rank(name => (a.get(name) || 0) * (1 - t) + (b.get(name) || 0) * t)
-                                    ]);
+                                <pre style="color: white; background: #2b2b2b;"> populateDataset()
+                                    <code class="javascript">
+                                    let data = {
+                                        labels: Dates,
+                                        datasets: [{
+                                            label: `${$('#currency2').val()}`,
+                                            data: DateValuesArr,
+                                            backgroundColor: ['rgba(255, 0, 0, 0.05)'],
+                                            pointBackgroundColor: 'white'
+                                        }]
+                                    } 
+                                </code> </pre>
+                                <p class="card-text">
+                                    The options variable below will be used to define the options for the chart, this can be used to change properties such as 
+                                    chart
+                                </p>
+                                <pre style="color: white; background: #2b2b2b;"> populateDataset()
+                                    <code class="javascript">
+
+                                    let options = { 
+                                        legend: {
+                                            labels: {
+                                                fontColor: "white",
+                                                fontSize: 18
+                                            }
+                                        },
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    fontColor: "white",
+                                                    fontSize: 18,
+                                                    stepSize: 1
+                                                }
+                                            }],
+                                        xAxes: [{
+                                                ticks: {
+                                                    fontColor: "white",
+                                                    fontSize: 14,
+                                                    stepSize: 1
+                                                }
+                                            }]
+                                        }
+                                    }
+                                </code> </pre>
+                                <pre style="color: white; background: #2b2b2b;"> populateDataset()
+                                    <code class="javascript">
+                                    var LineChart = new Chart(chartElement, {
+                                        type: 'line',
+                                        data: data,
+                                        options: options
+                                    });
                                 </code></pre>
 
                                 <div class="divider my-4"></div>
