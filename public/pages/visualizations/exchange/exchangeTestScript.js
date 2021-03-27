@@ -68,14 +68,11 @@ async function getCurrencyList()
         
         currency1.value = "USD";
         currency2.value = "GBP";
-
     }
     catch (error)
     {
         console.log(error);
     }
-
-
 }
 
 async function OnCurrencyChange() 
@@ -165,17 +162,37 @@ async function populateDataset()
             },
             scales: {
                 yAxes: [{
+                    scaleLabel: {
+                    fontColor: "white",
+                    fontSize: 14,
+                    display: true,
+                    labelString: `Value of ${CompCurrency.value}`
+                    },
                     ticks: {
                         fontColor: "white",
                         fontSize: 18,
-                        stepSize: 1
+                        stepSize: 1,
+                        callback: function(value, index, values) {
+                        return '$' + value;
+                        },
                     }
                 }],
                 xAxes: [{
+                scaleLabel: {
+                    fontColor: "white",
+                    fontSize: 14,
+                    display: true,
+                    labelString: `Price changes each day`
+                },
                     ticks: {
                         fontColor: "white",
                         fontSize: 14,
-                        stepSize: 1
+                        stepSize: 1,
+                        title:{
+                            align:'center',
+                            text: "Text",
+                            display: true
+                        }
                     }
                 }]
             }
