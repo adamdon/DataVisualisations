@@ -22,58 +22,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.5.0/d3.js" ></script>
 		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <script src="./script.js" type="module" defer></script>
-		<script>
-			window.onload = function () {
-			
-				async function getData(){
-				
-					console.log("running getData")
-				
-				var countrySelection = document.getElementById("countryDropDown");
-				var countrySlug = countrySelection.value;
-				console.log(option.value)
 
-				const url = `https://api.teleport.org/api/urban_areas/slug:${countrySlug}/scores/`
-				console.log(url);
-				const response = await fetch(url)
-				const data = await response.json() 
-				console.log(data)
-			
-				//example chart of countries oil (this is the format i will use)
-				var chart = new CanvasJS.Chart("chartContainer", {
-				animationEnabled: true,
-				theme: "light1", // "light1", "light2", "dark1", "dark2"
-				title:{
-					text: "San Fransisco"
-				},
-				axisY: {
-					title: "Score Out Of Ten"
-				},
-				data: [{        
-					type: "column",  
-					showInLegend: true, 
-					legendMarkerColor: "grey",
-					legendText: "City Attributes",
-					dataPoints: [      
-					]
-				}]
-				});
-			
-				data.categories.forEach(category => {
-					chart.options.data[0].dataPoints.push({ y: category.score_out_of_10, label: category.name, color: category.color})
-					console.log(category)
-				});
-			
-				chart.render();
-				}
-				
-				function runFunction(){
-					console.log("hello");
-				}
-				//getData();
-			
-			}
-			</script>
 
     </head>
 
@@ -165,7 +114,7 @@
                         <div class="card text-white bg-primary">
                             <div class="card-header"><i class="fas fa-th"></i> Top Coin Market History</div>
                             <div class="card-body">
-								<select id="countryDropDown" onchange="runFunction()">
+								<select id="countryDropDown" >
 									<option ></option><option value="aarhus">Aarhus</option><option value="adelaide">Adelaide</option><option value="albuquerque">Albuquerque</option>
 									<option value="almaty">Almaty</option><option value="amsterdam">Amsterdam</option><option value="anchorage">Anchorage</option><option value="andorra">Andorra</option><option value="ankara">Ankara</option><option value="asheville">Asheville</option><option value="asuncion">Asuncion</option><option value="athens">Athens</option><option value="atlanta">Atlanta</option><option value="auckland">Auckland</option><option value="austin">Austin</option><option value="baku">Baku</option><option value="bali">Bali</option><option value="baltimore">Baltimore</option><option value="bangkok">Bangkok</option><option value="barcelona">Barcelona</option><option value="beijing">Beijing</option><option value="beirut">Beirut</option><option value="belfast">Belfast</option><option value="belgrade">Belgrade</option><option value="belize-city">Belize City</option><option value="bengaluru">Bengaluru</option><option value="bergen">Bergen</option><option value="berlin">Berlin</option><option value="bern">Bern</option><option value="bilbao">Bilbao</option><option value="birmingham">Birmingham</option><option value="birmingham-al">Birmingham, AL</option><option value="bogota">Bogota</option><option value="boise">Boise</option><option value="bologna">Bologna</option><option value="bordeaux">Bordeaux</option><option value="boston">Boston</option><option value="boulder">Boulder</option><option value="bozeman">Bozeman</option><option value="bratislava">Bratislava</option><option value="brighton">Brighton</option><option value="brisbane">Brisbane</option><option value="bristol">Bristol</option><option value="brno">Brno</option><option value="brussels">Brussels</option><option value="bucharest">Bucharest</option><option value="budapest">Budapest</option><option value="buenos-aires">Buenos Aires</option><option value="buffalo">Buffalo</option><option value="cairo">Cairo</option><option value="calgary">Calgary</option><option value="cambridge">Cambridge</option><option value="cape-town">Cape Town</option>
 									<option value="caracas">Caracas</option><option value="cardiff">Cardiff</option><option value="casablanca">Casablanca</option><option value="charleston">Charleston</option><option value="charlotte">Charlotte</option><option value="chattanooga">Chattanooga</option><option value="chennai">Chennai</option><option value="chiang-mai">Chiang Mai</option><option value="chicago">Chicago</option><option value="chisinau">Chisinau</option><option value="christchurch">Christchurch</option><option value="cincinnati">Cincinnati</option><option value="cleveland">Cleveland</option><option value="cluj-napoca">Cluj-Napoca</option><option value="cologne">Cologne</option><option value="colorado-springs">Colorado Springs</option><option value="columbus">Columbus</option><option value="copenhagen">Copenhagen</option><option value="cork">Cork</option><option value="curitiba">Curitiba</option><option value="dallas">Dallas</option><option value="dar-es-salaam">Dar es Salaam</option><option value="delhi">Delhi</option><option value="denver">Denver</option><option value="des-moines">Des Moines</option><option value="detroit">Detroit</option><option value="doha">Doha</option><option value="dresden">Dresden</option><option value="dubai">Dubai</option><option value="dublin">Dublin</option><option value="dusseldorf">Dusseldorf</option><option value="edinburgh">Edinburgh</option><option value="edmonton">Edmonton</option><option value="eindhoven">Eindhoven</option><option value="eugene">Eugene</option><option value="florence">Florence</option><option value="florianopolis">Florianopolis</option><option value="fort-collins">Fort Collins</option><option value="frankfurt">Frankfurt</option><option value="fukuoka">Fukuoka</option><option value="gaillimh">Galway</option><option value="gdansk">Gdansk</option><option value="geneva">Geneva</option><option value="gibraltar">Gibraltar</option><option value="glasgow">Glasgow</option><option value="gothenburg">Gothenburg</option><option value="grenoble">Grenoble</option>
