@@ -1,10 +1,10 @@
 {
   "name": "datavisualisations",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon --experimental-modules server --ignore public"
+    "server": "nodemon --experimental-modules server --ignore public",
+    "start": "node server.js"
   },
   "author": "Group 22",
   "license": "MIT",
@@ -16,5 +16,14 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamdon/DataVisualisations.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adamdon/DataVisualisations/issues"
+  },
+  "homepage": "https://github.com/adamdon/DataVisualisations#readme",
+  "description": ""
 }
