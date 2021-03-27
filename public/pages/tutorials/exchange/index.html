@@ -196,17 +196,55 @@
                                     &lt;/select&gt;
                                     &lt;p&gt; Secondary Currency &lt;/p&gt;
                                     &lt;select name="currency2" id="currency2"&gt;
-                                    
                                     &lt;/select&gt;
                                     &lt;p&gt; Select a date: &lt;/p&gt;
                                     &lt;input id="el"&gt;
-                                
-                                
-                                
                                 &lt;/div&gt; 
                                     &lt;canvas id="exchangeChart"&gt;&lt;/canvas&gt; 
                                 </code>
 
+                                </pre>
+
+                                <p class="card-text">
+                                    After creating the html elements above, 
+                                    we will now create a external javascript file called exchangeScript.js.
+                                    All of the code snippets below will be placed in this file.
+                                    The code below contains a little JQuery for selecting DOM elements, 
+                                    it will be run when the script it first loaded and is responsible for running important functions 
+                                    and setting up the date range picker. For this tutorial we will be using 
+                                    <a href="https://github.com/tamble/jquery-ui-daterangepicker">JQuery UI Date Range Picker</a>.
+
+                                </p>
+
+                                <pre style="color: white; background: #2b2b2b;" > exchangeScript.js
+                                    <code class="javascript">
+                                    let startdate
+                                    let enddate
+                                    console.log("Exchange Currency on script started");
+                                    getCurrencyList();
+                                    let currency1 = document.getElementById('currency1');
+                                    let currency2 = document.getElementById('currency2');
+                                    currency1.onchange = OnCurrencyChange;
+                                    currency2.onchange = OnCurrencyChange;
+                                    $('#el').daterangepicker({
+
+                                        change: function(event, data) { 
+
+                                            let datesChanged = Object.values(JSON.parse($('#el').val()));
+
+                                            startdate = datesChanged[0];
+                                            enddate = datesChanged[1];
+                                            $('#el').val(`${startdate} - ${enddate}`)
+                                            populateDataset()
+                                        }
+                                        
+                                    });
+                                        $('#el').removeAttr('style');
+                                        $('#drp_autogen0').text("Select a Date")
+                                        insertChartJsScriptTag();
+                                        populateDataset();
+
+                                    </code>
                                 </pre>
 
 
@@ -282,16 +320,14 @@
                                         {
                                             let BaseCurrency = document.getElementById('currency1');
                                             let CompCurrency = document.getElementById('currency2');
-                                        
-                                    
+
                                             let url = `https://api.exchangeratesapi.io/history?start_at=${startdate || "2021-01-01"}&end_at=${enddate || "2021-02-20"}&base=${BaseCurrency.value || 'USD'}&symbols=${CompCurrency.value|| 'GBP'}`;
                                             console.log(url);
                                             let chartElement = document.getElementById('exchangeChart').getContext('2d');
                                             chartElement.font = "30px Roboto";
                                             chartElement.fillStyle = "white";
                                             chartElement.fillText("Loading data...", 10, 50);
-                                    
-                                    
+                    
                                             let response = await axios.get(url);
                                     
                                 </code></pre>
@@ -358,37 +394,68 @@
                                     } 
                                 </code> </pre>
                                 <p class="card-text">
-                                    The options variable below will be used to define the options for the chart, this can be used to change properties such as 
-                                    chart
+                                    The options variable below will be used to define the options for the chart,
+                                    It can be used to alter a wide range of chart attributes, such as it's font size, color, etc.
+                                    As you can see from the code below we have alter a number of properties on the chart. 
+                                    These include change the font color, adding '$' in front each value on the y axes, as well adding labels both axes.
                                 </p>
                                 <pre style="color: white; background: #2b2b2b;"> populateDataset()
                                     <code class="javascript">
 
-                                    let options = { 
-                                        legend: {
-                                            labels: {
-                                                fontColor: "white",
-                                                fontSize: 18
-                                            }
-                                        },
-                                        scales: {
-                                            yAxes: [{
-                                                ticks: {
+                                        let options = { 
+                                            legend: {
+                                                labels: {
                                                     fontColor: "white",
-                                                    fontSize: 18,
-                                                    stepSize: 1
+                                                    fontSize: 18
                                                 }
-                                            }],
-                                        xAxes: [{
-                                                ticks: {
+                                            },
+                                            scales: {
+                                                yAxes: [{
+                                                    scaleLabel: {
                                                     fontColor: "white",
                                                     fontSize: 14,
-                                                    stepSize: 1
-                                                }
-                                            }]
+                                                    display: true,
+                                                    labelString: `Value of ${CompCurrency.value}`
+                                                    },
+                                                    ticks: {
+                                                        fontColor: "white",
+                                                        fontSize: 18,
+                                                        stepSize: 1,
+                                                        callback: function(value, index, values) {
+                                                        return '$' + value;
+                                                        },
+                                                    }
+                                                }],
+                                                xAxes: [{
+                                                scaleLabel: {
+                                                    fontColor: "white",
+                                                    fontSize: 14,
+                                                    display: true,
+                                                    labelString: `Price changes each day`
+                                                },
+                                                    ticks: {
+                                                        fontColor: "white",
+                                                        fontSize: 14,
+                                                        stepSize: 1,
+                                                        title:{
+                                                            align:'center',
+                                                            text: "Text",
+                                                            display: true
+                                                        }
+                                                    }
+                                                }]
+                                            }
                                         }
-                                    }
                                 </code> </pre>
+
+                                <p class="card-text">
+                                    This next section  of code is responsible for using the
+                                     previous two defined varibles to create the Chart. Tt takes two parameters the element 
+                                     you'd like to use to display the chart and an object that contains 3 values. The first value 
+                                     'type' is the type of chart you'd like to create with ChartJS, 
+                                     the next two values are data and options which we previous created.
+                                </p>
+
                                 <pre style="color: white; background: #2b2b2b;"> populateDataset()
                                     <code class="javascript">
                                     var LineChart = new Chart(chartElement, {
