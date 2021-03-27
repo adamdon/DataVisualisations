@@ -22,7 +22,8 @@ window.onload = function () {
         text: countryName
     },
     axisY: {
-        title: "Score Out Of Ten"
+        title: "Score Out Of Ten",
+        maximum: 10
     },
     data: [{        
         type: "column",  
