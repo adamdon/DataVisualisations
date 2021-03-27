@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+    <head>
+
+        <title>DataVisualisations</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/a11y-dark.min.css" integrity="sha512-1rzCaYWsg3l6uKvGbUT6rAZFOcVn0zeXAFlZudsnj8k2xcrU5asL8jfJUEijV9GPYMh0GnPToeCTJj6RXQnA8g==" crossorigin="anonymous" />
+        <link rel="stylesheet" href="../../../css/colors.css" type="text/css">
+        <link rel="stylesheet" href="../../../css/main.css" type="text/css">
+
+        <script src="https://kit.fontawesome.com/4ebb081c7a.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" defer integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" defer integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js" integrity="sha512-d00ajEME7cZhepRqSIVsQVGDJBdZlfHyQLNC6tZXYKTG7iwcF8nhlFuppanz8hYgXr8VvlfKh4gLC25ud3c90A==" crossorigin="anonymous"></script>
+        <script>window.hljs.highlightAll();</script>
+    </head>
+
+
+
+
+    <body>
+
+        <!-- nav bar start  -->
+
+
+        <nav class="navbar navbar-expand-lg ml-auto navbar-dark bg-primary">
+
+            <a class="navbar-brand" href="/">
+                <img src="../../../image/logo.svg" width="30" height="30" class="d-inline-block align-top" alt="logo">
+                DataVisualisations
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse " id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../../">Home </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../../pages/visualizations/earthquake/">earthquake</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../../pages/visualizations/exchange/">exchange</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../../pages/visualizations/iss/">iss</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../../pages/visualizations/marketcap/">marketcap </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../../pages/visualizations/quality/">quality</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../../pages/visualizations/weather/">weather</a>
+                    </li>
+
+
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Tutorials
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="../../../pages/tutorials/earthquake/">earthquake tutorial</a>
+                            <a class="dropdown-item" href="../../../pages/tutorials/exchange/">exchange tutorial</a>
+                            <a class="dropdown-item" href="../../../pages/tutorials/iss/">iss tutorial</a>
+                            <a class="dropdown-item" href="../../../pages/tutorials/marketcap/">marketcap tutorial</a>
+                            <a class="dropdown-item" href="../../../pages/tutorials/quality/">quality tutorial</a>
+                            <a class="dropdown-item" href="../../../pages/tutorials/weather/">weather tutorial</a>
+                        </div>
+                    </li>
+                </ul>
+
+
+            </div>
+
+
+        </nav>
+
+        <!-- nav bar end  -->
+
+
+
+
+
+        <div class="container-fluid layout-container-fluid rounded"> <!-- layout-container-fluid -->
+
+
+            <div class="row no-gutters">  <!-- Row 1  -->
+
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"> <!-- col 1  -->
+
+                    <div class="content-container-fluid">
+                        <div class="card text-white bg-primary">
+                            <div class="card-header"><i class="fas fa-graduation-cap"></i> Tutorial for Weather API</div>
+                            <div class="card-body">
+
+
+
+                                <!-- Page content start  -->
+
+                                <div class="container-fluid">
+
+                                    <div class="row no-gutters">  <!-- Row   -->
+
+
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"> <!-- col   -->
+
+                                            <div class="container-fluid">
+
+
+                                                <h5 class="card-title">Tutorial Sections</h5>
+
+                                                <ol>
+                                                    <li>Getting the data from the API</li>
+                                                    <li>Processing the information</li>
+                                                    <li>Displaying in the visualisation</li>
+                                                    <li>Further reading links</li>
+                                                </ol>
+
+
+                                            </div>
+
+                                        </div>  <!-- col 1  -->
+
+
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"> <!-- col 2  -->
+
+                                            <div class="container-fluid">
+
+                                                <img src="./image.png" class="rounded w-100" alt="Computer code">
+
+
+                                            </div>
+
+                                        </div> <!-- col 2  -->
+
+
+                                    </div> <!-- Row   -->
+
+                                </div>
+
+
+
+
+
+
+
+
+
+                                <div class="divider my-4"></div>
+
+
+
+                                <h5 class="card-title"><i class="fas fa-cloud-download-alt"></i> Getting the data from the API</h5>
+
+                                <p class="card-text">
+                                    The API used in this data visualisation is provided by <a href="https://openweathermap.org/">OpenWeatherMap</a> which offers access to the most updated weather forecast.
+                                    In order to proceed with the tutorial is, however, necessary to create a free account on their website with the purpose of obtaining a free <strong>API Key</strong> which is fundamental for the functionality
+                                    of the API itself.
+                                    This tutorial assumes that the reader is fluent with HTML and Javascript and knows how to read the documentation provided by the sources linked.
+                                    Once the account is created and the key is activated, the next step involves the selection of the type of API to use.
+                                    This tutorial focuses the attention on the <a href="https://openweathermap.org/api/one-call-api">One Call API</a>.
+                                    This API provides a 7 days forecast with results updated daily, hourly or minutely and starting from the current day and returns responses in JSON format.
+                                    Now is the time to start retrieving data from the API.
+                                </p>
+
+                                <pre><code class="javascript">
+                                    class GetWeather{
+                                        async getCurrent(lat, lng){
+                                          const myKey = "Type your API key here";
+                                      
+                                          const response = await fetch(
+                                            `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&appid=${myKey}`
+                                          );
+                                      
+                                          const data = await response.json();
+                                      
+                                          console.log(data); // prints data to console.
+                                      
+                                          return data;
+                                        }
+                                      }
+                                </code></pre>
+
+                                <p class="card-text">The above code allows the api request to be handled through an object of the class <strong>GetWeather</strong>.
+                                The location will be retrieved from coordinates which will be accessed through <a href="https://developers.google.com/maps/documentation/javascript/adding-a-google-map">Google Map</a>.</p>
+
+                                <div class="divider my-4"></div>
+
+
+
+
+
+                                <h5 class="card-title"><i class="fas fa-wrench"></i> Processing the information</h5>
+
+                                <p class="card-text">
+                                    Once the coordinates have been obtained and the "data" retrieved from the API, it is fundamental to process it and store it into variables.
+                                    Thanks to Google Map, it is possible to utilise an event listener which will retrieve the coordinates from the map itself and will perform a weather request with the suggested coordinates.
+                                    The data will then be stored into an array, named "temps", and then managed accordingly based on what is needed to be parsed into any HTML element. See below for an example and refer to the One Call API documentation provided by OpenWeatherMap for a description of the JSON file structure.
+                                </p>
+
+                                <pre><code class="javascript">
+                                    function initMap() {
+                                        // The map, centered at Glasgow
+                                        const map = new google.maps.Map(document.getElementById("map"), {
+                                          zoom: 7,
+                                          center: { lat: 55.860916, lng: -4.251433 },
+                                        });
+                                        // The marker, positioned at Glasgow
+                                        const marker = new google.maps.Marker({
+                                          position: { lat: 55.860916, lng: -4.251433 },
+                                          draggable: true,
+                                          map: map,
+                                        });
+                                      
+                                        google.maps.event.addListener(marker, 'dragend', async function (evt) {
+                                          const latitude = evt.latLng.lat();
+                                          const longitude = evt.latLng.lng();
+                                      
+                                          var temps = await weather.getCurrent(latitude, longitude);
+                                          console.log(temps);
+                                </code></pre>
+
+                                <p class="card-text">
+                                    Using an "async" function is mandatory in order to avoid incorrect data parsing or potential crashes.
+                                </p>
+
+                                <div class="divider my-4"></div>
+
+
+                                <h5 class="card-title"><i class="fas fa-desktop"></i> Displaying in the visualisation</h5>
+
+                                <p class="card-text">
+                                    The reamining step involves the "parsing" of the values from the variables into a HTML element.
+                                    Assuming the presence of the following HTML element
+                                </p>
+
+                                <pre><code class="javascript">
+                                    &lt;div id="max_temp">The max temperature for the current day will be displayed here&lt;/div&gt;
+                                </code></pre>
+                                <p class="card-text">
+                                    It is just necessary to pass the desired value from the temps array by following the array structure explained in the One Call API documentation.
+                                    For the current day max temperature, for example, the data will be parsed as follows.
+                                </p>
+
+                                <pre><code class="javascript">
+                                    document.getElementbyID('day1').innerHTML = `The max temperature for the current day is: ${temps.daily[0].temp.max}`;
+                                </code></pre>
+
+                                <div class="divider my-4"></div>
+
+
+
+
+
+
+                                <h5 class="card-title"><i class="fas fa-book-reader"></i> Further Reading links</h5>
+
+                                <ul>
+                                    <li><a href="https://www.google.com/" target="_blank" class="text-decoration-none font-weight-bold text-white"><i class="fas fa-link"></i> API docs, Library Docs</a></li>
+                                    <li><a href="https://www.google.com/" target="_blank" class="text-decoration-none font-weight-bold text-white"><i class="fas fa-link"></i> Library Docs</a></li>
+                                    <li><a href="https://www.google.com/" target="_blank" class="text-decoration-none font-weight-bold text-white"><i class="fas fa-link"></i> About the data</a></li>
+                                </ul>
+
+                                <div class="divider my-4"></div>
+
+
+
+
+                                <!-- Page content end  -->
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!-- col 1  -->
+
+
+            </div> <!-- Row 1  -->
+
+
+
+
+
+        </div> <!-- layout-container-fluid  -->
+
+
+
+
+    </body>
+
+
+</html>

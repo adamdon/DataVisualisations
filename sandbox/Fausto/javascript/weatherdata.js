@@ -6,7 +6,7 @@ class GetCoordinates { // gets data based on coordinates
     const myKey = "6032bc89af3a113b007863b41d2362ad";
 
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${myKey}`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&appid=${myKey}`
     );
 
     const data = await response.json();
@@ -22,7 +22,7 @@ class GetCity{
     const myKey = "6032bc89af3a113b007863b41d2362ad";
 
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${myKey}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${myKey}`
     );
 
     const data = await response.json();
@@ -46,8 +46,6 @@ class UI {
     //add them to inner HTML
 
     //document.getElementById('label').innerHTML = `<p>The latitude is: ${data.coord.lat} and longitude is: ${data.coord.lon}</p>`;
-    var max = Math.round(`${data.main.temp_max}` - 273.15);
-    var min = Math.round(`${data.main.temp_min}` - 273.15);
 
     this.uiContainer.innerHTML = `
         
@@ -58,8 +56,8 @@ class UI {
                 <h6 class="card-subtitle mb-2">Latitude: <strong>${data.coord.lat}</strong></h6>
                 <h6 class="card-subtitle mb-2">Longitude: <strong>${data.coord.lon}</strong></h6>
                 <br>
-                <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${max}°C.</strong><br> Lows of <strong style="color: #3284D2;">${min}°C.</strong></h6>
-                <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${data.weather[0].description}</strong></p>
+                <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${data.main.temp_max}°C.</strong><br> Lows of <strong style="color: #3284D2;">${data.main.temp_min}°C.</strong></h6>
+                <p class="card-text" style="text-align: center;">Current weather conditions are described as: <strong style="color: #54D232;">${data.weather[0].description}</strong></p>
                 
             </div>
         </div>
@@ -139,9 +137,6 @@ function initMap() {
     coord.getCurrent(latitude, longitude).then((data) => {
       document.getElementById('searchUser').value = ""; // resets placeholder in text box
 
-      var max = Math.round(`${data.main.temp_max}` - 273.15); // converts max temperature value from kelvin to Celsius
-      var min = Math.round(`${data.main.temp_min}` - 273.15); // converts min temperature value from kelvin to Celsius
-
       document.getElementById('Info').innerHTML = `
           
       <div class="card mx-auto mt-5" style="width: 18rem; margin-bottom: 10px;">
@@ -151,7 +146,7 @@ function initMap() {
                 <h6 class="card-subtitle mb-2">Latitude: <strong>${data.coord.lat}</strong></h6>
                 <h6 class="card-subtitle mb-2">Longitude: <strong>${data.coord.lon}</strong></h6>
                 <br>
-                <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${max}°C.</strong><br> Lows of <strong style="color: #3284D2;">${min}°C.</strong></h6>
+                <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${data.main.temp_max}°C.</strong><br> Lows of <strong style="color: #3284D2;">${data.main.temp_min}°C.</strong></h6>
                 <p class="card-text" style="text-align: center;">Weather conditions are described as: <strong style="color: #54D232;">${data.weather[0].description}</strong></p>
                 
             </div>
