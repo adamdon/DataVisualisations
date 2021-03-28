@@ -173,24 +173,38 @@
 
 
 
-                                <h5 class="card-title"><i class="fas fa-cloud-download-alt"></i> Getting the data from the API</h5>
+                                <h5 class="card-title"><i class="fas fa-wrench"></i> City Selection</h5>
 
                                 <p class="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                    Excepteur sint occaecat cupidatat non proident,
-                                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    In order to properly utilise the teleport API we must select a city,
+                                    to do this we will use a deop down menu to allow the user to select one.
+                                    Here is the html code for this drop down menu with six example cities.
+                                </p>
+
+                                <pre><code class="html">
+                                    &lt;select id="cityDropDown" &gt;
+                                        &lt;option value="amsterdam" selected&gt;Amsterdam&lt;/option&gt;
+                                        &lt;option value="philadelphia"&gt;Philadelphia&lt;/option&gt;
+                                        &lt;option value="phoenix"&gt;Phoenix&lt;/option&gt;
+                                        &lt;option value="prague"&gt;Prague&lt;/option&gt;
+                                        &lt;option value="quebec"&gt;Quebec&lt;/option&gt;
+                                        &lt;option value="tokyo"&gt;Tokyo&lt;/option&gt;
+                                    &lt;/select&gt;
+                                </code></pre>
+
+                                <p class="card-text">
+                                    we need to make our javascript run whenever the dropdown selection changes,
+                                    We can then pull this data from the html using javascript
                                 </p>
 
                                 <pre><code class="javascript">
-                                    const t = i / speed;
-                                    keyframes.push([
-                                        new Date(ka * (1 - t) + kb * t),
-                                        rank(name => (a.get(name) || 0) * (1 - t) + (b.get(name) || 0) * t)
-                                    ]);
+                                    //making our code execute on a selection change 
+                                    document.getElementById('cityDropDown').addEventListener('change',runJavascript)
+
+                                    //pulling the data from the selection
+                                    var citySelection = document.getElementById("cityDropDown");
+                                    var citySlug = citySelection.value;
+                                    var cityName = citySelection.options[citySelection.selectedIndex].text;
                                 </code></pre>
 
                                 <div class="divider my-4"></div>
@@ -199,24 +213,18 @@
 
 
 
-                                <h5 class="card-title"><i class="fas fa-wrench"></i> Processing the information</h5>
+                                <h5 class="card-title"><i class="fas fa-cloud-download-alt"></i> Getting Data From the API</h5>
 
                                 <p class="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                    Excepteur sint occaecat cupidatat non proident,
-                                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    Now that we have selected a city we need to do something with it,
+                                    we use the cities "citySlug" in our api request to get data about it.
+                                    Here is the javascript for that
                                 </p>
 
                                 <pre><code class="javascript">
-                                    const t = i / speed;
-                                    keyframes.push([
-                                        new Date(ka * (1 - t) + kb * t),
-                                        rank(name => (a.get(name) || 0) * (1 - t) + (b.get(name) || 0) * t)
-                                    ]);
+                                    const url = `https://api.teleport.org/api/urban_areas/slug:${citySlug}/scores/`
+                                    const response = await fetch(url)
+                                    const data = await response.json() 
                                 </code></pre>
 
                                 <div class="divider my-4"></div>
@@ -229,21 +237,55 @@
                                 <h5 class="card-title"><i class="fas fa-desktop"></i> Displaying in the visualisation</h5>
 
                                 <p class="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                    Excepteur sint occaecat cupidatat non proident,
-                                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    Firstly we must have a place to put our visualisation, which is easy we just use a basic div tag.
+                                    So here is our html chart container
+                                </p>
+
+                                <pre><code class="html">
+                                    &lt;div id="chartContainer" style="height: 500px; width: 100%;"&gt;&lt;/div&gt;
+                                </code></pre>
+
+                                <p class="card-text">
+                                    We then Have to put our data in a chart, for this we are using canvasjs for this.
+                                    we initialise a new canvasjs chart, all the static values are set at this stage
+                                    except the title which is set as cityName that we pulled from the select earlier.
+
+                                    we then add extra datapoints for each unique quality category about the city. 
                                 </p>
 
                                 <pre><code class="javascript">
-                                    const t = i / speed;
-                                    keyframes.push([
-                                        new Date(ka * (1 - t) + kb * t),
-                                        rank(name => (a.get(name) || 0) * (1 - t) + (b.get(name) || 0) * t)
-                                    ]);
+                                    //creating the chart
+                                    var chart = new CanvasJS.Chart("chartContainer", {
+                                        animationEnabled: true,
+                                        theme: "light1", 
+                                        title:{
+                                            text: cityName
+                                        },
+                                        axisY: {
+                                            title: "Score Out Of Ten",
+                                            maximum: 10
+                                        },
+                                        data: [{        
+                                            type: "column",  
+                                            showInLegend: true, 
+                                            legendMarkerColor: "grey",
+                                            legendText: "City Attributes",
+                                            dataPoints: [      
+                                            ]
+                                        }]
+                                        });
+                                        
+                                        //adding a data point to the chart for each category 
+                                        data.categories.forEach(category => {
+                                            chart.options.data[0].dataPoints.push(
+                                                { 
+                                                    y: category.score_out_of_10,
+                                                    label: category.name,
+                                                    color: category.color
+                                                })
+                                        });
+                                    
+                                        chart.render();
                                 </code></pre>
 
                                 <div class="divider my-4"></div>
@@ -256,7 +298,7 @@
                                 <h5 class="card-title"><i class="fas fa-book-reader"></i> Further Reading links</h5>
 
                                 <ul>
-                                    <li><a href="https://developers.teleport.org/api/" target="_blank" class="text-decoration-none font-weight-bold text-white"><i class="fas fa-link"></i>Library API Docs</a></li>
+                                    <li><a href="https://developers.teleport.org/api/" target="_blank" class="text-decoration-none font-weight-bold text-white"><i class="fas fa-link"></i>Teleport API Docs</a></li>
                                     <li><a href="https://canvasjs.com/javascript-charts/json-data-api-ajax-chart/" target="_blank" class="text-decoration-none font-weight-bold text-white"><i class="fas fa-link"></i>CanvasJs Library Docs</a></li>
                                     <li><a href="https://developers.teleport.org/showcase/" target="_blank" class="text-decoration-none font-weight-bold text-white"><i class="fas fa-link"></i>Similar Projects</a></li>
                                 </ul>

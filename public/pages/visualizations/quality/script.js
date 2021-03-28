@@ -4,22 +4,22 @@ window.onload = function () {
     
         console.log("running getData")
     
-    var countrySelection = document.getElementById("countryDropDown");
-    var countrySlug = countrySelection.value;
-    var countryName = countrySelection.options[countrySelection.selectedIndex].text;
-    console.log(countrySlug)
+    var citySelection = document.getElementById("cityDropDown");
+    var citySlug = citySelection.value;
+    var cityName = citySelection.options[citySelection.selectedIndex].text;
+    console.log(citySlug)
 
-    const url = `https://api.teleport.org/api/urban_areas/slug:${countrySlug}/scores/`
+    const url = `https://api.teleport.org/api/urban_areas/slug:${citySlug}/scores/`
     const response = await fetch(url)
     const data = await response.json() 
     console.log(data)
 
-    //example chart of countries oil (this is the format i will use)
+    
     var chart = new CanvasJS.Chart("chartContainer", {
     animationEnabled: true,
     theme: "light1", // "light1", "light2", "dark1", "dark2"
     title:{
-        text: countryName
+        text: cityName
     },
     axisY: {
         title: "Score Out Of Ten",
@@ -43,7 +43,7 @@ window.onload = function () {
     chart.render();
     }
     
-    document.getElementById('countryDropDown').addEventListener('change',rungetData)
+    document.getElementById('cityDropDown').addEventListener('change',rungetData)
 
     function rungetData(){
         getData();
