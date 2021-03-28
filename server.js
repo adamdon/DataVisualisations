@@ -8,7 +8,7 @@ import connectLivereload from "connect-livereload";
 //Sets up livereload so changes to html will auto refresh browser without plugins
 let livereloadServer = livereload.createServer({extraExts : ["js"]});
 
-livereloadServer.watch("views");
+livereloadServer.watch("public");
 livereloadServer.server.once("connection", () => {setTimeout(() => {livereloadServer.refresh("/");}, 100);});
 
 
