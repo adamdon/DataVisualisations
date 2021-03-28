@@ -110,7 +110,7 @@
 
                     <div class="content-container-fluid">
                         <div class="card text-white bg-primary">
-                            <div class="card-header"><i class="fas fa-graduation-cap"></i> Tutorial for TITLEHERE</div>
+                            <div class="card-header"><i class="fas fa-graduation-cap"></i> Tutorial for Marketcap</div>
                             <div class="card-body">
 
 
@@ -176,21 +176,28 @@
                                 <h5 class="card-title"><i class="fas fa-cloud-download-alt"></i> Getting the data from the API</h5>
 
                                 <p class="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                    Excepteur sint occaecat cupidatat non proident,
-                                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    The CoinGecko API is utilised to fetch data in marketcap barchart race visualization. This API is an excellent choice for cryptocurrencies as the data comes from one of the most popular price trackers and requires no API key to function.
+                                </p>
+
+                                <p class="card-text">
+                                    There are many ways to get the data from the api but the most up to date best practice is to use the JavaScript Fetch API introduced in es6.
                                 </p>
 
                                 <pre><code class="javascript">
-                                    const t = i / speed;
-                                    keyframes.push([
-                                        new Date(ka * (1 - t) + kb * t),
-                                        rank(name => (a.get(name) || 0) * (1 - t) + (b.get(name) || 0) * t)
-                                    ]);
+static async #fetchCoinNames()
+{
+    const urlText = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false`;
+    const response = await fetch(urlText);
+    const data = await response.json();
+
+    const coinNames = data.map(coin => coin.id);
+
+    let coinsNamesToFilter = ["bitcoin", "ethereum", "ripple", "tether", "usd-coin"];
+    let filteredCoinNames = coinNames.filter(name => !(coinsNamesToFilter.includes(name)));
+    let shortListTokenNames = filteredCoinNames.slice(0, 15);
+
+    return shortListTokenNames
+}
                                 </code></pre>
 
                                 <div class="divider my-4"></div>
@@ -202,21 +209,47 @@
                                 <h5 class="card-title"><i class="fas fa-wrench"></i> Processing the information</h5>
 
                                 <p class="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                    Excepteur sint occaecat cupidatat non proident,
-                                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    The data taken from the CoinGecko AP will not be suitable as it is and will need to be processed in a number of steps.
+                                </p>
+
+                                <p class="card-text">
+                                    First the names of the 50 largest market caps will need to be requested. As there is a large discrepancy between the largest few coins and the remaining of the top 50 you may wish to filter these to provide a more useful bar chart race that can show changes over time.
+                                </p>
+
+                                <p class="card-text">
+                                    The next step is the loop through the array of the largest market caps and make new requests for each coin name in order to get the chart history for each coin in the desired time frame.
+                                </p>
+
+                                <p class="card-text">
+                                    Finally the data will need to be parsed into a format the bar chart race will understand. This can be done by iterating through the collected data and creating an array of object literals in a data, name, category and value format.
                                 </p>
 
                                 <pre><code class="javascript">
-                                    const t = i / speed;
-                                    keyframes.push([
-                                        new Date(ka * (1 - t) + kb * t),
-                                        rank(name => (a.get(name) || 0) * (1 - t) + (b.get(name) || 0) * t)
-                                    ]);
+static async #fetchCoinMarketcap(coinText)
+{
+    const urlText = `https://api.coingecko.com/api/v3/coins/${coinText}/market_chart?vs_currency=usd&days=90&interval=daily`;
+    const response = await fetch(urlText);
+    const data = await response.json();
+    const allMarketCaps = data.market_caps;
+    let fullDataObjectArray = [];
+
+
+    for (const [key, value] of Object.entries(allMarketCaps))
+    {
+
+        fullDataObjectArray.push(
+            {
+                date: new Date(value[0]),
+                name: coinText,
+                category: coinText,
+                value: value[1].toFixed(2)
+            }
+        );
+
+    }
+
+    return fullDataObjectArray;
+}
                                 </code></pre>
 
                                 <div class="divider my-4"></div>
@@ -229,21 +262,37 @@
                                 <h5 class="card-title"><i class="fas fa-desktop"></i> Displaying in the visualisation</h5>
 
                                 <p class="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                    Excepteur sint occaecat cupidatat non proident,
-                                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    The chart consists of four main parts; the bars, the x-axis, the labels, and the ticker showing the current date. These are updated on a continuous loop at and rate defined by the key frame rate until the data has been completely iterated though.
+                                </p>
+
+                                <p class="card-text">
+                                    The bars displayed on screen are defined by a rank depended by the top 15 caps out of 50. The x-asis is updated on the same keyframe using the date from the value property of the objects created earlier. The labels are static from the name property and the ticker from the date property.
                                 </p>
 
                                 <pre><code class="javascript">
-                                    const t = i / speed;
-                                    keyframes.push([
-                                        new Date(ka * (1 - t) + kb * t),
-                                        rank(name => (a.get(name) || 0) * (1 - t) + (b.get(name) || 0) * t)
-                                    ]);
+let barChartSvg = d3.select("#barChartSvg").attr("viewBox", [0, 0, width, height]);
+
+let updateBars = bars(barChartSvg);
+let updateAxis = axis(barChartSvg);
+let updateLabels = labels(barChartSvg);
+let updateTicker = ticker(barChartSvg);
+
+
+document.getElementById("loadingP").remove(); //Turn off loading text
+for (const keyframe of keyframes)
+{
+    const transition = barChartSvg.transition().duration(duration).ease(d3.easeLinear);
+
+    // Extract the top bar’s value.
+    xHorizontal.domain([0, keyframe[1][0].value]);
+
+    updateAxis(keyframe, transition);
+    updateBars(keyframe, transition);
+    updateLabels(keyframe, transition);
+    updateTicker(keyframe, transition);
+
+    await transition.end();
+}
                                 </code></pre>
 
                                 <div class="divider my-4"></div>
@@ -256,9 +305,9 @@
                                 <h5 class="card-title"><i class="fas fa-book-reader"></i> Further Reading links</h5>
 
                                 <ul>
-                                    <li><a href="https://www.google.com/" target="_blank" class="text-decoration-none font-weight-bold text-white"><i class="fas fa-link"></i> API docs, Library Docs</a></li>
-                                    <li><a href="https://www.google.com/" target="_blank" class="text-decoration-none font-weight-bold text-white"><i class="fas fa-link"></i> Library Docs</a></li>
-                                    <li><a href="https://www.google.com/" target="_blank" class="text-decoration-none font-weight-bold text-white"><i class="fas fa-link"></i> About the data</a></li>
+                                    <li><a href="https://www.coingecko.com/en/api#explore-api" target="_blank" class="text-decoration-none font-weight-bold text-white"><i class="fas fa-link"></i> CoinGecko API Documentation</a></li>
+                                    <li><a href="https://www.w3schools.com/js/js_api_fetch.asp" target="_blank" class="text-decoration-none font-weight-bold text-white"><i class="fas fa-link"></i> W3 Schools - JavaScript Fetch API</a></li>
+                                    <li><a href="https://github.com/d3/d3/wiki" target="_blank" class="text-decoration-none font-weight-bold text-white"><i class="fas fa-link"></i> D3 Library Documentation </a></li>
                                 </ul>
 
                                 <div class="divider my-4"></div>
