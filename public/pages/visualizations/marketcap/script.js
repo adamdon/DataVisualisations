@@ -37,31 +37,41 @@ window.onload = async () =>
     let formatDate = d3.utcFormat("%-d/%-m/%-y");
 
 
-    let barChartSvg = d3.select("#barChartSvg").attr("viewBox", [0, 0, width, height]);
-
-    let updateBars = bars(barChartSvg);
-    let updateAxis = axis(barChartSvg);
-    let updateLabels = labels(barChartSvg);
-    let updateTicker = ticker(barChartSvg);
-
 
     document.getElementById("loadingP").remove(); //Turn off loading text
-    for (const keyframe of keyframes)
+
+    await start();
+    async function start()
     {
-        const transition = barChartSvg.transition().duration(duration).ease(d3.easeLinear);
+        document.getElementById("barChartSvg").innerHTML = ""; //Turn off loading text
 
-        // Extract the top bar’s value.
-        xHorizontal.domain([0, keyframe[1][0].value]);
 
-        updateAxis(keyframe, transition);
-        updateBars(keyframe, transition);
-        updateLabels(keyframe, transition);
-        updateTicker(keyframe, transition);
+        let barChartSvg = d3.select("#barChartSvg").attr("viewBox", [0, 0, width, height]);
 
-        // invalidation.then(() => barChartSvg.interrupt());
-        await transition.end();
+        let updateBars = bars(barChartSvg);
+        let updateAxis = axis(barChartSvg);
+        let updateLabels = labels(barChartSvg);
+        let updateTicker = ticker(barChartSvg);
+
+
+        for (const keyframe of keyframes)
+        {
+            const transition = barChartSvg.transition().duration(duration).ease(d3.easeLinear);
+
+            // Extract the top bar’s value.
+            xHorizontal.domain([0, keyframe[1][0].value]);
+
+            updateAxis(keyframe, transition);
+            updateBars(keyframe, transition);
+            updateLabels(keyframe, transition);
+            updateTicker(keyframe, transition);
+
+            // invalidation.then(() => barChartSvg.interrupt());
+            await transition.end();
+        }
+        await start(); //restart animation recursively
+
     }
-
 
 
 
