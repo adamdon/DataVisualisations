@@ -146,8 +146,8 @@ async function populateDataset()
                 datasets: [{
                     label: `${$('#currency2').val()}`,
                     data: DateValuesArr,
-                    backgroundColor: ['rgba(255, 0, 0, 0.05)'],
-                    pointBackgroundColor: 'white'
+                    backgroundColor: ['rgba(255, 0, 0, 0.25)'],
+                    pointBackgroundColor: 'red'
                 }]
             
        
@@ -156,20 +156,20 @@ async function populateDataset()
         let options = { 
             legend: {
                 labels: {
-                    fontColor: "white",
+                    fontColor: "black",
                     fontSize: 18
                 }
             },
             scales: {
                 yAxes: [{
                     scaleLabel: {
-                    fontColor: "white",
+                    fontColor: "black",
                     fontSize: 14,
                     display: true,
                     labelString: `Value of ${CompCurrency.value}`
                     },
                     ticks: {
-                        fontColor: "white",
+                        fontColor: "black",
                         fontSize: 18,
                         stepSize: 1,
                         callback: function(value, index, values) {
@@ -179,13 +179,13 @@ async function populateDataset()
                 }],
                 xAxes: [{
                 scaleLabel: {
-                    fontColor: "white",
+                    fontColor: "black",
                     fontSize: 14,
                     display: true,
                     labelString: `Price changes each day`
                 },
                     ticks: {
-                        fontColor: "white",
+                        fontColor: "black",
                         fontSize: 14,
                         stepSize: 1,
                         title:{
