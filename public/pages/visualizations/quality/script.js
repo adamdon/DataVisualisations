@@ -30,7 +30,7 @@ window.onload = function () {
         var cityName = citySelection.options[citySelection.selectedIndex].text;
         var citySlug = citySelection.value;
 
-        var randomColor = '#' + (Math.floor(Math.random()*16777215).toString(16));
+        var randomColor = '#' + (Math.floor((Math.random()*16777215) + 1).toString(16));
         
         //var cityName = citySelection.options[citySelection.selectedIndex].text;
         chart.options.data.push({        
