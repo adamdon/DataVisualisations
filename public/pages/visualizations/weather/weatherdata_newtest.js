@@ -106,6 +106,9 @@ class UI {
         
         `;
 
+        document.getElementById('prev').style.visibility = "visible";
+        document.getElementById('next').style.visibility = "visible";
+
     document.getElementById('day1').innerHTML = `
       <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
             <div class="card-body justify-content-center" style="background: #414180;">
@@ -273,5 +276,7 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById('day5').innerHTML = "";
     document.getElementById('day6').innerHTML = "";
     document.getElementById('day7').innerHTML = "";
+    document.getElementById('prev').style.visibility = "hidden";
+    document.getElementById('next').style.visibility = "hidden";
   })
 }
