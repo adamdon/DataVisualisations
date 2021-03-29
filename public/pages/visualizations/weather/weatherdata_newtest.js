@@ -106,54 +106,57 @@ class UI {
         
         `;
 
+        document.getElementById('prev').style.visibility = "visible";
+        document.getElementById('next').style.visibility = "visible";
+
     document.getElementById('day1').innerHTML = `
       <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
             <div class="card-body justify-content-center" style="background: #414180;">
             <h5 class="card-title" style="text-align: center;"><strong>Current Day</strong></h5>
       <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[0]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[0]}°C.</strong></h6>
-      <p class="card-text">Weather conditions are described as: <strong style="color: #54D232;">${week_description[0]}</strong></p>`;
+      <p class="card-text">Weather conditions are described as: <br><strong style="color: #54D232;">${week_description[0]}</strong></p>`;
 
     document.getElementById('day2').innerHTML = `
       <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
             <div class="card-body justify-content-center" style="background: #414180;">
             <h5 class="card-title" style="text-align: center;"><strong>Day 2</strong></h5>
       <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[1]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[1]}°C.</strong></h6>
-      <p class="card-text">Weather conditions are described as: <strong style="color: #54D232;">${week_description[1]}</strong></p>`;
+      <p class="card-text">Weather conditions are described as: <br><strong style="color: #54D232;">${week_description[1]}</strong></p>`;
 
     document.getElementById('day3').innerHTML = `
       <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
             <div class="card-body justify-content-center" style="background: #414180;">
             <h5 class="card-title" style="text-align: center;"><strong>Day 3</strong></h5>
       <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[2]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[2]}°C.</strong></h6>
-      <p class="card-text">Weather conditions are described as: <strong style="color: #54D232;">${week_description[2]}</strong></p>`;
+      <p class="card-text">Weather conditions are described as: <br><strong style="color: #54D232;">${week_description[2]}</strong></p>`;
 
     document.getElementById('day4').innerHTML = `
       <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
             <div class="card-body justify-content-center" style="background: #414180;">
             <h5 class="card-title" style="text-align: center;"><strong>Day 4</strong></h5>
       <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[3]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[3]}°C.</strong></h6>
-      <p class="card-text">Weather conditions are described as: <strong style="color: #54D232;">${week_description[3]}</strong></p>`;
+      <p class="card-text">Weather conditions are described as: <br><strong style="color: #54D232;">${week_description[3]}</strong></p>`;
 
     document.getElementById('day5').innerHTML = `
       <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
             <div class="card-body justify-content-center" style="background: #414180;">
             <h5 class="card-title" style="text-align: center;"><strong>Day 5</strong></h5>
       <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[4]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[4]}°C.</strong></h6>
-      <p class="card-text">Weather conditions are described as: <strong style="color: #54D232;">${week_description[4]}</strong></p>`;
+      <p class="card-text">Weather conditions are described as: <br><strong style="color: #54D232;">${week_description[4]}</strong></p>`;
 
     document.getElementById('day6').innerHTML = `
       <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
             <div class="card-body justify-content-center" style="background: #414180;">
             <h5 class="card-title" style="text-align: center;"><strong>Day 6</strong></h5>
       <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[5]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[5]}°C.</strong></h6>
-      <p class="card-text">Weather conditions are described as: <strong style="color: #54D232;">${week_description[5]}</strong></p>`;
+      <p class="card-text">Weather conditions are described as: <br><strong style="color: #54D232;">${week_description[5]}</strong></p>`;
 
     document.getElementById('day7').innerHTML = `
       <div class="card mx-auto mt-5" style="width: 16rem; margin-bottom: 10px;">
             <div class="card-body justify-content-center" style="background: #414180;">
             <h5 class="card-title" style="text-align: center;"><strong>Day 7</strong></h5>
       <h6 class="card-subtitle mb-2">Highs of <strong style="color: #E31B10;">${week_tempmax[6]}°C.</strong><br> Lows of <strong style="color: #3284D2;">${week_tempmin[6]}°C.</strong></h6>
-      <p class="card-text">Weather conditions are described as: <strong style="color: #54D232;">${week_description[6]}</strong></p>`;
+      <p class="card-text">Weather conditions are described as: <br><strong style="color: #54D232;">${week_description[6]}</strong></p>`;
   }
 
   clearUI() {
@@ -273,5 +276,7 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById('day5').innerHTML = "";
     document.getElementById('day6').innerHTML = "";
     document.getElementById('day7').innerHTML = "";
+    document.getElementById('prev').style.visibility = "hidden";
+    document.getElementById('next').style.visibility = "hidden";
   })
 }

@@ -46,7 +46,7 @@
             <div class="collapse navbar-collapse " id="navbarNavDropdown">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../../../">Home </a>
+                        <a class="nav-link" href="./">Home </a>
                     </li>
 
                     <li class="nav-item">
@@ -61,16 +61,16 @@
                         <a class="nav-link" href="../../../pages/visualizations/iss/">iss</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../../pages/visualizations/marketcap/">marketcap</a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="../../../pages/visualizations/marketcap/">marketcap <span class="sr-only">(current)</span></a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="../../../pages/visualizations/quality/">quality</a>
                     </li>
 
-                    <li class="nav-item active">
-                        <a class="nav-link" href="../../../pages/visualizations/weather/">weather<span class="sr-only">(current)</span></a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../../pages/visualizations/weather/">weather</a>
                     </li>
 
 
@@ -79,15 +79,12 @@
                             Tutorials
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">earthquake tutorial</a>
-                            <a class="dropdown-item" href="#">exchange tutorial</a>
-                            <a class="dropdown-item" href="#">iss tutorial</a>
-                            <a class="dropdown-item" href="#">marketcap tutorial</a>
-                            <a class="dropdown-item" href="#">quality tutorial</a>
+                            <a class="dropdown-item" href="../../../pages/tutorials/earthquake/">earthquake tutorial</a>
+                            <a class="dropdown-item" href="../../../pages/tutorials/exchange/">exchange tutorial</a>
+                            <a class="dropdown-item" href="../../../pages/tutorials/iss/">iss tutorial</a>
+                            <a class="dropdown-item" href="../../../pages/tutorials/marketcap/">marketcap tutorial</a>
+                            <a class="dropdown-item" href="../../../pages/tutorials/quality/">quality tutorial</a>
                             <a class="dropdown-item" href="../../../pages/tutorials/weather/">weather tutorial</a>
-                            <a class="dropdown-item" href="#">implementing APIs </a>
-                            <a class="dropdown-item" href="#"></a>
-                            <a class="dropdown-item" href="#"></a>
                         </div>
                     </li>
                 </ul>
@@ -125,15 +122,39 @@
                                 <br>
                                 <div id="map"></div>
                                 <div id="Info"></div>
-                                <div class="container-fluid" style="overflow: hidden; display: flex; flex-direction: row; flex-wrap: wrap;">
-                                    <div id="day1" style="padding-right: 25px;"></div>
-                                    <div id="day2" style="padding-right: 25px;"></div>
-                                    <div id="day3" style="padding-right: 25px;"></div>
-                                    <div id="day4"></div>
-                                    <div id="day5" style="padding-right: 165px;"></div>
-                                    <div id="day6" style="padding-right: 150px;"></div>
-                                    <div id="day7"></div>
-                                 </div>  
+                                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <div id="day1" class="day-box"></div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <div id="day2" class="day-box"></div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <div id="day3" class="day-box"></div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <div id="day4" class="day-box"></div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <div id="day5" class="day-box"></div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <div id="day6" class="day-box"></div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <div id="day7" class="day-box"></div>
+                                        </div>
+                                    </div>
+                                    <a  id="prev" class="carousel-control-prev" href="#carouselExampleIndicators" style="visibility: hidden;" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                      </a>
+                                      <a id="next" class="carousel-control-next" href="#carouselExampleIndicators" style="visibility: hidden;" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                      </a>
+                                </div>
                             </div>
                         </div>
                     </div> 
