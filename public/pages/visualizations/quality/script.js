@@ -16,12 +16,17 @@ window.onload = function () {
     },
     axisY: {
         title: "Score Out Of Ten",
-        maximum: 10
+        maximum: 10,
+    },
+    axisX: {
+        labelFontSize: 12,
     },
     data: []});
 
     addCityData(chart, 0, numberOfDDs - 1);
     }
+
+    
 
     async function addCityData(chart, number, numberToReach){
         console.log("running addCityData")
@@ -30,7 +35,7 @@ window.onload = function () {
         var cityName = citySelection.options[citySelection.selectedIndex].text;
         var citySlug = citySelection.value;
 
-        var randomColor = '#' + (Math.floor((Math.random()*16777215) + 1).toString(16));
+        var randomColor = '#' + (Math.floor((Math.random()*16777215)).toString(16));
         
         //var cityName = citySelection.options[citySelection.selectedIndex].text;
         chart.options.data.push({        
@@ -65,6 +70,7 @@ window.onload = function () {
     function removeDropDown(){
         document.getElementById('cityDropDown' + (numberOfDDs- 1)).remove();
         numberOfDDs--;
+        getData();
     }
 
     function addDropDown(){
