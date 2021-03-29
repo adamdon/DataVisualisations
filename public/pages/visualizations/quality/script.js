@@ -15,7 +15,7 @@ window.onload = function () {
         text: "City Comparison" 
     },
     axisY: {
-        title: "Score Out Of Ten",
+        title: "Score Out of Ten",
         maximum: 10,
         minimum: 0,
     },
@@ -29,10 +29,10 @@ window.onload = function () {
         theme: "light1",
         zoomEnabled: true,
         title:{
-            text: "Cities overall Scores out of 100"
+            text: "Cities Overall Scores Out of 100"
         },
         axisY: {
-            title: "Total score",
+            title: "Total Score",
             maximum : 100,
             minimum : 0,
         },
