@@ -53,6 +53,15 @@ window.onload = async () =>
         let updateLabels = labels(barChartSvg);
         let updateTicker = ticker(barChartSvg);
 
+        barChartSvg.append("text")
+            .style('fill', 'white')
+            .attr("class", "x label")
+            .attr("text-anchor", "end")
+            .attr("x", width)
+            .attr("y", height - 2)
+            .text("Total worth in USD");
+
+
 
         for (const keyframe of keyframes)
         {
@@ -80,11 +89,14 @@ window.onload = async () =>
         const now = svg.append("text")
             .style("font", `bold ${barSize}px var(--sans-serif)`)
             .style("font-variant-numeric", "tabular-nums")
+            .style('fill', 'white')
             .attr("text-anchor", "end")
             .attr("x", width - 6)
             .attr("y", margin.top + barSize * (shownBarsNumber - 0.45))
             .attr("dy", "0.32em")
             .text(formatDate(keyframes[0][0]));
+
+
 
         return ([date], transition) =>
         {
