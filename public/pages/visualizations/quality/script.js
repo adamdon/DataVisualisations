@@ -7,9 +7,9 @@ window.onload = function () {
     
     
 
-    var chart = new CanvasJS.Chart("chartContainer", {
+    var scoreChart = new CanvasJS.Chart("qualityChartContainer", {
     animationEnabled: true,
-    theme: "light1", // "light1", "light2", "dark1", "dark2"
+    theme: "light1", // other available themes "light1", "light2", "dark1", "dark2"
     zoomEnabled: true,
     title:{
         text: "City Comparison" 
@@ -17,18 +17,40 @@ window.onload = function () {
     axisY: {
         title: "Score Out Of Ten",
         maximum: 10,
+        minimum: 0,
     },
     axisX: {
         labelFontSize: 12,
     },
     data: []});
 
-    addCityData(chart, 0, numberOfDDs - 1);
+    var totalChart = new CanvasJS.Chart("totalChartContainer", {
+        animationEnabled: true,
+        theme: "light1",
+        zoomEnabled: true,
+        title:{
+            text: "Cities overall Scores out of 100"
+        },
+        axisY: {
+            title: "Total score",
+            maximum : 100,
+            minimum : 0,
+        },
+        data: [{
+        type: "bar",  
+        showInLegend: false,
+        dataPoints: []}]
+    });
+
+        addCityData(scoreChart, totalChart, 0, numberOfDDs - 1);
+
     }
 
     
 
-    async function addCityData(chart, number, numberToReach){
+    
+
+    async function addCityData(scoreChart, totalChart, number, numberToReach){
         console.log("running addCityData")
 
         var citySelection = document.getElementById("cityDropDown" + number);
@@ -38,7 +60,7 @@ window.onload = function () {
         var randomColor = '#' + (Math.floor((Math.random()*16777215)).toString(16));
         
         //var cityName = citySelection.options[citySelection.selectedIndex].text;
-        chart.options.data.push({        
+        scoreChart.options.data.push({        
             type: "column",  
             showInLegend: true, 
             legendMarkerColor: randomColor,
@@ -54,13 +76,16 @@ window.onload = function () {
 
         //adding datapoints
         data.categories.forEach(category => {
-            chart.options.data[number].dataPoints.push({ y: category.score_out_of_10, label: category.name, color: randomColor})
+            scoreChart.options.data[number].dataPoints.push({ y: category.score_out_of_10, label: category.name, color: randomColor})
         });
+        console.log(data.teleport_city_score)
+        totalChart.options.data[0].dataPoints.push({ y: data.teleport_city_score, label: cityName, color: randomColor})
 
         if(number >= numberToReach){
-            chart.render();
+            scoreChart.render();
+            totalChart.render();
         } else {
-            addCityData(chart, number + 1, numberToReach)
+            addCityData(scoreChart, totalChart, number + 1, numberToReach)
         }
     }
     addDropDown();
@@ -97,6 +122,8 @@ window.onload = function () {
           option.text = city.name;
           select.appendChild(option);
         }
+
+        
        
         document.getElementById('dropDownsDiv').appendChild(select);
         document.getElementById('cityDropDown' + numberOfDDs).addEventListener('change',rungetData)
