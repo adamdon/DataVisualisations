@@ -56,6 +56,11 @@ export default class
         //Gets the market cap history of a single coin by name
     static async #fetchCoinMarketcap(coinText)
     {
+        console.log("sleep start")
+        await this.#sleep(505);
+        console.log("sleep end")
+
+
         const urlText = `https://api.coingecko.com/api/v3/coins/${coinText}/market_chart?vs_currency=usd&days=30&interval=daily`;
         const response = await fetch(urlText);
         const data = await response.json();
@@ -64,7 +69,6 @@ export default class
         lastDateInArray.setHours(0, 0, 0, 0);
         const filteredCaps = allMarketCaps.filter(element => (new Date(element[0])) < lastDateInArray);
         // console.log(allMarketCaps[0][0]);
-        console.log(lastDateInArray.toISOString());
 
         this.#updateLoadingUi();
         let fullDataObjectArray = [];
@@ -97,6 +101,12 @@ export default class
         loadingElement.innerHTML = (loadingElement.innerHTML + ".");
 
 
+    }
+
+
+    static #sleep(ms)
+    {
+        return new Promise(resolve => setTimeout(resolve, ms || DEF_DELAY));
     }
 
 
