@@ -35,7 +35,7 @@ export default class
 
         let coinsNamesToFilter = ["bitcoin", "ethereum", "ripple", "tether", "usd-coin"];
         let filteredCoinNames = coinNames.filter(name => !(coinsNamesToFilter.includes(name)));
-        let shortListTokenNames = filteredCoinNames.slice(0, 15);
+        let shortListTokenNames = filteredCoinNames.slice(0, 12);
 
 
         // console.log(coinNames);

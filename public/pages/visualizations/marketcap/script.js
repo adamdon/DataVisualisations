@@ -8,7 +8,7 @@ window.onload = async () =>
 
 
     let duration = 120;
-    let shownBarsNumber = 15;
+    let shownBarsNumber = 10;
     let speed = 10;
 
 
