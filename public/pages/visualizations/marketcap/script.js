@@ -112,7 +112,7 @@ window.onload = async () =>
     function bars(svg)
     {
         let bar = svg.append("g")
-            .attr("fill-opacity", 0.6)
+            .attr("fill-opacity", 0.9)
             .selectAll("rect");
 
         return ([date, data], transition) => bar = bar
