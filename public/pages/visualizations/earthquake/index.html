@@ -123,9 +123,17 @@
                                 </p>
 
                                 <hr class="my-2">
-
                                 <button type="button" id="map1Button" class="btn btn-dark btn-lg btn-block">Get
-                                    Earthquake Data
+                                    All Earthquakes Past Hour
+                                 </button>
+                                <button type="button" id="map2Button" class="btn btn-dark btn-lg btn-block">Get
+                                    All Earthquakes Data Past Day
+                                </button>
+                                <button type="button" id="map3Button" class="btn btn-dark btn-lg btn-block">Get
+                                    All Earthquakes Data Past 7 Days
+                                </button>
+                                <button type="button" id="map4Button" class="btn btn-dark btn-lg btn-block">Get
+                                    All Earthquakes Data Past 30 Days
                                 </button>
 
                                 <hr class="my-2">
@@ -169,13 +177,13 @@
                 google.maps.event.trigger(map, "resize");
             }
 
-
+            
             var thelocation;
             var titleName;
             $(document).ready(function ()
             {
 
-                $("#map1Button").click(function ()
+                $("#map2Button").click(function ()
                 {
                     // Set Google map  to its start state
                     map = new google.maps.Map(document.getElementById("map"), {
@@ -186,7 +194,7 @@
                     // The following uses JQuery library
                     $.ajax({
                         // The URL of the specific data required
-                        url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+                        url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson",
 
                         // Called if there is a problem loading the data
                         error: function ()
