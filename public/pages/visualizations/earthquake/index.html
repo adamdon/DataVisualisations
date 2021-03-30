@@ -181,7 +181,44 @@
             var thelocation;
             var titleName;
             $(document).ready(function ()
-            {
+              {
+                  
+                $("#map1Button").click(function ()
+                {
+                    // Set Google map  to its start state
+                    map = new google.maps.Map(document.getElementById("map"), {
+                        zoom: 2,
+                        center: new google.maps.LatLng(2.8, -187.3), // Center Map. Set this to any location that you like
+                        mapTypeId: "terrain" // can be any valid type
+                    });
+                    // The following uses JQuery library
+                    $.ajax({
+                        // The URL of the specific data required
+                        url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson",
+
+                        // Called if there is a problem loading the data
+                        error: function ()
+                        {
+                            $("#info").html("<p>An error has occurred</p>");
+                        },
+
+                        // Called when the data has succesfully loaded
+                        success: function (data)
+                        {
+                            $.each(data.features, function (key, val)
+                            {
+                                // Get the lat and lng data for use in the markers
+                                var coords = val.geometry.coordinates;
+                                var latLng = new google.maps.LatLng(coords[1], coords[0]);
+                                // Now create a new marker on the map
+                                var marker = new google.maps.Marker({
+                                    position: latLng,
+                                    map: map
+                                });
+                            });
+                        }  
+                    });
+                });
 
                 $("#map2Button").click(function ()
                 {
@@ -216,6 +253,79 @@
                                     map: map
                                 });
                             });
+                        }
+                    });
+                });
+
+                $("#map3Button").click(function ()
+                {
+                    // Set Google map  to its start state
+                    map = new google.maps.Map(document.getElementById("map"), {
+                        zoom: 2,
+                        center: new google.maps.LatLng(2.8, -187.3), // Center Map. Set this to any location that you like
+                        mapTypeId: "terrain" // can be any valid type
+                    });
+                    // The following uses JQuery library
+                    $.ajax({
+                        // The URL of the specific data required
+                        url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson",
+
+                        // Called if there is a problem loading the data
+                        error: function ()
+                        {
+                            $("#info").html("<p>An error has occurred</p>");
+                        },
+
+                        // Called when the data has succesfully loaded
+                        success: function (data)
+                        {
+                            $.each(data.features, function (key, val)
+                            {
+                                // Get the lat and lng data for use in the markers
+                                var coords = val.geometry.coordinates;
+                                var latLng = new google.maps.LatLng(coords[1], coords[0]);
+                                // Now create a new marker on the map
+                                var marker = new google.maps.Marker({
+                                    position: latLng,
+                                    map: map
+                                });
+                            });
+                        }
+                    });
+                });
+                $("#map4Button").click(function ()
+                {
+                    // Set Google map  to its start state
+                    map = new google.maps.Map(document.getElementById("map"), {
+                        zoom: 2,
+                        center: new google.maps.LatLng(2.8, -187.3), // Center Map. Set this to any location that you like
+                        mapTypeId: "terrain" // can be any valid type
+                    });
+                    // The following uses JQuery library
+                    $.ajax({
+                        // The URL of the specific data required
+                        url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson",
+
+                        // Called if there is a problem loading the data
+                        error: function ()
+                        {
+                            $("#info").html("<p>An error has occurred</p>");
+                        },
+
+                        // Called when the data has succesfully loaded
+                        success: function (data)
+                        {
+                            $.each(data.features, function (key, val)
+                            {
+                                // Get the lat and lng data for use in the markers
+                                var coords = val.geometry.coordinates;
+                                var latLng = new google.maps.LatLng(coords[1], coords[0]);
+                                // Now create a new marker on the map
+                                var marker = new google.maps.Marker({
+                                    position: latLng,
+                                    map: map
+                                });
+                            });
 
                         }
                     });
@@ -226,8 +336,6 @@
         <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPKZPA5U02v5Ag20p35PUos8uRoN6KvM8&callback=initMap">
         </script>
-
-
 
 
     </body>
