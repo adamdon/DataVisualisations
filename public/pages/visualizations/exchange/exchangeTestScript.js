@@ -46,7 +46,7 @@ async function getCurrencyList()
 {
     try
     {
-        let url = "https://api.exchangeratesapi.io/latest?base=USD";
+        let url = "https://api.exchangerate.host/latest?base=USD";
         let chartElement = document.getElementById('exchangeChart').getContext('2d');
         chartElement.font = "30px Roboto";
         chartElement.fillStyle = "white";
@@ -98,7 +98,7 @@ async function populateDataset()
         let CompCurrency = document.getElementById('currency2');
     
 
-        let url = `https://api.exchangeratesapi.io/history?start_at=${startdate || "2021-01-01"}&end_at=${enddate || "2021-02-20"}&base=${BaseCurrency.value || 'USD'}&symbols=${CompCurrency.value|| 'GBP'}`;
+        let url = `https://api.exchangerate.host/timeseries?start_date=${startdate || "2021-01-01"}&end_date=${enddate || "2021-02-20"}&base=${BaseCurrency.value || 'USD'}&symbols=${CompCurrency.value|| 'GBP'}`;
         console.log(url);
         let chartElement = document.getElementById('exchangeChart').getContext('2d');
         chartElement.font = "30px Roboto";
