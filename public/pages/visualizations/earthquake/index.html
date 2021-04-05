@@ -175,9 +175,8 @@
                     mapTypeId: "terrain" // can be any valid type
                 });
                 google.maps.event.trigger(map, "resize");
-            }
+            }  
 
-            
             var thelocation;
             var titleName;
             $(document).ready(function ()
@@ -194,7 +193,7 @@
                     // The following uses JQuery library
                     $.ajax({
                         // The URL of the specific data required
-                        url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson",
+                        url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson",
 
                         // Called if there is a problem loading the data
                         error: function ()
@@ -204,7 +203,8 @@
 
                         // Called when the data has succesfully loaded
                         success: function (data)
-                        {
+                        {    i = 0;
+                             var markers = []; // keep an array of Google Maps markers, to be used by the Google Maps clusterer
                             $.each(data.features, function (key, val)
                             {
                                 // Get the lat and lng data for use in the markers
@@ -213,10 +213,20 @@
                                 // Now create a new marker on the map
                                 var marker = new google.maps.Marker({
                                     position: latLng,
-                                    map: map
+                                    map: map,
+                                    label: val.properties.mag.toString()
                                 });
-                            });
-                        }  
+                                var infowindow = new google.maps.InfoWindow({
+                                content: "<h3>" + val.properties.title + "</h3><p><a href='" + val.properties.url + "'>Details</a></p>"
+                                 });
+                                 marker.addListener('click', function (data) {
+                                 infowindow.open(map, marker); // Open the Google maps marker infoWindow
+                                  }); 
+                                 markers[i++] = marker; //Add the marker to array to be used by clusterer
+                                });
+                            var markerCluster = new MarkerClusterer(map, markers,
+                            { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
+                        }
                     });
                 });
 
@@ -241,7 +251,8 @@
 
                         // Called when the data has succesfully loaded
                         success: function (data)
-                        {
+                        {    i = 0;
+                             var markers = []; // keep an array of Google Maps markers, to be used by the Google Maps clusterer
                             $.each(data.features, function (key, val)
                             {
                                 // Get the lat and lng data for use in the markers
@@ -250,9 +261,19 @@
                                 // Now create a new marker on the map
                                 var marker = new google.maps.Marker({
                                     position: latLng,
-                                    map: map
+                                    map: map,
+                                    label: val.properties.mag.toString()
                                 });
-                            });
+                                var infowindow = new google.maps.InfoWindow({
+                                content: "<h3>" + val.properties.title + "</h3><p><a href='" + val.properties.url + "'>Details</a></p>"
+                                 });
+                                 marker.addListener('click', function (data) {
+                                 infowindow.open(map, marker); // Open the Google maps marker infoWindow
+                                  }); 
+                                 markers[i++] = marker; //Add the marker to array to be used by clusterer
+                                });
+                            var markerCluster = new MarkerClusterer(map, markers,
+                            { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
                         }
                     });
                 });
@@ -278,7 +299,8 @@
 
                         // Called when the data has succesfully loaded
                         success: function (data)
-                        {
+                        {    i = 0;
+                             var markers = []; // keep an array of Google Maps markers, to be used by the Google Maps clusterer
                             $.each(data.features, function (key, val)
                             {
                                 // Get the lat and lng data for use in the markers
@@ -287,9 +309,19 @@
                                 // Now create a new marker on the map
                                 var marker = new google.maps.Marker({
                                     position: latLng,
-                                    map: map
+                                    map: map,
+                                    label: val.properties.mag.toString()
                                 });
-                            });
+                                var infowindow = new google.maps.InfoWindow({
+                                content: "<h3>" + val.properties.title + "</h3><p><a href='" + val.properties.url + "'>Details</a></p>"
+                                 });
+                                 marker.addListener('click', function (data) {
+                                 infowindow.open(map, marker); // Open the Google maps marker infoWindow
+                                  }); 
+                                 markers[i++] = marker; //Add the marker to array to be used by clusterer
+                                });
+                            var markerCluster = new MarkerClusterer(map, markers,
+                            { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
                         }
                     });
                 });
@@ -314,7 +346,8 @@
 
                         // Called when the data has succesfully loaded
                         success: function (data)
-                        {
+                        {    i = 0;
+                             var markers = []; // keep an array of Google Maps markers, to be used by the Google Maps clusterer
                             $.each(data.features, function (key, val)
                             {
                                 // Get the lat and lng data for use in the markers
@@ -323,16 +356,26 @@
                                 // Now create a new marker on the map
                                 var marker = new google.maps.Marker({
                                     position: latLng,
-                                    map: map
+                                    map: map,
+                                    label: val.properties.mag.toString()
                                 });
-                            });
-
+                                var infowindow = new google.maps.InfoWindow({
+                                content: "<h3>" + val.properties.title + "</h3><p><a href='" + val.properties.url + "'>Details</a></p>"
+                                 });
+                                 marker.addListener('click', function (data) {
+                                 infowindow.open(map, marker); // Open the Google maps marker infoWindow
+                                  }); 
+                                 markers[i++] = marker; //Add the marker to array to be used by clusterer
+                                });
+                            var markerCluster = new MarkerClusterer(map, markers,
+                            { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
                         }
                     });
                 });
             });
         </script>
-
+          <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+          </script>
         <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPKZPA5U02v5Ag20p35PUos8uRoN6KvM8&callback=initMap">
         </script>
