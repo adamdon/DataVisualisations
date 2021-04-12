@@ -106,8 +106,6 @@
 
 
 
-
-
     <div class="container-fluid layout-container-fluid rounded">
         <!-- layout-container-fluid -->
 
@@ -115,13 +113,12 @@
         <div class="row no-gutters">
             <!-- Row 1  -->
 
-
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <!-- col 1  -->
 
                 <div class="content-container-fluid">
                     <div class="card text-white bg-primary">
-                        <div class="card-header"><i class="fas fa-graduation-cap"></i> Tutorial for TITLEHERE</div>
+                        <div class="card-header"><i class="fas fa-graduation-cap"></i> Tutorial for ISS Tracker</div>
                         <div class="card-body">
 
                             <!-- Page content start  -->
@@ -129,7 +126,6 @@
 
                                 <div class="row no-gutters">
                                     <!-- Row   -->
-
 
                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <!-- col   -->
@@ -140,17 +136,15 @@
                                             <h5 class="card-title">Tutorial Sections</h5>
 
                                             <ol>
-                                                <li>Getting the data from the API</li>
-                                                <li>Processing the information</li>
-                                                <li>Displaying in the visualisation</li>
+                                                <li> Intialise Map and Icon</li>
+                                                <li> Setup Zoom Controls</li>
+                                                <li> Fetch and Display Data</li>
                                                 <li>Further reading links</li>
                                             </ol>
-
 
                                         </div>
 
                                     </div> <!-- col 1  -->
-
 
                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <!-- col 2  -->
@@ -158,7 +152,6 @@
                                         <div class="container-fluid">
 
                                             <img src="./image.png" class="rounded w-100" alt="Computer code">
-
 
                                         </div>
 
@@ -171,23 +164,34 @@
 
                             <div class="divider my-4"></div>
 
-
-
-                            <h5 class="card-title"><i class="fas fa-cloud-download-alt"></i> Getting the data from the
-                                API</h5>
+                            <h5 class="card-title"><i class="fas fa-cloud-download-alt"></i> Intialise Map and Icon</h5>
 
                             <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                Ut enim ad minim veniam,
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                                nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident,
-                                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                The first step in re-creating the ISS Tracker example is to load the LeafletJs library
+                                by linking the script within a script tag. <br>
+                                <br>
+                                After this create a map object and instatiate the three required attributes (latitude,
+                                longitude and default zoom level) and declare this as a const
+                                with using an L prefix to allow access the methods now available to u from LeafletJs.
+                                <br>
+                                <br>
+                                At this point we have an empty map container, for techinal reasons beyond the scope of
+                                this tutorial Leaflet and many other mapping tools import sections of map as tiles or
+                                small sections of maps, this example will be using the tiles from OpenStreetMap
+                                availaible
+                                under the open commons licence, then add the returned layer to the map. <br>
+                                <br>
+                                You can declare an new icon with the same attributes below linking image you wish to use
+                                in the icon Url attribute. This can new icon can now be added as marker to the Leaflet
+                                map
+                                with postion set to [0, 0] to centre the marker.
                             </p>
 
                             <pre><code class="javascript">
+                                <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+                                integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+                                crossorigin=""></script>
+
                                 const mymap = L.map('issMap').setView([0, 0], 1);
                                 const attribution =
                                 '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
@@ -205,17 +209,12 @@
 
                             <div class="divider my-4"></div>
 
-                            <h5 class="card-title"><i class="fas fa-wrench"></i> Processing the information</h5>
+                            <h5 class="card-title"><i class="fas fa-wrench"></i> Setup Zoom Controls</h5>
 
                             <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                Ut enim ad minim veniam,
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                                nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident,
-                                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                Now we have our map and icon in place we also want to make the visualisation more
+                                interactive so we will use this segement of code to allow users to zoom in whilst
+                                also automatically adjusting the icon.
                             </p>
 
                             <pre><code class="javascript">
@@ -230,22 +229,25 @@
                                     marker = L.marker([0, 0], { icon: issIcon }).addTo(mymap);
                                     marker.setLatLng(latlng);
                                   });
-                              
                                 </code></pre>
 
                             <div class="divider my-4"></div>
 
-                            <h5 class="card-title"><i class="fas fa-desktop"></i> Displaying in the visualisation</h5>
+                            <h5 class="card-title"><i class="fas fa-desktop"></i> Fetch and Display Data</h5>
 
                             <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                Ut enim ad minim veniam,
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                                nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident,
-                                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                First declare the URL of the API providing the data as const.
+                                <br>
+                                <br>
+                                Then declare a new boolean variable we will use to determin if its the users first time
+                                loading the visualization,
+                                this is important to prevent constantly overriding the users current zoom level with
+                                that of the default map view.
+                                <br>
+                                <br>
+                                Use getElement method of the document object to find the longtiude and latitude
+                                paragraphs and set the text concent to the data returned from the api.
+                                Finally use a set interval method to call getIss every second.
                             </p>
 
                             <pre><code class="javascript">
@@ -274,19 +276,18 @@
 
                             <div class="divider my-4"></div>
 
-
                             <h5 class="card-title"><i class="fas fa-book-reader"></i> Further Reading links</h5>
 
                             <ul>
-                                <li><a href="https://www.google.com/" target="_blank"
+                                <li><a href="https://leafletjs.com/examples/zoom-levels/" target="_blank"
                                         class="text-decoration-none font-weight-bold text-white"><i
-                                            class="fas fa-link"></i> API docs, Library Docs</a></li>
-                                <li><a href="https://www.google.com/" target="_blank"
+                                            class="fas fa-link"></i>Leaflet Map Zoom Levels</a></li>
+                                <li><a href="https://leafletjs.com" target="_blank"
                                         class="text-decoration-none font-weight-bold text-white"><i
-                                            class="fas fa-link"></i> Library Docs</a></li>
-                                <li><a href="https://www.google.com/" target="_blank"
+                                            class="fas fa-link"></i>Leaflet Js</a></li>
+                                <li><a href="https://wheretheiss.at/w/developer" target="_blank"
                                         class="text-decoration-none font-weight-bold text-white"><i
-                                            class="fas fa-link"></i> About the data</a></li>
+                                            class="fas fa-link"></i>ISS API</a></li>
                             </ul>
 
                             <div class="divider my-4"></div>
