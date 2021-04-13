@@ -16,7 +16,7 @@ livereloadServer.server.once("connection", () => {setTimeout(() => {livereloadSe
 //Set request handles
 let expressApp = express();
 
-expressApp.use(connectLivereload()); //monkey patches HTML with livereload.js for auto F5
+// expressApp.use(connectLivereload()); //monkey patches HTML with livereload.js for auto F5
 expressApp.use(express.json());
 expressApp.use(express.static("public"));
 
