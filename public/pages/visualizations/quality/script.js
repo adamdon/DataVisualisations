@@ -114,6 +114,9 @@ window.onload = function () {
         {slug: "thessaloniki", name: "Thessaloniki"},{slug: "tokyo", name: "Tokyo"},{slug: "toronto", name: "Toronto"},{slug: "toulouse", name: "Toulouse"},{slug: "tunis", name: "Tunis"},{slug: "turin", name: "Turin"},{slug: "turku", name: "Turku"},{slug: "uppsala", name: "Uppsala"},{slug: "utrecht", name: "Utrecht"},{slug: "valencia", name: "Valencia"},{slug: "valletta", name: "Valletta"},{slug: "vancouver", name: "Vancouver"},{slug: "victoria", name: "Victoria"},{slug: "vienna", name: "Vienna"},{slug: "vilnius", name: "Vilnius"},{slug: "warsaw", name: "Warsaw"},{slug: "washington-dc", name: "Washington, D.C."},{slug: "wellington", name: "Wellington"},{slug: "winnipeg", name: "Winnipeg"},{slug: "wroclaw", name: "Wroclaw"},{slug: "yerevan", name: "Yerevan"},{slug: "zagreb", name: "Zagreb"},{slug: "zurich", name: "Zurich"},
         ];
         var select = document.createElement("select");
+        select.classList.add("form-control");
+        select.classList.add("w-25");
+        select.classList.add("m-1");
         select.id = "cityDropDown" + numberOfDDs
        
         for (const city of cityInfo) {
