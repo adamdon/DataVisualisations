@@ -57,7 +57,7 @@ export default class
     static async #fetchCoinMarketcap(coinText)
     {
         console.log("sleep start")
-        await this.#sleep(505);
+        await this.#sleep(100);
         console.log("sleep end")
 
 
