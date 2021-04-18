@@ -188,19 +188,19 @@
 
                                 <pre style="color: white; background: #2b2b2b;" > index.html - &lt;body&gt;
                                     <code class="javascript">
-                                        {
-                                            "base": "EUR",
-                                            "date": "2018-04-08",
-                                            "rates": {
-                                              "CAD": 1.565,
-                                              "CHF": 1.1798,
-                                              "GBP": 0.87295,
-                                              "SEK": 10.2983,
-                                              "EUR": 1.092,
-                                              "USD": 1.2234,
-                                              ...
-                                            }
-                                          }
+{
+    "base": "EUR",
+    "date": "2018-04-08",
+    "rates": {
+      "CAD": 1.565,
+      "CHF": 1.1798,
+      "GBP": 0.87295,
+      "SEK": 10.2983,
+      "EUR": 1.092,
+      "USD": 1.2234,
+      ...
+    }
+  }
                                </code>
 
                                </pre>
@@ -213,17 +213,17 @@
 
                                 <pre style="color: white; background: #2b2b2b;" > index.html - &lt;body&gt;
                                      <code class="javascript">
-                                    &lt;div class="currencySelectContainer"&gt;
-                                    &lt;p&gt; Base Currency &lt;/p&gt;
-                                    &lt;select name="currency1" id="currency1"&gt;
-                                    &lt;/select&gt;
-                                    &lt;p&gt; Secondary Currency &lt;/p&gt;
-                                    &lt;select name="currency2" id="currency2"&gt;
-                                    &lt;/select&gt;
-                                    &lt;p&gt; Select a date: &lt;/p&gt;
-                                    &lt;input id="el"&gt;
-                                &lt;/div&gt; 
-                                    &lt;canvas id="exchangeChart"&gt;&lt;/canvas&gt; 
+    &lt;div class="currencySelectContainer"&gt;
+    &lt;p&gt; Base Currency &lt;/p&gt;
+    &lt;select name="currency1" id="currency1"&gt;
+    &lt;/select&gt;
+    &lt;p&gt; Secondary Currency &lt;/p&gt;
+    &lt;select name="currency2" id="currency2"&gt;
+    &lt;/select&gt;
+    &lt;p&gt; Select a date: &lt;/p&gt;
+    &lt;input id="el"&gt;
+&lt;/div&gt;
+    &lt;canvas id="exchangeChart"&gt;&lt;/canvas&gt;
                                 </code>
 
                                 </pre>
@@ -241,31 +241,31 @@
 
                                 <pre style="color: white; background: #2b2b2b;" > exchangeScript.js
                                     <code class="javascript">
-                                    let startdate
-                                    let enddate
-                                    console.log("Exchange Currency on script started");
-                                    getCurrencyList();
-                                    let currency1 = document.getElementById('currency1');
-                                    let currency2 = document.getElementById('currency2');
-                                    currency1.onchange = OnCurrencyChange;
-                                    currency2.onchange = OnCurrencyChange;
-                                    $('#el').daterangepicker({
+let startdate
+let enddate
+console.log("Exchange Currency on script started");
+getCurrencyList();
+let currency1 = document.getElementById('currency1');
+let currency2 = document.getElementById('currency2');
+currency1.onchange = OnCurrencyChange;
+currency2.onchange = OnCurrencyChange;
+$('#el').daterangepicker({
 
-                                        change: function(event, data) { 
+    change: function(event, data) {
 
-                                            let datesChanged = Object.values(JSON.parse($('#el').val()));
+        let datesChanged = Object.values(JSON.parse($('#el').val()));
 
-                                            startdate = datesChanged[0];
-                                            enddate = datesChanged[1];
-                                            $('#el').val(`${startdate} - ${enddate}`)
-                                            populateDataset()
-                                        }
-                                        
-                                    });
-                                        $('#el').removeAttr('style');
-                                        $('#drp_autogen0').text("Select a Date")
-                                        insertChartJsScriptTag();
-                                        populateDataset();
+        startdate = datesChanged[0];
+        enddate = datesChanged[1];
+        $('#el').val(`${startdate} - ${enddate}`)
+        populateDataset()
+    }
+
+});
+    $('#el').removeAttr('style');
+    $('#drp_autogen0').text("Select a Date")
+    insertChartJsScriptTag();
+    populateDataset();
 
                                     </code>
                                 </pre>
@@ -281,27 +281,27 @@
 
                                 <pre style="color: white; background: #2b2b2b;" > getCurrencyList()
                                     <code class="javascript">
-                                        try {
-                                            let url = "https://api.exchangeratesapi.io/latest?base=USD";
-                                            let chartElement = document.getElementById('exchangeChart').getContext('2d');
-                                            chartElement.font = "30px Roboto";
-                                            chartElement.fillStyle = "white";
-                                            chartElement.fillText("Loading data...", 10, 50);
-                                            let res = await axios.get(url);
-                                            let currencies = Object.keys(res.data.rates);            
-                                            let currency1 = document.getElementById('currency1');
-                                            let currency2 = document.getElementById('currency2');
-                                            currencies.forEach(currency => {
-                                                let opt = "&lt;option value="${currency}"&gt;${currency}&lt;/option&gt;";
-                                                    currency1.innerHTML = currency1.innerHTML + opt;
-                                                    currency2.innerHTML = currency2.innerHTML + opt;
-                                            });
-                                            currency1.value = "USD";
-                                            currency2.value = "GBP";
-                                        }
-                                        catch (error){
-                                            console.log(error);
-                                        }
+try {
+    let url = "https://api.exchangeratesapi.io/latest?base=USD";
+    let chartElement = document.getElementById('exchangeChart').getContext('2d');
+    chartElement.font = "30px Roboto";
+    chartElement.fillStyle = "white";
+    chartElement.fillText("Loading data...", 10, 50);
+    let res = await axios.get(url);
+    let currencies = Object.keys(res.data.rates);
+    let currency1 = document.getElementById('currency1');
+    let currency2 = document.getElementById('currency2');
+    currencies.forEach(currency => {
+        let opt = "&lt;option value="${currency}"&gt;${currency}&lt;/option&gt;";
+            currency1.innerHTML = currency1.innerHTML + opt;
+            currency2.innerHTML = currency2.innerHTML + opt;
+    });
+    currency1.value = "USD";
+    currency2.value = "GBP";
+}
+catch (error){
+    console.log(error);
+}
             
                                 </code></pre>
 
@@ -317,11 +317,11 @@
 
                                 <pre style="color: white; background: #2b2b2b;"> OnCurrencyChange()
                                     <code class="javascript">
-                                        let currency1 = document.getElementById('currency1');
-                                        let currency2 = document.getElementById('currency2');
-                                        console.log(currency1.value);
-                                        console.log(currency2.value);
-                                        populateDataset(); 
+let currency1 = document.getElementById('currency1');
+let currency2 = document.getElementById('currency2');
+console.log(currency1.value);
+console.log(currency2.value);
+populateDataset();
                                 </code></pre>
 
                                 <p class="card-text">
@@ -339,19 +339,19 @@
                                 </p>
                                 <pre style="color: white; background: #2b2b2b;"> populateDataset()
                                     <code class="javascript">
-                                        trygio
-                                        {
-                                            let BaseCurrency = document.getElementById('currency1');
-                                            let CompCurrency = document.getElementById('currency2');
+trygio
+{
+    let BaseCurrency = document.getElementById('currency1');
+    let CompCurrency = document.getElementById('currency2');
 
-                                            let url = `https://api.exchangeratesapi.io/history?start_at=${startdate || "2021-01-01"}&end_at=${enddate || "2021-02-20"}&base=${BaseCurrency.value || 'USD'}&symbols=${CompCurrency.value|| 'GBP'}`;
-                                            console.log(url);
-                                            let chartElement = document.getElementById('exchangeChart').getContext('2d');
-                                            chartElement.font = "30px Roboto";
-                                            chartElement.fillStyle = "white";
-                                            chartElement.fillText("Loading data...", 10, 50);
-                    
-                                            let response = await axios.get(url);
+    let url = `https://api.exchangeratesapi.io/history?start_at=${startdate || "2021-01-01"}&end_at=${enddate || "2021-02-20"}&base=${BaseCurrency.value || 'USD'}&symbols=${CompCurrency.value|| 'GBP'}`;
+    console.log(url);
+    let chartElement = document.getElementById('exchangeChart').getContext('2d');
+    chartElement.font = "30px Roboto";
+    chartElement.fillStyle = "white";
+    chartElement.fillText("Loading data...", 10, 50);
+
+    let response = await axios.get(url);
                                     
                                 </code></pre>
 
@@ -366,25 +366,25 @@
 
                                 <pre style="color: white; background: #2b2b2b;"> populateDataset()
                                     <code class="javascript">
-                                    const sortedRates =[];
-                                    for (const [key, value] of Object.entries(rates)) {
-                                        let newobj = { [key] :`${Object.values(value)}`};
-                                        sortedRates.push(newobj);
-                                    }
-                                    const newSortedRates = sortedRates.sort(function(a,b){
-                                        let date1 = new Date(Object.keys(a)[0]);
-                                        let date2 = new Date(Object.keys(b)[0]);
-                                        return date1.getDate() - date2.getDate()
-                                        });
-                                    console.log(newSortedRates);
-                                    const Dates =  []
-                                    const DateValuesArr = [];
-                                    newSortedRates.forEach(element => {
-                                        DateValuesArr.push((Object.values(element)[0]));
-                                    });
-                                    newSortedRates.forEach(element => {
-                                        Dates.push((Object.keys(element)[0].toString()));
-                                    });
+const sortedRates =[];
+for (const [key, value] of Object.entries(rates)) {
+    let newobj = { [key] :`${Object.values(value)}`};
+    sortedRates.push(newobj);
+}
+const newSortedRates = sortedRates.sort(function(a,b){
+    let date1 = new Date(Object.keys(a)[0]);
+    let date2 = new Date(Object.keys(b)[0]);
+    return date1.getDate() - date2.getDate()
+    });
+console.log(newSortedRates);
+const Dates =  []
+const DateValuesArr = [];
+newSortedRates.forEach(element => {
+    DateValuesArr.push((Object.values(element)[0]));
+});
+newSortedRates.forEach(element => {
+    Dates.push((Object.keys(element)[0].toString()));
+});
                                 </code></pre>
 
                                 <div class="divider my-4"></div>
@@ -406,15 +406,15 @@
 
                                 <pre style="color: white; background: #2b2b2b;"> populateDataset()
                                     <code class="javascript">
-                                    let data = {
-                                        labels: Dates,
-                                        datasets: [{
-                                            label: `${$('#currency2').val()}`,
-                                            data: DateValuesArr,
-                                            backgroundColor: ['rgba(255, 0, 0, 0.05)'],
-                                            pointBackgroundColor: 'white'
-                                        }]
-                                    } 
+let data = {
+    labels: Dates,
+    datasets: [{
+        label: `${$('#currency2').val()}`,
+        data: DateValuesArr,
+        backgroundColor: ['rgba(255, 0, 0, 0.05)'],
+        pointBackgroundColor: 'white'
+    }]
+}
                                 </code> </pre>
                                 <p class="card-text">
                                     The options variable below will be used to define the options for the chart,
@@ -425,50 +425,50 @@
                                 <pre style="color: white; background: #2b2b2b;"> populateDataset()
                                     <code class="javascript">
 
-                                        let options = { 
-                                            legend: {
-                                                labels: {
-                                                    fontColor: "white",
-                                                    fontSize: 18
-                                                }
-                                            },
-                                            scales: {
-                                                yAxes: [{
-                                                    scaleLabel: {
-                                                    fontColor: "white",
-                                                    fontSize: 14,
-                                                    display: true,
-                                                    labelString: `Value of ${CompCurrency.value}`
-                                                    },
-                                                    ticks: {
-                                                        fontColor: "white",
-                                                        fontSize: 18,
-                                                        stepSize: 1,
-                                                        callback: function(value, index, values) {
-                                                        return '$' + value;
-                                                        },
-                                                    }
-                                                }],
-                                                xAxes: [{
-                                                scaleLabel: {
-                                                    fontColor: "white",
-                                                    fontSize: 14,
-                                                    display: true,
-                                                    labelString: `Price changes each day`
-                                                },
-                                                    ticks: {
-                                                        fontColor: "white",
-                                                        fontSize: 14,
-                                                        stepSize: 1,
-                                                        title:{
-                                                            align:'center',
-                                                            text: "Text",
-                                                            display: true
-                                                        }
-                                                    }
-                                                }]
-                                            }
-                                        }
+let options = {
+    legend: {
+        labels: {
+            fontColor: "white",
+            fontSize: 18
+        }
+    },
+    scales: {
+        yAxes: [{
+            scaleLabel: {
+            fontColor: "white",
+            fontSize: 14,
+            display: true,
+            labelString: `Value of ${CompCurrency.value}`
+            },
+            ticks: {
+                fontColor: "white",
+                fontSize: 18,
+                stepSize: 1,
+                callback: function(value, index, values) {
+                return '$' + value;
+                },
+            }
+        }],
+        xAxes: [{
+        scaleLabel: {
+            fontColor: "white",
+            fontSize: 14,
+            display: true,
+            labelString: `Price changes each day`
+        },
+            ticks: {
+                fontColor: "white",
+                fontSize: 14,
+                stepSize: 1,
+                title:{
+                    align:'center',
+                    text: "Text",
+                    display: true
+                }
+            }
+        }]
+    }
+}
                                 </code> </pre>
 
                                 <p class="card-text">
@@ -481,11 +481,11 @@
 
                                 <pre style="color: white; background: #2b2b2b;"> populateDataset()
                                     <code class="javascript">
-                                    var LineChart = new Chart(chartElement, {
-                                        type: 'line',
-                                        data: data,
-                                        options: options
-                                    });
+var LineChart = new Chart(chartElement, {
+    type: 'line',
+    data: data,
+    options: options
+});
                                 </code></pre>
 
                                 <div class="divider my-4"></div>

@@ -181,21 +181,21 @@
                                 </p>
 
                                 <pre><code class="javascript">
-                                    class GetWeather{
-                                        async getCurrent(lat, lng){
-                                          const myKey = "Type your API key here"; // The API key should be obtained from OpenWeatherMap
-                                      
-                                          const response = await fetch(
-                                            `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&appid=${myKey}`
-                                          );
-                                      
-                                          const data = await response.json();
-                                      
-                                          console.log(data); // prints data to console.
-                                      
-                                          return data;
-                                        }
-                                      }
+class GetWeather{
+    async getCurrent(lat, lng){
+      const myKey = "Type your API key here"; // The API key should be obtained from OpenWeatherMap
+
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&appid=${myKey}`
+      );
+
+      const data = await response.json();
+
+      console.log(data); // prints data to console.
+
+      return data;
+    }
+  }
                                 </code></pre>
 
                                 <p class="card-text">The above code allows the api request to be handled through an object of the class <strong>GetWeather</strong>.
@@ -216,25 +216,25 @@
                                 </p>
 
                                 <pre><code class="javascript">
-                                    function initMap() {
-                                        // The map, centered at Glasgow
-                                        const map = new google.maps.Map(document.getElementById("map"), {
-                                          zoom: 7,
-                                          center: { lat: 55.860916, lng: -4.251433 },
-                                        });
-                                        // The marker, positioned at Glasgow
-                                        const marker = new google.maps.Marker({
-                                          position: { lat: 55.860916, lng: -4.251433 },
-                                          draggable: true,
-                                          map: map,
-                                        });
-                                      
-                                        google.maps.event.addListener(marker, 'dragend', async function (evt) {
-                                          const latitude = evt.latLng.lat();
-                                          const longitude = evt.latLng.lng();
-                                      
-                                          var temps = await weather.getCurrent(latitude, longitude);
-                                          console.log(temps);
+function initMap() {
+    // The map, centered at Glasgow
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 7,
+      center: { lat: 55.860916, lng: -4.251433 },
+    });
+    // The marker, positioned at Glasgow
+    const marker = new google.maps.Marker({
+      position: { lat: 55.860916, lng: -4.251433 },
+      draggable: true,
+      map: map,
+    });
+
+    google.maps.event.addListener(marker, 'dragend', async function (evt) {
+      const latitude = evt.latLng.lat();
+      const longitude = evt.latLng.lng();
+
+      var temps = await weather.getCurrent(latitude, longitude);
+      console.log(temps);
                                 </code></pre>
 
                                 <p class="card-text">
@@ -253,7 +253,7 @@
                                 </p>
 
                                 <pre><code class="javascript">
-                                    &lt;div id="max_temp">The max temperature for the current day will be displayed here&lt;/div&gt;
+&lt;div id="max_temp">The max temperature for the current day will be displayed here&lt;/div&gt;
                                 </code></pre>
                                 <p class="card-text">
                                     It is just necessary to pass the desired value from the temps array by following the array structure explained in the One Call API documentation.
@@ -261,7 +261,7 @@
                                 </p>
 
                                 <pre><code class="javascript">
-                                    document.getElementbyID('day1').innerHTML = `The max temperature for the current day is: ${temps.daily[0].temp.max}`;
+document.getElementbyID('day1').innerHTML = `The max temperature for the current day is: ${temps.daily[0].temp.max}`;
                                 </code></pre>
 
                                 <p class="card-text">

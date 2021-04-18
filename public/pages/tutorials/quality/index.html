@@ -179,14 +179,14 @@
                                 </p>
 
                                 <pre><code class="html">
-                                    &lt;select id="cityDropDown" &gt;
-                                        &lt;option value="amsterdam" selected&gt;Amsterdam&lt;/option&gt;
-                                        &lt;option value="philadelphia"&gt;Philadelphia&lt;/option&gt;
-                                        &lt;option value="phoenix"&gt;Phoenix&lt;/option&gt;
-                                        &lt;option value="prague"&gt;Prague&lt;/option&gt;
-                                        &lt;option value="quebec"&gt;Quebec&lt;/option&gt;
-                                        &lt;option value="tokyo"&gt;Tokyo&lt;/option&gt;
-                                    &lt;/select&gt;
+&lt;select id="cityDropDown" &gt;
+    &lt;option value="amsterdam" selected&gt;Amsterdam&lt;/option&gt;
+    &lt;option value="philadelphia"&gt;Philadelphia&lt;/option&gt;
+    &lt;option value="phoenix"&gt;Phoenix&lt;/option&gt;
+    &lt;option value="prague"&gt;Prague&lt;/option&gt;
+    &lt;option value="quebec"&gt;Quebec&lt;/option&gt;
+    &lt;option value="tokyo"&gt;Tokyo&lt;/option&gt;
+&lt;/select&gt;
                                 </code></pre>
 
                                 <p class="card-text">
@@ -219,9 +219,9 @@
                                 </p>
 
                                 <pre><code class="javascript">
-                                    const url = `https://api.teleport.org/api/urban_areas/slug:${citySlug}/scores/`
-                                    const response = await fetch(url)
-                                    const data = await response.json() 
+const url = `https://api.teleport.org/api/urban_areas/slug:${citySlug}/scores/`
+const response = await fetch(url)
+const data = await response.json()
                                 </code></pre>
 
                                 <div class="divider my-4"></div>
@@ -239,7 +239,7 @@
                                 </p>
 
                                 <pre><code class="html">
-                                    &lt;div id="chartContainer" style="height: 500px; width: 100%;"&gt;&lt;/div&gt;
+&lt;div id="chartContainer" style="height: 500px; width: 100%;"&gt;&lt;/div&gt;
                                 </code></pre>
 
                                 <p class="card-text">
@@ -251,38 +251,38 @@
                                 </p>
 
                                 <pre><code class="javascript">
-                                    //creating the chart
-                                    var chart = new CanvasJS.Chart("chartContainer", {
-                                        animationEnabled: true,
-                                        theme: "light1", 
-                                        title:{
-                                            text: cityName
-                                        },
-                                        axisY: {
-                                            title: "Score Out Of Ten",
-                                            maximum: 10
-                                        },
-                                        data: [{        
-                                            type: "column",  
-                                            showInLegend: true, 
-                                            legendMarkerColor: "grey",
-                                            legendText: "City Attributes",
-                                            dataPoints: [      
-                                            ]
-                                        }]
-                                        });
-                                        
-                                        //adding a data point to the chart for each category 
-                                        data.categories.forEach(category => {
-                                            chart.options.data[0].dataPoints.push(
-                                                { 
-                                                    y: category.score_out_of_10,
-                                                    label: category.name,
-                                                    color: category.color
-                                                })
-                                        });
-                                    
-                                        chart.render();
+//creating the chart
+var chart = new CanvasJS.Chart("chartContainer", {
+    animationEnabled: true,
+    theme: "light1",
+    title:{
+        text: cityName
+    },
+    axisY: {
+        title: "Score Out Of Ten",
+        maximum: 10
+    },
+    data: [{
+        type: "column",
+        showInLegend: true,
+        legendMarkerColor: "grey",
+        legendText: "City Attributes",
+        dataPoints: [
+        ]
+    }]
+    });
+
+    //adding a data point to the chart for each category
+    data.categories.forEach(category => {
+        chart.options.data[0].dataPoints.push(
+            {
+                y: category.score_out_of_10,
+                label: category.name,
+                color: category.color
+            })
+    });
+
+    chart.render();
                                 </code></pre>
 
                                 <div class="divider my-4"></div>
