@@ -24,6 +24,9 @@ $('#el').daterangepicker({
 });
     $('#el').removeAttr('style');
     $('#drp_autogen0').text("Select a Date")
+    $('#drp_autogen0').addClass("btn")
+    $('#drp_autogen0').addClass("btn-dark")
+
     insertChartJsScriptTag();
     populateDataset();
 
