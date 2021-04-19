@@ -93,9 +93,9 @@ async function OnCurrencyChange()
 
 async function populateDataset()
 {
-
     try
     {
+
 
         let BaseCurrency = document.getElementById('currency1');
         let CompCurrency = document.getElementById('currency2');
@@ -131,7 +131,7 @@ async function populateDataset()
             });
 
         console.log(newSortedRates);
-        const Dates =  []
+        const Dates =  [];
 
         const DateValuesArr = [];
 
@@ -201,7 +201,15 @@ async function populateDataset()
             }
         }
         
-        var LineChart = new Chart(chartElement, {
+        let chartContainer = document.getElementsByClassName('chartContainer')[0]
+        console.log($('#exchangeChart'));
+        $('#exchangeChart').remove();
+        console.log($('#exchangeChart'));
+        chartElement = document.createElement('canvas')
+        chartElement.id = 'exchangeChart'
+        chartContainer.append(chartElement);
+        chartElement = document.getElementById('exchangeChart').getContext('2d')
+        new Chart(chartElement, {
             type: 'line',
             data: data,
             options: options
