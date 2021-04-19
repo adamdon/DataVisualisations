@@ -172,12 +172,12 @@
                                     The API used in this data visualisation is provided by <a href="https://openweathermap.org/">OpenWeatherMap</a> which offers access to the most updated weather forecast.
                                     In order to proceed with the tutorial is, however, necessary to create a free account on their website with the purpose of obtaining a free <strong>API Key</strong> which is fundamental for the functionality
                                     of the API itself.
-                                    This tutorial assumes that the reader is fluent with HTML and Javascript and knows how to read the documentation provided by the sources linked.
+                                    This tutorial assumes that the reader knows the fundamentals of HTML and Javascript and knows how to read the documentation provided by the linked sources.
                                     Once the account is created and the key is activated, the next step involves the selection of the type of API to use.
                                     This tutorial focuses the attention on the <a href="https://openweathermap.org/api/one-call-api">One Call API</a>.
-                                    This API provides a 7 days forecast with results updated daily, hourly or minutely and starting from the current day and returns responses in JSON format.
+                                    This specific API provides a 7 days forecast with results updated daily, hourly or minutely, which then returns an array of data in JSON format.
                                     In order to retrieve data from the weather, it is necessary to use an asynchronous function which fetches data from the API and then stores its content into a variable/array.
-                                    The example below uses a class named <strong>GetWeather()</strong> which describes this process.
+                                    The example below uses a class named <strong>GetWeather()</strong> which describes this approach.
                                 </p>
 
                                 <pre><code class="javascript">
@@ -210,9 +210,10 @@ class GetWeather{
                                 <h5 class="card-title"><i class="fas fa-wrench"></i> Processing the information</h5>
 
                                 <p class="card-text">
-                                    Once the coordinates have been obtained and the "data" retrieved from the API, the next step involves storing such data into a variable (as explained above).
-                                    Thanks to Google Map, it is possible to utilise an event listener which will retrieve the coordinates from the map itself and will perform a weather request with the suggested coordinates.
-                                    The data will then be stored into an array, named "temps", and then managed accordingly based on what is needed to be parsed into any HTML element. See below for an example and refer to the One Call API documentation provided by OpenWeatherMap for a description of the JSON file structure.
+                                    Once the coordinates have been obtained and the "data" retrieved from the API, the next step involves storing such data into a local variable (as explained above).
+                                    Thanks to Google Map, a drag marker event listener will retrieve the coordinates from the map itself and will perform a weather request with the selected coordinates.
+                                    The data will then be stored into an array, named "temps", and then managed accordingly based on what is needed to be parsed into any HTML element.
+                                     See below for an example and refer to the One Call API documentation provided by OpenWeatherMap for a description of the JSON file structure.
                                 </p>
 
                                 <pre><code class="javascript">
@@ -238,7 +239,7 @@ function initMap() {
                                 </code></pre>
 
                                 <p class="card-text">
-                                    The above code allows the coder to load and display a Google map on a HTML document using an element with an ID of "map", a marker is then placed on the map on the specified coordinates (the default location is Glasgow).
+                                    As explained before, the above code allows the coder to load and display a Google map on a HTML document using an element with an ID of "map", a marker is then placed on the map on the specified coordinates (the default location is Glasgow).
                                     After loading the map and the marker, an event listener allows the system to "capture" user inputs performed by a drag and drop of the marker itself and when the marker is released the last location's coordinates will be used to retrieve the forecast on the specified location.
                                 </p>
 
@@ -249,14 +250,14 @@ function initMap() {
 
                                 <p class="card-text">
                                     The reamining step involves the "parsing" of the values from the variables into a HTML element.
-                                    Assuming the presence of the following HTML element
+                                    Assuming the presence of a HTML element where to pass the value, like the example below
                                 </p>
 
                                 <pre><code class="javascript">
 &lt;div id="max_temp">The max temperature for the current day will be displayed here&lt;/div&gt;
                                 </code></pre>
                                 <p class="card-text">
-                                    It is just necessary to pass the desired value from the temps array by following the array structure explained in the One Call API documentation.
+                                    it is then required to pass the desired value from the temps array by following the array structure explained in the One Call API documentation.
                                     For the current day max temperature, for example, the data will be parsed as follows:
                                 </p>
 
@@ -265,7 +266,7 @@ document.getElementbyID('day1').innerHTML = `The max temperature for the current
                                 </code></pre>
 
                                 <p class="card-text">
-                                    The data is stored as an array of elements, therefore it is necessary to print the specified value by navigating the array, the documentation provided by OpenWeatherMap explains the array file structure.
+                                    The data is stored as an array of elements, therefore it is necessary to print the specified value by navigating the array, the documentation provided by OpenWeatherMap gives a detail description of the array structure.
                                 </p>
 
                                 <div class="divider my-4"></div>
