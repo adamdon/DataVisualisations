@@ -165,19 +165,18 @@
 
                             <p class="card-text">
                                 The first step in re-creating the ISS Tracker example is to load the LeafletJs library
-                                by linking the script within a script tag. <br>
-                                <br>
+                                by linking the script within a script tag. 
+                                <p></p>
                                 After this create a map object and instatiate the three required attributes (latitude,
                                 longitude and default zoom level) and declare this as a const
                                 with using an L prefix to allow access the methods now available to u from LeafletJs.
-                                <br>
-                                <br>
+                                <p></p>
                                 At this point we have an empty map container, for techinal reasons beyond the scope of
                                 this tutorial Leaflet and many other mapping tools import sections of map as tiles or
                                 small sections of maps, this example will be using the tiles from OpenStreetMap
                                 availaible
-                                under the open commons licence, then add the returned layer to the map. <br>
-                                <br>
+                                under the open commons licence, then add the returned layer to the map. 
+                                <p></p>
                                 You can declare an new icon with the same attributes below linking image you wish to use
                                 in the icon Url attribute. This can new icon can now be added as marker to the Leaflet
                                 map
@@ -234,14 +233,12 @@ mymap.on('zoomend', function () {
 
                             <p class="card-text">
                                 First declare the URL of the API providing the data as const.
-                                <br>
-                                <br>
+                                <p></p>
                                 Then declare a new boolean variable we will use to determin if its the users first time
                                 loading the visualization,
                                 this is important to prevent constantly overriding the users current zoom level with
                                 that of the default map view.
-                                <br>
-                                <br>
+                                <p></p>
                                 Use getElement method of the document object to find the longtiude and latitude
                                 paragraphs and set the text concent to the data returned from the api.
                                 Finally use a set interval method to call getIss every second.
@@ -288,9 +285,6 @@ mymap.on('zoomend', function () {
                             </ul>
 
                             <div class="divider my-4"></div>
-
-
-
 
                             <!-- Page content end  -->
 
